@@ -1,0 +1,16 @@
+{
+    "account": {
+        "accountName": "একাউন্ট",
+        "loginName": "লগইন"
+    },
+    "cart": {
+        "myCart": "আমার কার্ট"
+    },
+    "routes": {
+        "home": "হোম",
+        "book": "বুক",
+        "subject": "বিষয়",
+        "writer": "লেখক",
+        "publisher": "প্রকাশক"
+    }
+}

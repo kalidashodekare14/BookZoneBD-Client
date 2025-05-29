@@ -1,21 +1,54 @@
+import '../i18n';
 import { useState } from "react";
 import { FaBars, FaRegUser } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { GrFavorite } from "react-icons/gr";
 import { IoIosSearch, IoMdClose } from "react-icons/io";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
 
+    const { t, i18n } = useTranslation("navbar")
     const [toggle, setToggle] = useState(false);
+
+    const changeLanguage = (lng) => i18n.changeLanguage(lng);
 
     const handleNavToggle = () => {
         setToggle(!toggle)
     }
 
 
+    const routeInfo = [
+        {
+            id: 1,
+            name: t("routes.home"),
+            route: "/"
+        },
+        {
+            id: 2,
+            name: t("routes.book"),
+            route: "/"
+        },
+        {
+            id: 3,
+            name: t("routes.subject"),
+            route: "/"
+        },
+        {
+            id: 4,
+            name: t("routes.writer"),
+            route: "/"
+        },
+        {
+            id: 5,
+            name: t("routes.publisher"),
+            route: "/"
+        },
+    ]
+
     return (
-        <div className="lg:px-10 px-5 relative bg-[#003A5A] text-white">
+        <div className=" px-5 relative bg-[#003A5A] text-white">
             {/*  */}
             <div className="flex items-center justify-between py-5">
                 <div className="pr-10">
@@ -31,8 +64,8 @@ const Navbar = () => {
                     <div className="flex items-center gap-2 lg:border-r-2 lg:px-10 cursor-pointer">
                         <FaRegUser className="lg:text-3xl text-[25px]" />
                         <div className="hidden lg:flex flex-col">
-                            <h3>Account</h3>
-                            <p>Log In</p>
+                            <h3>{t('account.accountName')}</h3>
+                            <p>{t('account.loginName')}</p>
                         </div>
                     </div>
                     <div className="relative cursor-pointer">
@@ -41,15 +74,15 @@ const Navbar = () => {
                             0
                         </div>
                     </div>
-                    <div className="flex items-center lg:gap-5 gap-2  cursor-pointer">
-                        <div className="relative ">
+                    <div className="flex justify-between items-center lg:gap-5 gap-2 cursor-pointer">
+                        <div className="relative">
                             <FiShoppingCart className="lg:text-3xl text-[25px]" />
                             <div className="absolute -top-3 -right-4 rounded-full lg:w-7 lg:h-7 w-5 h-5 bg-[#3BB77E] flex justify-center items-center text-white">
                                 0
                             </div>
                         </div>
-                        <div className="lg:flex flex-col hidden w-16">
-                            <h3>My Cart</h3>
+                        <div className="lg:flex justify-between flex-col hidden ">
+                            <h3>{t('cart.myCart')}</h3>
                             <p>$0.00</p>
                         </div>
                     </div>
@@ -57,18 +90,18 @@ const Navbar = () => {
             </div>
             <div className="font-hindSiliguri hidden lg:flex items-center justify-between">
                 <ul className="flex items-center-center gap-5 text-[18px]">
-                    <li>
-                        <Link to={""}>হোম</Link>
-                    </li>
-                    <li>বই</li>
-                    <li>বিষয়</li>
-                    <li>লেখক</li>
-                    <li>প্রকাশক</li>
+                    {
+                        routeInfo.map(routeLink => (
+                            <li>
+                                <Link to={routeLink.route}>{routeLink.name}</Link>
+                            </li>
+                        ))
+                    }
                 </ul>
                 <div>
-                    <select className="border ">
-                        <option className="text-black" value="">EN</option>
-                        <option className="text-black" value="">BN</option>
+                    <select onChange={(e) => changeLanguage(e.target.value)} className="border ">
+                        <option className="text-black" value="en">EN</option>
+                        <option className="text-black" value="bn">BN</option>
                     </select>
                 </div>
             </div>

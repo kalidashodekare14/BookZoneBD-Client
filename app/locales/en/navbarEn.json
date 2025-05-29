@@ -1,0 +1,16 @@
+{
+    "account": {
+        "accountName": "Account",
+        "loginName": "Log In"
+    },
+    "cart": {
+        "myCart": "My Cart"
+    },
+    "routes": {
+        "home": "Home",
+        "book": "Book",
+        "subject": "Subject",
+        "writer": "Writer",
+        "publisher": "Publisher"
+    }
+}
