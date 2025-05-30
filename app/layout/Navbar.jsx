@@ -11,11 +11,18 @@ const Navbar = () => {
 
     const { t, i18n } = useTranslation("navbar")
     const [toggle, setToggle] = useState(false);
+    const [lanSelect, setLanSelect] = useState("")
+
 
     const changeLanguage = (lng) => i18n.changeLanguage(lng);
 
     const handleNavToggle = () => {
         setToggle(!toggle)
+    }
+
+    const handleLanguageSelect = (event) => {
+        setLanSelect(event);
+        changeLanguage(event);
     }
 
 
@@ -47,6 +54,19 @@ const Navbar = () => {
         },
     ]
 
+    const lang = [
+        {
+            id: 1,
+            name: "EN",
+            value: "en"
+        },
+        {
+            id: 2,
+            name: "BN",
+            value: "bn"
+        }
+    ]
+
     return (
         <div className=" px-5 relative bg-[#003A5A] text-white">
             {/*  */}
@@ -61,7 +81,7 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="flex items-center justify-between lg:gap-8 gap-5">
-                    <div className="flex items-center gap-2 lg:border-r-2 lg:px-10 cursor-pointer">
+                    <div className="flex items-center gap-2 lg:border-r-2 border-[#bbb] lg:px-10 cursor-pointer">
                         <FaRegUser className="lg:text-3xl text-[25px]" />
                         <div className="hidden lg:flex flex-col">
                             <h3>{t('account.accountName')}</h3>
@@ -92,16 +112,20 @@ const Navbar = () => {
                 <ul className="flex items-center-center gap-5 text-[18px]">
                     {
                         routeInfo.map(routeLink => (
-                            <li>
+                            <li key={routeLink.id}>
                                 <Link to={routeLink.route}>{routeLink.name}</Link>
                             </li>
                         ))
                     }
                 </ul>
                 <div>
-                    <select onChange={(e) => changeLanguage(e.target.value)} className="border ">
-                        <option className="text-black" value="en">EN</option>
-                        <option className="text-black" value="bn">BN</option>
+                    <select onChange={(e) => handleLanguageSelect(e.target.value)} className="border ">
+                        {
+                            lang.map(lan => (
+                                <option key={lan.id} selected={lanSelect} className="text-black" value={lan.value}>{lan.name}</option>
+                            ))
+                        }
+                       
                     </select>
                 </div>
             </div>
@@ -122,9 +146,13 @@ const Navbar = () => {
                     <FaBars className="text-[25px]" />
                     <p className="uppercase font-bold">Menu</p>
                 </div>
-                <select className="border p-1">
-                    <option className="text-black" value="">EN</option>
-                    <option className="text-black" value="">BN</option>
+                <select onChange={(e) => changeLanguage(e.target.value)} className="border p-1">
+                    {
+                        lang.map(lan => (
+                            <option key={lan.id} selected={lanSelect} className="text-black" value={lan.value}>{lan.name}</option>
+                        ))
+                    }
+                   
                 </select>
             </div>
 
@@ -134,13 +162,13 @@ const Navbar = () => {
                     <IoMdClose onClick={handleNavToggle} className="text-3xl text-[#524c4c]" />
                 </div>
                 <ul className="flex-col items-center-center gap-5 space-y-2  text-[18px] px-3 py-5">
-                    <li>
-                        <Link to={""}>হোম</Link>
-                    </li>
-                    <li>বই</li>
-                    <li>বিষয়</li>
-                    <li>লেখক</li>
-                    <li>প্রকাশক</li>
+                    {
+                        routeInfo.map(routeLink => (
+                            <li key={routeLink.id}>
+                                <Link to={routeLink.route}>{routeLink.name}</Link>
+                            </li>
+                        ))
+                    }
                 </ul>
             </div>
 
