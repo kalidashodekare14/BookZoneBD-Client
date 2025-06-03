@@ -6,9 +6,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
+import 'swiper/css/navigation';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css'
+
+import { Navigation } from 'swiper/modules';
 
 const SpecialDiscount = () => {
 
@@ -75,9 +77,7 @@ const SpecialDiscount = () => {
                 <Swiper
                     slidesPerView={1}
                     spaceBetween={10}
-                    pagination={{
-                        clickable: true,
-                    }}
+                    navigation={true}
                     breakpoints={{
                         '@0.00': {
                             slidesPerView: 1,
@@ -96,7 +96,7 @@ const SpecialDiscount = () => {
                             spaceBetween: 50,
                         },
                     }}
-                    // modules={[Pagination]}
+                    modules={[Navigation]}
                     className="mySwiper"
                 >
                     {
