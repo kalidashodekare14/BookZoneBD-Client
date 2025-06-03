@@ -156,7 +156,7 @@ const Navbar = () => {
                 </select>
             </div>
 
-            <div className={`${!toggle && "hidden duration-300"} w-80 min-h-screen  absolute left-0 top-0  text-black bg-white   font-hindSiliguri  lg:hidden flex-col items-center justify-between py-5`}>
+            <div className={`${!toggle && "hidden duration-300"} z-20 w-80 min-h-screen  absolute left-0 top-0  text-black bg-white   font-hindSiliguri  lg:hidden flex-col items-center justify-between py-5`}>
                 <div className="flex justify-between items-center  border-b-1 border-[#bbb] pb-2 px-3">
                     <p className="font-bold text-[#524c4c]">Menu</p>
                     <IoMdClose onClick={handleNavToggle} className="text-3xl text-[#524c4c]" />
