@@ -28,7 +28,7 @@ const BannerSection = () => {
     ]
 
     return (
-        <div>
+        <div className=' my-10 2xl'>
             <Swiper
                 autoplay={{
                     delay: 2500,
@@ -42,8 +42,8 @@ const BannerSection = () => {
                 className="mySwiper">
                 {
                     bannerInfo.map(banner => (
-                        <SwiperSlide key={banner.id}>
-                            <img className='w-full h-80' src={banner.image} alt="" />
+                        <SwiperSlide className='rounded-2xl' key={banner.id}>
+                            <img className='rounded-2xl w-full h-80' src={banner.image} alt="" />
                         </SwiperSlide>
                     ))
                 }

@@ -9,8 +9,11 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@coreui/coreui": "^5.4.0",
+    "@coreui/react": "^5.7.0",
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",
+    "@smastrom/react-rating": "^1.5.0",
     "i18next": "^25.2.1",
     "i18next-browser-languagedetector": "^8.1.0",
     "isbot": "^5.1.27",

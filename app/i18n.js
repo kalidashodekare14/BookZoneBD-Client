@@ -2,8 +2,13 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next';
 
+// navbar file
 import navInfoEN from './locales/en/navbarEn.json';
 import navInfoBN from './locales/bn/navbarBn.json'
+
+// home title file
+import homeTitleEN from './locales/en/homeTitle.json'
+import homeTitleBN from './locales/bn/homeTitle.json'
 
 
 i18n.use(LanguageDetector).use(initReactI18next).init({
@@ -11,10 +16,12 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
     lng: "en",
     resources: {
         en: {
-            navbar: navInfoEN
+            navbar: navInfoEN,
+            homeTitle: homeTitleEN
         },
         bn: {
-            navbar: navInfoBN
+            navbar: navInfoBN,
+            homeTitle: homeTitleBN
         }
     }
 })
