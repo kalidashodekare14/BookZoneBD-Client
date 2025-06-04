@@ -77,7 +77,7 @@ const SpecialDiscount = () => {
             <div className='my-10'>
                 <Swiper
                     slidesPerView={1}
-                    spaceBetween={8}
+                    spaceBetween={10}
                     // navigation={true}
                     breakpoints={{
                         '@0.00': {
@@ -94,7 +94,7 @@ const SpecialDiscount = () => {
                         },
                         '@1.50': {
                             slidesPerView: 5,
-                            spaceBetween: 50,
+                            spaceBetween: 20,
                         },
                     }}
                     modules={[Navigation]}

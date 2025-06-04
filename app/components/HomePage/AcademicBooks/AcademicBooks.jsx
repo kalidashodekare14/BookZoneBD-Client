@@ -97,7 +97,7 @@ const AcademicBooks = () => {
                         },
                         '@1.50': {
                             slidesPerView: 5,
-                            spaceBetween: 50,
+                            spaceBetween: 20,
                         },
                     }}
                     modules={[Navigation]}
