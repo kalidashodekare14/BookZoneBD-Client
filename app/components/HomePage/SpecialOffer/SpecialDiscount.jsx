@@ -11,6 +11,7 @@ import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css'
 
 import { Navigation } from 'swiper/modules';
+import SwiperNavButton from '../../SwiperCustomization/SwiperNavButton';
 
 const SpecialDiscount = () => {
 
@@ -77,7 +78,7 @@ const SpecialDiscount = () => {
                 <Swiper
                     slidesPerView={1}
                     spaceBetween={10}
-                    navigation={true}
+                    // navigation={true}
                     breakpoints={{
                         '@0.00': {
                             slidesPerView: 1,
@@ -124,7 +125,7 @@ const SpecialDiscount = () => {
                             </SwiperSlide>
                         ))
                     }
-
+                <SwiperNavButton />
                 </Swiper>
             </div>
         </div>

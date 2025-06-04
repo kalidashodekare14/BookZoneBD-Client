@@ -5,6 +5,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import SwiperNavButton from '../../SwiperCustomization/SwiperNavButton';
 
 const BannerSection = () => {
 
@@ -37,8 +38,8 @@ const BannerSection = () => {
                 pagination={{
                     clickable: true,
                 }}
-                navigation={true}
-                 modules={[Autoplay, Pagination, Navigation]}
+                // navigation={true}
+                modules={[Autoplay, Pagination, Navigation]}
                 className="mySwiper">
                 {
                     bannerInfo.map(banner => (
@@ -47,7 +48,7 @@ const BannerSection = () => {
                         </SwiperSlide>
                     ))
                 }
-
+                <SwiperNavButton />
             </Swiper>
         </div>
     );
