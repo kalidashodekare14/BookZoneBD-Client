@@ -84,7 +84,7 @@ const TrendingBooks = () => {
             <div className='my-10'>
                 <Swiper
                     slidesPerView={1}
-                    spaceBetween={10}
+                    spaceBetween={8}
                     // navigation={true}
                     breakpoints={{
                         '@0.00': {

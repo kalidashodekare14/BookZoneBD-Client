@@ -77,7 +77,7 @@ const SpecialDiscount = () => {
             <div className='my-10'>
                 <Swiper
                     slidesPerView={1}
-                    spaceBetween={10}
+                    spaceBetween={8}
                     // navigation={true}
                     breakpoints={{
                         '@0.00': {
@@ -103,29 +103,35 @@ const SpecialDiscount = () => {
                     {
                         cardData.map(data => (
                             <SwiperSlide>
-                                <div className=' border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
-                                    <img className='w-full h-60 px-5' src={data.image} alt="" />
-                                    <div className='mt-3 space-y-2'>
-                                        <h1 className='font-semibold'>{data.title}</h1>
-                                        <p>{data.author}</p>
-                                        <Rating
-                                            style={{ maxWidth: 100 }}
-                                            value={3}
-                                            readOnly
-                                        />
-                                        <div className='flex justify-between items-center'>
-                                            <p>৳{data.price * data.discount / 100}</p>
-                                            <p><del>৳{data.price}</del></p>
-                                        </div>
-                                        <button className='btn w-full bg-[#003A5A] text-white'>Add to cart</button>
+                                <div className='relative'>
+                                    <div className='absolute top-0 font-rubik bg-[#003A5A] w-14 h-14 p-5 text-white rounded-full flex justify-center items-center'>
+                                        <h1>{data.discount}% Off</h1>
                                     </div>
+                                    <div className='border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
+                                        <img className='w-full h-60 px-5' src={data.image} alt="" />
+                                        <div className='mt-3 space-y-2'>
+                                            <h1 className='font-semibold'>{data.title}</h1>
+                                            <p>{data.author}</p>
+                                            <Rating
+                                                style={{ maxWidth: 100 }}
+                                                value={3}
+                                                readOnly
+                                            />
+                                            <div className='flex justify-between items-center'>
+                                                <p>৳{data.price * data.discount / 100}</p>
+                                                <p><del>৳{data.price}</del></p>
+                                            </div>
+                                            <button className='btn w-full bg-[#003A5A] text-white'>Add to cart</button>
+                                        </div>
 
+                                    </div>
                                 </div>
+
 
                             </SwiperSlide>
                         ))
                     }
-                <SwiperNavButton />
+                    <SwiperNavButton />
                 </Swiper>
             </div>
         </div>
