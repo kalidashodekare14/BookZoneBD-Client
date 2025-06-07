@@ -4,7 +4,7 @@ import { FaBars, FaRegUser } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { GrFavorite } from "react-icons/gr";
 import { IoIosSearch, IoMdClose } from "react-icons/io";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
@@ -12,7 +12,8 @@ const Navbar = () => {
     const { t, i18n } = useTranslation("navbar")
     const [toggle, setToggle] = useState(false);
     const [lanSelect, setLanSelect] = useState("")
-
+    const [active, setActive] = useState(false)
+    const { pathname } = useLocation()
 
     const changeLanguage = (lng) => i18n.changeLanguage(lng);
 
@@ -35,22 +36,22 @@ const Navbar = () => {
         {
             id: 2,
             name: t("routes.book"),
-            route: "/"
+            route: "/book"
         },
         {
             id: 3,
             name: t("routes.subject"),
-            route: "/"
+            route: "/subject"
         },
         {
             id: 4,
             name: t("routes.writer"),
-            route: "/"
+            route: "/writer"
         },
         {
             id: 5,
             name: t("routes.publisher"),
-            route: "/"
+            route: "/publisher"
         },
     ]
 
@@ -112,7 +113,7 @@ const Navbar = () => {
                 <ul className="flex items-center-center gap-5 text-[18px]">
                     {
                         routeInfo.map(routeLink => (
-                            <li key={routeLink.id}>
+                            <li className={`${routeLink.route === pathname && "border-b-2"}`} key={routeLink.id}>
                                 <Link to={routeLink.route}>{routeLink.name}</Link>
                             </li>
                         ))
@@ -125,7 +126,7 @@ const Navbar = () => {
                                 <option key={lan.id} selected={lanSelect} className="text-black" value={lan.value}>{lan.name}</option>
                             ))
                         }
-                       
+
                     </select>
                 </div>
             </div>
@@ -152,7 +153,7 @@ const Navbar = () => {
                             <option key={lan.id} selected={lanSelect} className="text-black" value={lan.value}>{lan.name}</option>
                         ))
                     }
-                   
+
                 </select>
             </div>
 
@@ -164,7 +165,7 @@ const Navbar = () => {
                 <ul className="flex-col items-center-center gap-5 space-y-2  text-[18px] px-3 py-5">
                     {
                         routeInfo.map(routeLink => (
-                            <li key={routeLink.id}>
+                            <li className={`${routeLink.route === pathname && "border-b-2"}`} key={routeLink.id}>
                                 <Link to={routeLink.route}>{routeLink.name}</Link>
                             </li>
                         ))
