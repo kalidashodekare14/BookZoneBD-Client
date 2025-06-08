@@ -1,12 +1,19 @@
-
+import React from 'react';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css'
 import { useState } from 'react';
-
-
+import './TotalBook.css'
+import { FaBarsStaggered } from 'react-icons/fa6';
+import { IoMdClose } from 'react-icons/io';
 
 const TotalBook = () => {
 
+    const [toggle, setToggle] = useState(false)
+    const [ratingFilter, setRatingFilter] = useState(null)
+
+    const handleToggele = () => {
+        setToggle(!toggle)
+    }
 
     const allBookData = [
         {
@@ -171,10 +178,17 @@ const TotalBook = () => {
         }
     ]
 
+
     return (
-        <div className='mx-5 my-5'>
+        <div className='mx-5 my-5 font-mixed'>
             <div className='flex items-center justify-between my-5'>
-                <p>Total items 100</p>
+                <div className='flex items-center gap-3'>
+                    {
+                        toggle ? <IoMdClose className='lg:hidden text-xl' onClick={handleToggele} /> : <FaBarsStaggered className='lg:hidden' onClick={handleToggele} /> 
+                    }
+                    {/* <FaBarsStaggered className='lg:hidden' onClick={handleToggele} /> */}
+                    <p className='font-semibold'>Total items {allBookData.length}</p>
+                </div>
                 <select defaultValue="Pick a color" className="select w-32 focus:outline-0">
                     <option >All</option>
                     <option>Crimson</option>
@@ -184,17 +198,64 @@ const TotalBook = () => {
             </div>
             <div className='flex justify-between gap-5'>
                 {/* filtering layout */}
-                <div className='w-96 h-screen'>
-                    <div className='shadow-xl/50 p-5'>
+                <div className={`${toggle ? "translate-x-0 left-0 duration-300" : "-translate-x-full duration-300"}  absolute -left-10 lg:translate-x-0  lg:static z-20 bg-white w-[80%] lg:w-96 lg:h-screen space-y-3`}>
+                    <div className='filter-shadaw p-5'>
                         <p className='my-5'>Shop by Price</p>
                         {/* <div className='flex items-center justify-between font-semibold'>
                             <p>৳0</p>
                             <p>৳20000</p>
                         </div> */}
                     </div>
+                    <div className='filter-shadaw'>
+                        <p className=' px-3 py-3 font-semibold text-xl'>Filters</p>
+                        <div>
+                            <div tabIndex={0} className="collapse collapse-arrow bg-base-100 border-base-300 border-b">
+                                <input type="checkbox" className="peer" />
+                                <div className="collapse-title font-semibold">Author</div>
+                                <div className="overflow-auto max-h-72 px-3">
+                                    {
+                                        allBookData.map(author => (
+                                            <div className='flex items-center gap-2 text-[16px]'>
+                                                <input className='' type="checkbox" />
+                                                <p>{author.author}</p>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            <div tabIndex={0} className="collapse collapse-arrow bg-base-100 border-base-300 border-b">
+                                <input type="checkbox" className="peer" />
+                                <div className="collapse-title font-semibold">Publisher</div>
+                                <div className="overflow-auto max-h-72 px-3">
+                                    {
+                                        allBookData.map(author => (
+                                            <div className='flex items-center gap-2 text-[16px]'>
+                                                <input className='' type="checkbox" />
+                                                <p>{author.author}</p>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            <div tabIndex={0} className="collapse collapse-arrow bg-base-100 border-base-300">
+                                <input type="checkbox" className="peer" />
+                                <div className="collapse-title font-semibold">Rating</div>
+                                <div className="overflow-auto max-h-72 px-3">
+                                    <Rating
+                                        className='py-3'
+                                        style={{ maxWidth: 120 }}
+                                        value={ratingFilter}
+                                        onChange={setRatingFilter}
+                                        isRequired
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 {/* all data */}
-                <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
+                <div className='grid grid-cols-1 z-10  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
                     {
                         allBookData.map(book => (
                             <div className=' border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>

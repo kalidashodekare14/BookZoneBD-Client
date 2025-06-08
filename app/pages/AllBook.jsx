@@ -1,4 +1,5 @@
-import AllBook from '../components/AllBook/TotalBook';
+import AllBook from '../components/TotalBook/TotalBook';
+import 'react-range-slider-input/dist/style.css';
 
 const AllBookPage = () => {
     return (
