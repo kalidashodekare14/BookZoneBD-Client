@@ -1,3 +1,30 @@
-.filter-shadaw{
+@import "react-input-range/lib/css/index.css";
+
+
+.filter-shadaw {
     box-shadow: 1px 1px 4px black;
+}
+
+.input-range__track {
+    background: #bbb;
+    height: 8px;
+}
+
+.input-range__track--active {
+    background: #3BB77E;
+}
+
+.input-range__slider {
+    background-color: #3BB77E;
+    border: 2px solid white;
+    height: 20px;
+    width: 20px;
+    top: -4px;
+}
+
+
+.input-range__label--min,
+.input-range__label--max,
+.input-range__label {
+    display: none;
 }

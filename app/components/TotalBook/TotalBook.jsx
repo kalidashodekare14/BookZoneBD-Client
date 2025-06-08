@@ -5,11 +5,19 @@ import { useState } from 'react';
 import './TotalBook.css'
 import { FaBarsStaggered } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
+import InputRange from 'react-input-range';
+
 
 const TotalBook = () => {
 
-    const [toggle, setToggle] = useState(false)
-    const [ratingFilter, setRatingFilter] = useState(null)
+    const [toggle, setToggle] = useState(false);
+    const [ratingFilter, setRatingFilter] = useState(null);
+    const [priceFilter, setPriceFilter] = useState({ min: 0, max: 10000 });
+    const [discountFilter, setdiscountFilter] = useState({ min: 0, max: 100 });
+
+
+    console.log('checking price filter', priceFilter)
+
 
     const handleToggele = () => {
         setToggle(!toggle)
@@ -184,9 +192,8 @@ const TotalBook = () => {
             <div className='flex items-center justify-between my-5'>
                 <div className='flex items-center gap-3'>
                     {
-                        toggle ? <IoMdClose className='lg:hidden text-xl' onClick={handleToggele} /> : <FaBarsStaggered className='lg:hidden' onClick={handleToggele} /> 
+                        toggle ? <IoMdClose className='lg:hidden text-xl' onClick={handleToggele} /> : <FaBarsStaggered className='lg:hidden' onClick={handleToggele} />
                     }
-                    {/* <FaBarsStaggered className='lg:hidden' onClick={handleToggele} /> */}
                     <p className='font-semibold'>Total items {allBookData.length}</p>
                 </div>
                 <select defaultValue="Pick a color" className="select w-32 focus:outline-0">
@@ -199,14 +206,41 @@ const TotalBook = () => {
             <div className='flex justify-between gap-5'>
                 {/* filtering layout */}
                 <div className={`${toggle ? "translate-x-0 left-0 duration-300" : "-translate-x-full duration-300"}  absolute -left-10 lg:translate-x-0  lg:static z-20 bg-white w-[80%] lg:w-96 lg:h-screen space-y-3`}>
-                    <div className='filter-shadaw p-5'>
-                        <p className='my-5'>Shop by Price</p>
-                        {/* <div className='flex items-center justify-between font-semibold'>
-                            <p>৳0</p>
-                            <p>৳20000</p>
-                        </div> */}
+                    <div className='filter-shadaw pt-2 pb-2 rounded-xl'>
+                        <div className='border-b'>
+                            <p className='text-xl py-4 pl-2 border-[#bbb] font-semibold'>Shop by Price</p>
+                        </div>
+                        <div className='px-5 py-3'>
+                            <InputRange
+                                maxValue={10000}
+                                minValue={0}
+                                value={priceFilter}
+                                onChange={setPriceFilter} />
+                            <div className='flex items-center justify-between'>
+                                <p>৳{priceFilter.min}</p>
+                                <p>৳{priceFilter.max}</p>
+                            </div>
+                        </div>
+
                     </div>
-                    <div className='filter-shadaw'>
+                    <div className='filter-shadaw pt-2 pb-2 rounded-xl'>
+                        <div className='border-b'>
+                            <p className='text-xl py-4 pl-2 border-[#bbb] font-semibold'>Shop by Discount</p>
+                        </div>
+                        <div className='px-5 py-3'>
+                            <InputRange
+                                maxValue={100}
+                                minValue={0}
+                                value={discountFilter}
+                                onChange={setdiscountFilter} />
+                            <div className='flex items-center justify-between'>
+                                <p>{discountFilter.min}%</p>
+                                <p>{discountFilter.max}%</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div className='filter-shadaw rounded-xl'>
                         <p className=' px-3 py-3 font-semibold text-xl'>Filters</p>
                         <div>
                             <div tabIndex={0} className="collapse collapse-arrow bg-base-100 border-base-300 border-b">

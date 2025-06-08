@@ -70,7 +70,7 @@ const Navbar = () => {
     ]
 
     return (
-        <div className=" px-5 relative bg-[#003A5A] text-white">
+        <div className=" px-5 font-mixed relative bg-[#003A5A] text-white">
             {/*  */}
             <div className="flex items-center justify-between py-5">
                 <div className="pr-10">
@@ -110,7 +110,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-            <div className="font-hindSiliguri hidden lg:flex items-center justify-between">
+            <div className=" hidden lg:flex items-center justify-between">
                 <ul className="flex items-center-center gap-5 text-[18px]">
                     {
                         routeInfo.map(routeLink => (
@@ -158,7 +158,7 @@ const Navbar = () => {
                 </select>
             </div>
 
-            <div className={`${!toggle && "hidden duration-300"} z-20 w-80 min-h-screen  absolute left-0 top-0  text-black bg-white   font-hindSiliguri  lg:hidden flex-col items-center justify-between py-5`}>
+            <div className={`${!toggle && "hidden duration-300"} z-20 w-80 min-h-screen  absolute left-0 top-0  text-black bg-white    lg:hidden flex-col items-center justify-between py-5`}>
                 <div className="flex justify-between items-center  border-b-1 border-[#bbb] pb-2 px-3">
                     <p className="font-bold text-[#524c4c]">Menu</p>
                     <IoMdClose onClick={handleNavToggle} className="text-3xl text-[#524c4c]" />
