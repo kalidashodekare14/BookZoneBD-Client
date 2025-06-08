@@ -1,0 +1,41 @@
+.animate {
+    position: relative;
+    width: max-content;
+}
+
+.active {
+    position: relative;
+    width: max-content;
+}
+
+.animate::after {
+    content: '';
+    background: white;
+    border-radius: 100px;
+    height: 3px;
+    width: 0%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+}
+
+.active::after {
+    content: '';
+    background: white;
+    border-radius: 100px;
+    height: 3px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+}
+
+.active:hover::after{
+    width: 0;
+}
+
+.animate:hover::after {
+    width: 100%;
+}

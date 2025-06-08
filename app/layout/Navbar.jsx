@@ -6,6 +6,7 @@ import { GrFavorite } from "react-icons/gr";
 import { IoIosSearch, IoMdClose } from "react-icons/io";
 import { Link, useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
+import './Navbar.css'
 
 const Navbar = () => {
 
@@ -113,7 +114,7 @@ const Navbar = () => {
                 <ul className="flex items-center-center gap-5 text-[18px]">
                     {
                         routeInfo.map(routeLink => (
-                            <li className={`${routeLink.route === pathname && "border-b-2"}`} key={routeLink.id}>
+                            <li className={`${routeLink.route === pathname && "active"} animate`} key={routeLink.id}>
                                 <Link to={routeLink.route}>{routeLink.name}</Link>
                             </li>
                         ))
