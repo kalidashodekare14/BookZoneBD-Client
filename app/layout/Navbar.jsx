@@ -47,7 +47,7 @@ const Navbar = () => {
         {
             id: 4,
             name: t("routes.subject"),
-            route: "/subject"
+            route: "/subjects"
         },
         {
             id: 5,
