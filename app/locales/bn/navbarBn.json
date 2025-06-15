@@ -9,6 +9,7 @@
     "routes": {
         "home": "হোম",
         "book": "বুক",
+        "categories": "কেটাগরি",
         "subject": "বিষয়",
         "writer": "লেখক",
         "publisher": "প্রকাশক"

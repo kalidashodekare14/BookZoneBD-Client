@@ -41,16 +41,21 @@ const Navbar = () => {
         },
         {
             id: 3,
+            name: t("routes.categories"),
+            route: "/categories"
+        },
+        {
+            id: 4,
             name: t("routes.subject"),
             route: "/subject"
         },
         {
-            id: 4,
+            id: 5,
             name: t("routes.writer"),
             route: "/writer"
         },
         {
-            id: 5,
+            id: 6,
             name: t("routes.publisher"),
             route: "/publisher"
         },
@@ -157,8 +162,7 @@ const Navbar = () => {
 
                 </select>
             </div>
-
-            <div className={`${!toggle && "hidden duration-300"} z-20 w-80 min-h-screen  absolute left-0 top-0  text-black bg-white    lg:hidden flex-col items-center justify-between py-5`}>
+            <div className={`${!toggle && "hidden duration-300"} z-30 w-80 min-h-screen  absolute left-0 top-0  text-black bg-white    lg:hidden flex-col items-center justify-between py-5`}>
                 <div className="flex justify-between items-center  border-b-1 border-[#bbb] pb-2 px-3">
                     <p className="font-bold text-[#524c4c]">Menu</p>
                     <IoMdClose onClick={handleNavToggle} className="text-3xl text-[#524c4c]" />

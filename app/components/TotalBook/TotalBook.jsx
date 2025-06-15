@@ -188,8 +188,8 @@ const TotalBook = () => {
 
 
     return (
-        <div className='mx-5 my-5 font-mixed'>
-            <div className='flex items-center justify-between my-5'>
+        <div className='lg:mx-5 my-5 font-mixed'>
+            <div className=' flex items-center justify-between my-5'>
                 <div className='flex items-center gap-3'>
                     {
                         toggle ? <IoMdClose className='lg:hidden text-xl' onClick={handleToggele} /> : <FaBarsStaggered className='lg:hidden' onClick={handleToggele} />
@@ -203,9 +203,14 @@ const TotalBook = () => {
                     <option>Velvet</option>
                 </select>
             </div>
-            <div className='flex justify-between gap-5'>
+            <div className='relative flex justify-between gap-5'>
+
+                {toggle && (
+                    <div className="absolute  inset-0 w-full bg-[#00000052] bg-opacity-30 z-30 pointer-events-none"></div>
+                )}
+
                 {/* filtering layout */}
-                <div className={`${toggle ? "translate-x-0 left-0 duration-300" : "-translate-x-full duration-300"}  absolute -left-10 lg:translate-x-0  lg:static z-20 bg-white w-[80%] lg:w-96 lg:h-screen space-y-3`}>
+                <div className={`${toggle ? "translate-x-0 left-0 duration-300" : "-translate-x-full duration-300"}  px-5 lg:mx-0 absolute -left-10 lg:translate-x-0  lg:static z-30  bg-white w-[85%] p-5 pl-0 pt-0 lg:w-96 lg:h-screen space-y-3`}>
                     <div className='filter-shadaw pt-2 pb-2 rounded-xl'>
                         <div className='border-b'>
                             <p className='text-xl py-4 pl-2 border-[#bbb] font-semibold'>Shop by Price</p>
@@ -289,7 +294,7 @@ const TotalBook = () => {
                     </div>
                 </div>
                 {/* all data */}
-                <div className='grid grid-cols-1 z-10  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
+                <div className='relative mx-5 lg:mx-0  grid grid-cols-1 z-20  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
                     {
                         allBookData.map(book => (
                             <div className=' border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>

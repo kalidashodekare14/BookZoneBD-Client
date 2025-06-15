@@ -9,6 +9,7 @@
     "routes": {
         "home": "Home",
         "book": "Book",
+        "categories": "Categories",
         "subject": "Subject",
         "writer": "Writer",
         "publisher": "Publisher"
