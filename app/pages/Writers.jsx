@@ -71,9 +71,9 @@ const Writers = () => {
             <div className='grid grid-cols-1 lg:grid-cols-4 gap-3'>
                 {
                     writersInfo.map(writer => (
-                        <div className='border-2 border-[#bbb] hover:border-[#003A5A] rounded-2xl cursor-pointer  flex flex-col justify-center items-center p-5 space-y-3'>
+                        <div className='border-2 border-[#bbb] hover:border-[#003A5A] hover:duration-300 rounded-2xl cursor-pointer  flex flex-col justify-center items-center p-5 space-y-3'>
                             <img className='w-32 h-32 rounded-full' src={writer.image} alt="" />
-                            <p>{writer.name}</p>
+                            <p className='text-xl'>{writer.name}</p>
                             <button className='btn w-52 bg-[#003A5A] text-white'>View Details</button>
                         </div>
                     ))

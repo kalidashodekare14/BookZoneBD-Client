@@ -72,7 +72,7 @@ const Publisher = () => {
                     publisherData.map(publisher => (
                         <div className="border-2 border-[#bbb] hover:border-[#003A5A] hover:duration-300 flex flex-col justify-center items-center gap-5 p-5">
                             <img className="w-40 h-40 border rounded-full" src={publisher.logo} alt="" />
-                            <p className="text-xl hover:text-white">{publisher.name}</p>
+                            <p className="text-xl">{publisher.name}</p>
                             <button className="btn w-52 bg-[#003A5A] text-white">View Details</button>
                         </div>
                     ))
