@@ -52,7 +52,7 @@ const Navbar = () => {
         {
             id: 5,
             name: t("routes.writer"),
-            route: "/writer"
+            route: "/writers"
         },
         {
             id: 6,

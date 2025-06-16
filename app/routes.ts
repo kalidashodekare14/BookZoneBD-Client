@@ -4,6 +4,8 @@ export default [
     index("./pages/Home.jsx"),
     route("book", "./pages/AllBook.jsx"),
     route("categories", "./pages/Categories.jsx"),
-    route("subjects", "./pages/Subjects.jsx")
+    route("subjects", "./pages/Subjects.jsx"),
+    route("writers", "./pages/Writers.jsx"),
+    route("publisher", "./pages/Publisher.jsx")
 
 ] satisfies RouteConfig;

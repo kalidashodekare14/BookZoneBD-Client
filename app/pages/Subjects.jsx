@@ -52,7 +52,7 @@ const SubjectsPage = () => {
                         <div className='relative w-full h-52 cursor-pointer rounded-2xl group'>
                             <img className='w-full h-52 relative z-10 rounded-2xl' src={category.image} alt="" />
                             <div className='absolute top-0 bg-[#000000a8] group-hover:bg-[#00000052] group-hover:duration-300 w-full h-full z-20 rounded-2xl'></div>
-                            <h1 className='absolute z-30 top-[40%] left-[40%] text-white text-2xl'>{category.subject}</h1>
+                            <h1 className='absolute z-30 top-[40%] left-[40%] text-white text-2xl group-hover:bg-black group-hover:duration-300 p-2 rounded-xl'>{category.subject}</h1>
                         </div>
                     ))
                 }
