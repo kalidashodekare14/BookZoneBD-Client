@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import './ViewDetailsPage.css'
+import { Rating } from '@smastrom/react-rating';
+import '@smastrom/react-rating/style.css';
 
 const ViewDetailsPage = () => {
 
@@ -11,7 +13,10 @@ const ViewDetailsPage = () => {
         {
             "image": "https://i.ibb.co/gMg3m1Zw/potherpachali.png",
             "title": "পথের পাঁচালী",
-            "author": "বিভূতিভূষণ বন্দ্যোপাধ্যায়",
+            "author": {
+                "name": "বিভূতিভূষণ বন্দ্যোপাধ্যায়",
+                "image": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSuFnh8mh6WfiAXU0jGmRiP6EXFQK5PefgnEiQIFNLtsMKGfXby9-mC7zefO-w8aTjLLzQdprFK7byzNd-SWuNbA"
+            },
             "rating": 4.8,
             "price": 2000,
             "discount": 25
@@ -177,10 +182,42 @@ const ViewDetailsPage = () => {
                 <div className='cursor-pointer book-shadaw w-72 h-96 overflow-hidden bg-[#bbbbbb6b] border-black '>
                     <img className='w-full h-96 hover:w-68 hover:duration-300 ' src={allBookData[3].image} alt="" />
                 </div>
-                <div>
-                    <h1 className='text-xl'>{allBookData[3].title}</h1>
-                    <p>Writer: {allBookData[3].author}</p>
-                    <p>Category: উপন্যাস</p>
+                <div className='space-y-3 w-[40%]'>
+                    <h1 className='text-xl'>পথের পাঁচালী</h1>
+                    <div className='flex items-center gap-2'>
+                        <img className='w-16 h-16 rounded-full border p-2' src={"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSuFnh8mh6WfiAXU0jGmRiP6EXFQK5PefgnEiQIFNLtsMKGfXby9-mC7zefO-w8aTjLLzQdprFK7byzNd-SWuNbA"} alt="" />
+                        <p>বিভূতিভূষণ বন্দ্যোপাধ্যায়</p>
+                    </div>
+                    <Rating
+                        style={{ maxWidth: 100 }}
+                        value={3}
+                        readOnly
+                    />
+                    <p>বাংলার গ্রামে দুই ভাইবোন অপু আর দুর্গার বেড়ে ওঠা নিয়েই বিখ্যাত এই উপন্যাস। এই উপন্যাসের ছোটোদের জন্য সংস্করণটির নাম আম আঁটির ভেঁপু। পরবর্তীকালে বিখ্যাত বাঙালি চলচ্চিত্র পরিচালক সত্যজিৎ রায় এই উপন্যাসটি অবলম্বনে পথের পাঁচালী (চলচ্চিত্র) নির্মাণ করেন যা পৃথিবী-বিখ্যাত হয়।</p>
+                    <div className="">
+                        <table className=" text-left w-60">
+                            <tr>
+                                <td className='font-semibold'>Publisher</td>
+                                <td>অনুপম প্রকাশনী</td>
+                            </tr>
+                            <tr>
+                                <td className='font-semibold'>Language</td>
+                                <td>বাংলা</td>
+                            </tr>
+                            <tr>
+                                <td className='font-semibold'>Page</td>
+                                <td>5487</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p className='space-x-3 text-xl'>
+                        <del>৳{allBookData[0].price}</del>
+                        <span>৳{allBookData[0].price * allBookData[0].discount / 100}</span>
+                    </p>
+                    <div className='space-x-3'>
+                        <button className='btn w-52 bg-[#003A5A] text-white'>Add to Cart</button>
+                        <button className='btn w-52  bg-opacity-0 border bg-opacity-0 border-[#003A5A]'>Preview</button>
+                    </div>
                 </div>
             </div>
         </div>
