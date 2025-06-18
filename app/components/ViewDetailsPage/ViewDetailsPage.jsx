@@ -3,11 +3,12 @@ import { useParams } from 'react-router';
 import './ViewDetailsPage.css'
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
+import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 
 const ViewDetailsPage = () => {
 
-    // const floatValues = [4.30, 3.50, 2.20, 1.20]
-    const floatValues = [120, 25, 15, 11]
+    const floatValues = [4.30, 3.50, 2.20, 1.20]
+    const reviewRange = [120, 25, 15, 11]
     const [ratingInput, setRatingInput] = useState(null)
 
     const allBookData = [
@@ -176,6 +177,90 @@ const ViewDetailsPage = () => {
         }
     ]
 
+    const reviewData = [
+        {
+            id: 1,
+            name: "Dip Roy",
+            reviewText: "বইটা অনেক ভালো আমি পড়েছি",
+            rating: 0,
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEfVLHWUhPZlg06EslP51HN86z95tdlvBCfg&s",
+            date: "2025-06-10"
+        },
+        {
+            id: 2,
+            name: "Jui Akter",
+            reviewText: "এই বইটা আমাকে অনেক অনুপ্রাণিত করেছে।",
+            rating: 4,
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsGTA3_R57qEqb53kD5xDRi6kCfCQJntwGqA&s",
+            date: "2025-06-12"
+        },
+        {
+            id: 3,
+            name: "Rafi Hasan",
+            reviewText: "ভালো লাগেনি, লেখার স্টাইল একটু দুর্বল ছিল।",
+            rating: 2,
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnCoKANE7UwhA8ABKR3pFi-PKMgtqAUdHtuA&s",
+            date: "2025-06-13"
+        },
+        {
+            id: 4,
+            name: "Mim Chowdhury",
+            reviewText: "ছবিগুলো অসাধারণ ছিল, ছোটদের জন্য একদম পারফেক্ট।",
+            rating: 5,
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkFjmoZpOMsbGHmtinZvZOdiJhpAMmGOV-Bg&s",
+            date: "2025-06-15"
+        },
+        {
+            id: 5,
+            name: "Sabbir Rahman",
+            reviewText: "একদম সময়ের অপচয়, কনটেন্ট ভালো না।",
+            rating: 1,
+            image: "https://i.pinimg.com/originals/9e/e0/ae/9ee0ae4e22cfcaff074e0e5716961dd8.jpg",
+            date: "2025-06-16"
+        },
+        {
+            id: 6,
+            name: "Nusrat Jahan",
+            reviewText: "গল্পের প্লট ভালো ছিল, তবে আরও গভীরতা প্রয়োজন ছিল।",
+            rating: 3,
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa9QoegeBaHUIHLbm17sqLdbQaKe7vm_F4zQ&s",
+            date: "2025-06-14"
+        },
+        {
+            id: 7,
+            name: "Tanvir Ahmed",
+            reviewText: "এক কথায় অসাধারণ! লেখকের কাজকে সাধুবাদ জানাই।",
+            rating: 5,
+            image: "https://www.mgi.org/assets/images/team/d3.jpg",
+            date: "2025-06-17"
+        },
+        {
+            id: 8,
+            name: "Lamia Haque",
+            reviewText: "ভালোই ছিল, তবে শেষে কিছুটা দুর্বল মনে হয়েছে।",
+            rating: 3,
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUgw32e5TJHzaXcI4-6dwv66UWPCRPMisumQ&s",
+            date: "2025-06-11"
+        },
+        {
+            id: 9,
+            name: "Anik Das",
+            reviewText: "বইটি অনেক ইনফরমেটিভ ছিল, নতুন অনেক কিছু শিখলাম।",
+            rating: 4,
+            image: "https://avatars.githubusercontent.com/u/16396161?v=4",
+            date: "2025-06-09"
+        },
+        {
+            id: 10,
+            name: "Shimu Khatun",
+            reviewText: "ভাষা সহজবোধ্য ছিল, নতুন পাঠকদের জন্য ভালো।",
+            rating: 4,
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhVcG80PEkE7iYOPa6644rMQHF_OglGye2pQ&s",
+            date: "2025-06-08"
+        }
+    ];
+
+
 
     return (
         <div className='mx-20 my-5 font-mixed'>
@@ -272,12 +357,40 @@ const ViewDetailsPage = () => {
                                 <Rating readOnly value={value} key={value} />
                             ))}
                         </div>
-                        <div className='flex flex-col gap-1'>
-                            {floatValues.map((value) => (
-                                <input value={value} className='text-[black] w-52' type="range" />
-                            ))}
-                        </div>
                     </div>
+                </div>
+                <div className='space-y-3'>
+                    {
+                        reviewData.map(review => (
+                            <div className='space-y-3 border-b border-[#bbbbbb8c] pb-3 '>
+                                <div className='flex items-center gap-2'>
+                                    <img className='w-10 h-10 rounded-full' src={review.image} alt="" />
+                                    <div className='space-y-1'>
+                                        <p className='space-x-3'>
+                                            <span className='font-semibold'>{review.name}</span>
+                                            <span>{review.date}</span>
+                                        </p>
+                                        <Rating
+                                            style={{ maxWidth: 80 }}
+                                            value={3}
+                                            readOnly
+                                        />
+                                    </div>
+                                </div>
+                                <p>{review.reviewText}</p>
+                                <div className='flex  items-center gap-3'>
+                                    <button className='btn '>
+                                        <AiOutlineLike className='text-xl' />
+                                        <span>0</span>
+                                    </button>
+                                    <button className='btn'>
+                                        <AiOutlineDislike className='text-xl' />
+                                        <span>0</span>
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         </div>
