@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import './ViewDetailsPage.css'
 import { Rating } from '@smastrom/react-rating';
@@ -6,8 +6,9 @@ import '@smastrom/react-rating/style.css';
 
 const ViewDetailsPage = () => {
 
-    const params = useParams()
-    console.log(params)
+    // const floatValues = [4.30, 3.50, 2.20, 1.20]
+    const floatValues = [120, 25, 15, 11]
+    const [ratingInput, setRatingInput] = useState(null)
 
     const allBookData = [
         {
@@ -178,9 +179,9 @@ const ViewDetailsPage = () => {
 
     return (
         <div className='mx-20 my-5 font-mixed'>
-            <div className='flex gap-5'>
-                <div className='cursor-pointer book-shadaw w-72 h-96 overflow-hidden bg-[#bbbbbb6b] border-black '>
-                    <img className='w-full h-96 hover:w-68 hover:duration-300 ' src={allBookData[3].image} alt="" />
+            <div className='flex justify-between gap-5'>
+                <div className='cursor-pointer book-shadaw w-80 h-96 overflow-hidden bg-[#bbbbbb6b] border-black '>
+                    <img className='w-full h-96 hover:w-74 hover:duration-300 duration-300' src={allBookData[3].image} alt="" />
                 </div>
                 <div className='space-y-3 w-[40%]'>
                     <h1 className='text-xl'>পথের পাঁচালী</h1>
@@ -217,6 +218,65 @@ const ViewDetailsPage = () => {
                     <div className='space-x-3'>
                         <button className='btn w-52 bg-[#003A5A] text-white'>Add to Cart</button>
                         <button className='btn w-52  bg-opacity-0 border bg-opacity-0 border-[#003A5A]'>Preview</button>
+                    </div>
+                </div>
+                <div className=''>
+                    <h1 className='text-xl'>Related Products</h1>
+                    <div className='space-y-3 my-3'>
+                        {
+                            allBookData.slice(1, 5).map(rp => (
+                                <div className='flex gap-3 cursor-pointer'>
+                                    <img className='w-14 h-20' src={rp.image} alt="" />
+                                    <div>
+                                        <h1>{rp.title}</h1>
+                                        <p>{rp.author}</p>
+                                        <Rating
+                                            style={{ maxWidth: 80 }}
+                                            value={3}
+                                            readOnly
+                                        />
+                                        <p className='space-x-3'>
+                                            <del>৳{rp.price}</del>
+                                            <span>৳{rp.price * rp.discount / 100}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h1 className='text-2xl font-semibold'>Reviews and Ratings</h1>
+                <div className='flex justify-between items-center my-3'>
+                    <div className='space-y-3'>
+                        <Rating
+                            style={{ maxWidth: 150 }}
+                            value={ratingInput}
+                            onChange={setRatingInput}
+                            isRequired
+                        />
+                        <button className='btn bg-[#003A5A] text-white'>রিভিউ লিখুন</button>
+                    </div>
+                    <div>
+                        <h1 className='text-3xl'>4.50</h1>
+                        <Rating
+                            style={{ maxWidth: 90 }}
+                            value={3}
+                            readOnly
+                        />
+                    </div>
+                    <div className='flex'>
+                        <div style={{ maxWidth: 100, width: '100%' }}>
+                            {floatValues.map((value) => (
+                                <Rating readOnly value={value} key={value} />
+                            ))}
+                        </div>
+                        <div className='flex flex-col gap-1'>
+                            {floatValues.map((value) => (
+                                <input value={value} className='text-[black] w-52' type="range" />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
