@@ -88,13 +88,16 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="flex items-center justify-between lg:gap-8 gap-5">
-                    <div className="flex items-center gap-2 lg:border-r-2 border-[#bbb] lg:px-10 cursor-pointer">
-                        <FaRegUser className="lg:text-3xl text-[25px]" />
-                        <div className="hidden lg:flex flex-col">
-                            <h3>{t('account.accountName')}</h3>
-                            <p>{t('account.loginName')}</p>
+                    <Link to={"/login"}>
+                        <div className="flex items-center gap-2 lg:border-r-2 border-[#bbb] lg:px-10 cursor-pointer">
+                            <FaRegUser className="lg:text-3xl text-[25px]" />
+                            <div className="hidden lg:flex flex-col">
+                                <h3>{t('account.accountName')}</h3>
+                                <p>{t('account.loginName')}</p>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
+
                     <div className="relative cursor-pointer">
                         <GrFavorite className="lg:text-3xl text-[25px]" />
                         <div className="absolute -top-3 -right-4 rounded-full lg:w-7 lg:h-7 w-5 h-5 bg-[#3BB77E] flex justify-center items-center text-white">

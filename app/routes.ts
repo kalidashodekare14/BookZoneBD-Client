@@ -7,6 +7,8 @@ export default [
     route("subjects", "./pages/Subjects.jsx"),
     route("writers", "./pages/Writers.jsx"),
     route("publisher", "./pages/Publisher.jsx"),
-    route("book/:book_id", "./pages/ViewDetails.jsx")
+    route("book/:book_id", "./pages/ViewDetails.jsx"),
+    route("login", "./pages/Login.jsx"),
+    route("signup", "./pages/SignUp.jsx"),
 
 ] satisfies RouteConfig;
