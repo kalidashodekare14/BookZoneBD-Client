@@ -74,6 +74,8 @@ const Navbar = () => {
         }
     ]
 
+    
+
     return (
         <div className=" px-5 font-mixed relative bg-[#003A5A] text-white">
             {/*  */}

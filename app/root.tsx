@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -26,6 +27,12 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+
+  const { pathname } = useLocation()
+  console.log('main location', pathname)
+
+  const dashboardLoaction = pathname.startsWith("/dashboard")
+
   return (
     <html lang="en">
       <head>
@@ -35,9 +42,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Navbar />
+        {!dashboardLoaction && <Navbar />}
         {children}
-        <Footer />
+        {!dashboardLoaction && <Footer />}
         <ScrollRestoration />
         <Scripts />
       </body>
