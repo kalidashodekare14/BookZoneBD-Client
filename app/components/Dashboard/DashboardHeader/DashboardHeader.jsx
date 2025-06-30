@@ -26,25 +26,25 @@ const DashboardHeader = ({ isToggle, handleToggle }) => {
                 }
             </div>
             <div className='flex items-center gap-5'>
-                <div className='relative w-14 h-12 cursor-pointer'>
-                    <div className='relative flex justify-center items-center w-12 h-12 rounded-full border'>
-                        <IoMdNotificationsOutline className='text-2xl text-[#307bc4]' />
+                <div className='relative cursor-pointer'>
+                    <div className='relative'>
+                        <IoMdNotificationsOutline className='text-3xl text-[#307bc4]' />
                     </div>
-                    <div className='w-6 h-6 flex justify-center items-center absolute top-0 right-0 bg-[#307bc4] rounded-full'>
+                    <div className='w-6 h-6 flex justify-center items-center absolute -top-2 -right-2 bg-[#307bc4] rounded-full'>
                         <span className='text-white'>10</span>
                     </div>
                 </div>
-                <div className='relative w-14 h-12 cursor-pointer'>
-                    <div className='relative flex justify-center items-center w-12 h-12 rounded-full border'>
+                <div className='relative cursor-pointer'>
+                    <div className='relative'>
                         <LuMessageSquare className='text-2xl text-[#307bc4]' />
                     </div>
-                    <div className='w-6 h-6 flex justify-center items-center absolute top-0 right-0 bg-[#307bc4] rounded-full'>
+                    <div className='w-6 h-6 flex justify-center items-center absolute -top-3 -right-2 bg-[#307bc4] rounded-full'>
                         <span className='text-white'>15</span>
                     </div>
                 </div>
                 <div className='flex items-center '>
-                    <div onClick={handleDropdownToggle} className='z-10  flex justify-end items-center  gap-3 pr-3 h-12 font-rubik bg-none lg:bg-gradient-to-r from-[#307ac43a] to-[#307ac42c]  rounded-full'>
-                        <div className='relative z-20 cursor-pointer w-[50px] h-[50px] rounded-full bg-white'>
+                    <div onClick={handleDropdownToggle} className='z-10  flex justify-end items-center  gap-3 pr-3 h-[40px] font-rubik bg-none lg:bg-gradient-to-r from-[#307ac43a] to-[#307ac42c]  rounded-full'>
+                        <div className='relative z-20 cursor-pointer w-[40px] h-[40px] rounded-full bg-white'>
                             <img
                                 className='w-full h-full rounded-full'
                                 src={"https://i.ibb.co/WcTWxsN/nav-img.png"}

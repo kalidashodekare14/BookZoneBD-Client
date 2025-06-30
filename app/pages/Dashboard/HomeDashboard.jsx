@@ -1,9 +1,14 @@
-import React from 'react';
+import AdminDashboard from "../../components/Dashboard/AdminRoutes/AdminDashboard";
+
 
 const HomeDashboard = () => {
+
+
+
     return (
         <div>
-            <h1>Dashboard</h1>
+            <AdminDashboard />
+            
         </div>
     );
 };

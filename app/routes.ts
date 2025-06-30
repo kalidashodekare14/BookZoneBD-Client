@@ -13,7 +13,11 @@ export default [
     // Dashboard 
     route("dashboard", "./pages/Dashboard/dashboard.jsx", [
         index("./pages/Dashboard/HomeDashboard.jsx"),
-        
+        route("/dashboard/all_book", "./pages/Dashboard/AdminPage/AllBook.jsx"),
+        route("/dashboard/manage_users", "./pages/Dashboard/AdminPage/AllUser.jsx"),
+        route("/dashboard/add_book", "./pages/Dashboard/AdminPage/AddBook.jsx"),
+        route("/dashboard/view_order", "./pages/Dashboard/AdminPage/ViewOrder.jsx"),
+        route("/dashboard/view-review", "./pages/Dashboard/AdminPage/ViewReview.jsx"),
     ])
 
 ] satisfies RouteConfig;

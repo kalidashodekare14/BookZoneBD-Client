@@ -8,7 +8,7 @@ import { Link, useLocation } from 'react-router'
 
 const DashboardNavigation = ({ isToggle }) => {
 
-    const {pathname} = useLocation()
+    const { pathname } = useLocation()
 
     const dashboardLinks = [
         {
@@ -32,7 +32,7 @@ const DashboardNavigation = ({ isToggle }) => {
         {
             id: "4",
             name: "Add Book",
-            path: "/dashboard/patients",
+            path: "/dashboard/add_book",
             icon: <BiSolidBookAdd />
         },
         {
@@ -44,7 +44,7 @@ const DashboardNavigation = ({ isToggle }) => {
         {
             id: "6",
             name: "View Reviews",
-            path: "/dashboard/view_reviews",
+            path: "/dashboard/view-review",
             icon: <GiStarsStack />
         },
     ]
@@ -52,7 +52,7 @@ const DashboardNavigation = ({ isToggle }) => {
     return (
         <div className='relative '>
             <div className={`${isToggle ? "translate-y-20 translate-x-0 duration-300" : "-translate-x-full translate-y-20 duration-300"} z-50 absolute lg:static lg:translate-y-0 lg:translate-x-0  left-0  bg-white w-52 border border-[#bbb] h-[650px]`}>
-                <div className='flex flex-col gap-5 text-[18px] pr-3 font-rubik'>
+                <div className='flex flex-col gap-1 text-[16px] font-rubik'>
                     <div className='hidden lg:flex py-5 px-3'>
                         <img
                             src={""}
@@ -61,7 +61,7 @@ const DashboardNavigation = ({ isToggle }) => {
                     </div>
                     {
                         dashboardLinks.map(navi => (
-                            <Link key={navi.id} to={navi.path} className={`${pathname == navi.path ? "bg-[#307bc4] text-white rounded-br-full rounded-tr-xl p-2 flex items-center gap-2" : "hover:bg-[#307bc4] hover:rounded-br-full hover:rounded-tr-xl hover:text-white p-2 flex items-center gap-2"}`} >
+                            <Link key={navi.id} to={navi.path} className={`${pathname == navi.path ? "bg-[#307bc4] text-white  p-2 flex items-center gap-2" : "hover:bg-[#307bc4] hover:text-white p-2 flex items-center gap-2"}`} >
                                 <p>{navi.icon}</p>
                                 <p>{navi.name}</p>
                             </Link>
