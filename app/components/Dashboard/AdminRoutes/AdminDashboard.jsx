@@ -7,7 +7,7 @@ import { FaUsers } from 'react-icons/fa';
 import './AdminDashboard.css'
 import { FcLineChart } from 'react-icons/fc';
 import { MdOutlineShowChart } from 'react-icons/md';
-import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+import { Area, AreaChart, CartesianGrid, Pie, PieChart, Tooltip, XAxis, YAxis } from 'recharts';
 
 
 const AdminDashboard = () => {
@@ -57,10 +57,63 @@ const AdminDashboard = () => {
         }
     ]
 
+    const data01 = [
+        {
+            "name": "Group A",
+            "value": 400
+        },
+        {
+            "name": "Group B",
+            "value": 300
+        },
+        {
+            "name": "Group C",
+            "value": 300
+        },
+        {
+            "name": "Group D",
+            "value": 200
+        },
+        {
+            "name": "Group E",
+            "value": 278
+        },
+        {
+            "name": "Group F",
+            "value": 189
+        }
+    ];
+    const data02 = [
+        {
+            "name": "Group A",
+            "value": 2400
+        },
+        {
+            "name": "Group B",
+            "value": 4567
+        },
+        {
+            "name": "Group C",
+            "value": 1398
+        },
+        {
+            "name": "Group D",
+            "value": 9800
+        },
+        {
+            "name": "Group E",
+            "value": 3908
+        },
+        {
+            "name": "Group F",
+            "value": 4800
+        }
+    ];
+
     return (
         <div className='font-mixed p-5 bg-[#E0E0E0] h-[585px]'>
             <div className='my-10 grid grid-cols-1 lg:grid-cols-4 gap-5'>
-                <div className='bg-white rounded-xl  p-3 border border-[#bbb] flex flex-col gap-2'>
+                <div className='bg-[#f8f8f8] rounded-xl  p-3 border border-[#bbb] flex flex-col gap-2'>
                     <h1 className='text-[18px]'>Total Earned</h1>
                     <div className='flex items-center gap-3'>
                         <p className='text-2xl font-semibold'>$50K</p>
@@ -70,7 +123,7 @@ const AdminDashboard = () => {
                         </p>
                     </div>
                 </div>
-                <div className='bg-white rounded-xl p-3 border border-[#bbb] flex flex-col gap-2'>
+                <div className='bg-[#f8f8f8] rounded-xl p-3 border border-[#bbb] flex flex-col gap-2'>
                     <h1 className='text-[18px]'>Total Users</h1>
                     <div className='flex items-center gap-3'>
                         <p className='text-2xl font-semibold'>2000</p>
@@ -80,7 +133,7 @@ const AdminDashboard = () => {
                         </p>
                     </div>
                 </div>
-                <div className='bg-white rounded-xl p-3 border border-[#bbb] flex flex-col gap-2'>
+                <div className='bg-[#f8f8f8] rounded-xl p-3 border border-[#bbb] flex flex-col gap-2'>
                     <h1 className='text-[18px]'>Total Products</h1>
                     <div className='flex items-center gap-3'>
                         <p className='text-2xl font-semibold'>5000</p>
@@ -90,7 +143,7 @@ const AdminDashboard = () => {
                         </p>
                     </div>
                 </div>
-                <div className='bg-white rounded-xl p-3 border border-[#bbb] flex flex-col gap-2'>
+                <div className='bg-[#f8f8f8] rounded-xl p-3 border border-[#bbb] flex flex-col gap-2'>
                     <h1 className='text-[18px]'>Total Orders</h1>
                     <div className='flex items-center gap-3'>
                         <p className='text-2xl font-semibold'>1500</p>
@@ -101,26 +154,28 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className='bg-[white] w-[70%] rounded-2xl'>
-                <AreaChart width={750} height={350} data={data}
-                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                    <defs>
-                        <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                            <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                        </linearGradient>
-                        <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                            <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-                        </linearGradient>
-                    </defs>
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <Tooltip />
-                    <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-                    <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
-                </AreaChart>
+            <div className='flex'>
+                <div className='bg-[#f8f8f8] w-[70%] rounded-2xl'>
+                    <AreaChart width={750} height={350} data={data}
+                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                        <defs>
+                            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                                <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                            </linearGradient>
+                            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                            </linearGradient>
+                        </defs>
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <Tooltip />
+                        <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+                        <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
+                    </AreaChart>
+                </div>
             </div>
         </div>
     );
