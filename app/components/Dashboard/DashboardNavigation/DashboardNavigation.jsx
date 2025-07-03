@@ -2,6 +2,7 @@ import { BiSolidBookAdd } from 'react-icons/bi'
 import { FaUsers } from 'react-icons/fa'
 import { FaCartFlatbedSuitcase } from 'react-icons/fa6'
 import { GiStarsStack } from 'react-icons/gi'
+import { IoIosHome } from 'react-icons/io'
 import { IoBookSharp } from 'react-icons/io5'
 import { MdDashboard } from 'react-icons/md'
 import { Link, useLocation } from 'react-router'
@@ -51,7 +52,7 @@ const DashboardNavigation = ({ isToggle }) => {
 
     return (
         <div className='relative '>
-            <div className={`${isToggle ? "translate-y-20 translate-x-0 duration-300" : "-translate-x-full translate-y-20 duration-300"} z-50 absolute lg:static lg:translate-y-0 lg:translate-x-0  left-0  bg-white w-52 border border-[#bbb] h-[650px]`}>
+            <div className={`${isToggle ? "translate-y-20 translate-x-0 duration-300" : "-translate-x-full translate-y-20 duration-300"} z-50 absolute lg:static lg:translate-y-0 lg:translate-x-0  left-0  bg-white w-52 border-[#bbb]`}>
                 <div className='flex flex-col gap-1 text-[16px] font-rubik'>
                     <div className='hidden lg:flex py-5 px-3'>
                         <img
@@ -69,7 +70,11 @@ const DashboardNavigation = ({ isToggle }) => {
                     }
                     <div className="divider">OR</div>
                     <Link to={'/'} className={`hover:bg-[#307bc4] hover:rounded-br-full hover:rounded-tr-xl hover:text-white p-2`}>
-                        <p>Home</p>
+                        <div className='flex items-center gap-2'>
+                            <p><IoIosHome /></p>
+                            <p>Home</p>
+
+                        </div>
                     </Link>
                 </div>
             </div>
