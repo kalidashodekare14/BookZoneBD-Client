@@ -177,7 +177,7 @@ const AllBook = () => {
             <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
                 <table className="table">
                     <thead>
-                        <tr>
+                        <tr className='text-[16px]'>
                             <th></th>
                             <th>Name</th>
                             <th>Author</th>
@@ -189,7 +189,7 @@ const AllBook = () => {
                     <tbody>
                         {
                             allBookData.slice(0, 6).map(books => (
-                                <tr>
+                                <tr className='text-[15px]'>
                                     <th>
                                         <img className='w-14 h-14 rounded-full' src={books.image} alt="" />
                                     </th>
