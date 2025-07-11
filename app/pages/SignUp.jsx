@@ -1,11 +1,35 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { FaFacebookF, FaGoogle, FaTwitter } from 'react-icons/fa';
 import { Link } from 'react-router';
+import useAuth from '../hooks/useAuth';
 
 const SignUp = () => {
+
+    const { registerSystem, setLoading, loading } = useAuth()
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm()
+
+    const onSubmit = async (data) => {
+        console.log(data)
+        registerSystem(data.email, data.password)
+            .then(res => (
+                console.log(res.user)
+            ))
+            .catch(error => {
+                console.log(error.message)
+                setLoading(false)
+            })
+    }
+
     return (
         <div className=' flex justify-center items-center font-mixed h-[600px] bg-[#F0F2F5]'>
-            <div className='bg-white p-8'>
+            <form onSubmit={handleSubmit(onSubmit)} className='bg-white p-8'>
                 <div className='text-center space-y-2 my-5'>
                     <h1 className='text-2xl font-semibold'>Signup to your account</h1>
                     <p className='text-[#5a5a5a] space-x-2'>
@@ -28,11 +52,13 @@ const SignUp = () => {
                 </div>
                 <div className="divider">OR</div>
                 <div>
-                    <input className='input focus:outline-0 w-full' placeholder='Email address' type="text" />
-                    <input className='input focus:outline-0 w-full' placeholder='Password' type="password" />
+                    <input {...register("email")} className='input focus:outline-0 w-full' placeholder='Email address' type="text" />
+                    <input {...register("password")} className='input focus:outline-0 w-full' placeholder='Password' type="password" />
                 </div>
-                <button className='btn w-full text-[16px] bg-[#003A5A] text-white my-5'>Login</button>
-            </div>
+                <button type='submit' className='btn w-full text-[16px] bg-[#003A5A] text-white my-5'>
+                    {loading ? <span class="loader"></span> : "SignUp"}
+                </button>
+            </form>
         </div>
     );
 };

@@ -11,6 +11,7 @@ import {
 import type { Route } from "./+types/root";
 import Navbar from './layout/Navbar.jsx';
 import Footer from './layout/Footer.jsx';
+import AuthProvider from './AuthProvider/AuthProvider'
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -31,7 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation()
   console.log('main location', pathname)
 
-  const dashboardLoaction = pathname.startsWith("/dashboard")
+  const dashboardLoaction = pathname.startsWith("/dashboard");
 
   return (
     <html lang="en">
@@ -42,9 +43,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {!dashboardLoaction && <Navbar />}
-        {children}
-        {!dashboardLoaction && <Footer />}
+        <AuthProvider>
+          {!dashboardLoaction && <Navbar />}
+          {children}
+          {!dashboardLoaction && <Footer />}
+        </AuthProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
