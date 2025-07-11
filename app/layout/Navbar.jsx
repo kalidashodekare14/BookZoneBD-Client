@@ -7,6 +7,7 @@ import { IoIosSearch, IoMdClose } from "react-icons/io";
 import { Link, useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import './Navbar.css'
+import useAuth from '../hooks/useAuth';
 
 const Navbar = () => {
 
@@ -15,6 +16,9 @@ const Navbar = () => {
     const [lanSelect, setLanSelect] = useState("")
     const [active, setActive] = useState(false)
     const { pathname } = useLocation()
+    const { user, logoutSystem } = useAuth();
+
+    console.log(user)
 
     const changeLanguage = (lng) => i18n.changeLanguage(lng);
 
@@ -74,7 +78,7 @@ const Navbar = () => {
         }
     ]
 
-    
+
 
     return (
         <div className=" px-5 font-mixed relative bg-[#003A5A] text-white">
@@ -90,15 +94,41 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="flex items-center justify-between lg:gap-8 gap-5">
-                    <Link to={"/login"}>
-                        <div className="flex items-center gap-2 lg:border-r-2 border-[#bbb] lg:px-10 cursor-pointer">
-                            <FaRegUser className="lg:text-3xl text-[25px]" />
-                            <div className="hidden lg:flex flex-col">
-                                <h3>{t('account.accountName')}</h3>
-                                <p>{t('account.loginName')}</p>
+                    {
+                        user ? (
+                            <div className="dropdown dropdown-end text-black">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img
+                                            alt="Tailwind CSS Navbar component"
+                                            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                    </div>
+                                </div>
+                                <ul
+                                    tabIndex={0}
+                                    className="menu menu-sm dropdown-content bg-base-100 z-1 mt-3 w-52 p-2 shadow ">
+                                    <li>
+                                        <Link to={'/profile'} className="justify-between text-[15px]">
+                                            Profile
+                                        </Link>
+                                    </li>
+                                    <li><a className='text-[15px]'>Settings</a></li>
+                                    <li onClick={() => logoutSystem()}><p className='text-[15px]'>Logout</p></li>
+                                </ul>
                             </div>
-                        </div>
-                    </Link>
+                        ) : (
+                            <Link to={"/login"}>
+                                <div className="flex items-center gap-2 lg:border-r-2 border-[#bbb] lg:px-10 cursor-pointer">
+                                    <FaRegUser className="lg:text-3xl text-[25px]" />
+                                    <div className="hidden lg:flex flex-col">
+                                        <h3>{t('account.accountName')}</h3>
+                                        <p>{t('account.loginName')}</p>
+                                    </div>
+                                </div>
+                            </Link>
+                        )
+                    }
+
 
                     <div className="relative cursor-pointer">
                         <GrFavorite className="lg:text-3xl text-[25px]" />
