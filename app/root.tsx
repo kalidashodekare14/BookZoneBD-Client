@@ -11,8 +11,10 @@ import {
 import type { Route } from "./+types/root";
 import Navbar from './layout/Navbar.jsx';
 import Footer from './layout/Footer.jsx';
-import AuthProvider from './AuthProvider/AuthProvider'
+import AuthProvider from './AuthProvider/AuthProvider';
+import store from './Redux/store.js';
 import "./app.css";
+import { Provider } from "react-redux";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -43,11 +45,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <AuthProvider>
-          {!dashboardLoaction && <Navbar />}
-          {children}
-          {!dashboardLoaction && <Footer />}
-        </AuthProvider>
+        <Provider store={store} >
+          <AuthProvider>
+            {!dashboardLoaction && <Navbar />}
+            {children}
+            {!dashboardLoaction && <Footer />}
+          </AuthProvider>
+        </Provider>
         <ScrollRestoration />
         <Scripts />
       </body>
