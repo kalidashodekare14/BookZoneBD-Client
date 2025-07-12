@@ -48,8 +48,8 @@ const UserProfile = () => {
 
 
     return (
-        <div className='min-h-screen font-mixed flex justify-center items-center bg-[#e0e0e0]'>
-            <div className='w-[60%] bg-white p-5'>
+        <div className='lg:h-[600px] font-mixed flex justify-center items-center bg-[#e0e0e0]'>
+            <div className='lg:w-[60%] w-full bg-white p-5'>
                 <div className='flex justify-between items-center '>
                     <div className="w-32 mb-5 rounded-full">
                         <img
@@ -107,7 +107,7 @@ const UserProfile = () => {
                                 <label htmlFor="">Name</label>
                                 <input {...register("name")} defaultValue={userData?.name} className='input focus:outline-0 w-full' type="text" />
                             </div>
-                            <div className='flex items-center gap-3'>
+                            <div className='flex lg:flex-row flex-col items-center gap-3'>
                                 <div className='flex flex-col w-full'>
                                     <label htmlFor="">Date Of Birth</label>
                                     <input {...register("date_of_birth")} defaultValue={userData?.date_of_birth} className='input focus:outline-0 w-full' type="date" />

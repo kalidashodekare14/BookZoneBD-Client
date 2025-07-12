@@ -43,8 +43,8 @@ const SignUp = () => {
 
 
     return (
-        <div className=' flex justify-center items-center font-mixed h-[600px] bg-[#F0F2F5]'>
-            <form onSubmit={handleSubmit(onSubmit)} className='bg-white p-8 w-[30%]'>
+        <div className=' flex justify-center items-center font-mixed lg:h-[600px] py-5 bg-[#F0F2F5]'>
+            <form onSubmit={handleSubmit(onSubmit)} className='bg-white p-8 lg:w-[30%] w-[95%]'>
                 <div className='text-center space-y-2 my-5'>
                     <h1 className='text-2xl font-semibold'>Signup to your account</h1>
                     <p className='text-[#5a5a5a] space-x-2'>
