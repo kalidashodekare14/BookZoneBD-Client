@@ -9,6 +9,14 @@ export const profileData = createAsyncThunk(
     }
 )
 
+export const profileDataUpdate = createAsyncThunk(
+    'profile/profileDataUpdate',
+    async ({ email, data }) => {
+        const res = await axiosSecure.patch(`/api/userInfo/user_information_update/${email}`, data)
+        return res.data.data
+    }
+)
+
 
 
 
@@ -22,12 +30,25 @@ const profileSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(profileData.pending, (state, action) => {
-                state.loading = false;
+                state.loading = true;
             })
             .addCase(profileData.fulfilled, (state, action) => {
+                state.loading = false;
                 state.userData = action.payload;
             })
             .addCase(profileData.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            // profile update
+            .addCase(profileDataUpdate.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(profileDataUpdate.fulfilled, (state, action) => {
+                state.loading = false;
+                state.userData = { ...state.userData, ...action.payload };
+            })
+            .addCase(profileDataUpdate.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })
