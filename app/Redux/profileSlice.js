@@ -40,7 +40,8 @@ const profileSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-            // profile update
+
+            // info update
             .addCase(profileDataUpdate.pending, (state, action) => {
                 state.loading = true;
             })

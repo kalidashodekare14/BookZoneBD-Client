@@ -9,22 +9,22 @@ import useAuth from '../hooks/useAuth';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
-
 const UserProfile = () => {
 
     const { user } = useAuth()
     const [open, setOpen] = useState(false);
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
+    const [isGender, setIsGender] = useState(null);
     const { userData, loading, error } = useSelector(state => state.profile);
     const dispatch = useDispatch();
 
-
+    console.log('checking gender', isGender)
 
 
     useEffect(() => {
         dispatch(profileData({ email: user?.email }))
-    }, [user?.email])
+    }, [user])
 
     const {
         register,
@@ -33,22 +33,33 @@ const UserProfile = () => {
         formState: { errors },
     } = useForm()
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data)
         const userInfo = {
             name: data.name,
             date_of_birth: data.date_of_birth,
-            gender: data.gender,
+            gender: isGender,
             address: data.address,
             contact_number: data.contact_number
 
         }
-        dispatch(profileDataUpdate({ email: user?.email, data: userInfo }))
+        dispatch(profileDataUpdate({ email: user?.email, data: userInfo }));
+        if (loading === false) {
+            onCloseModal()
+        }
     }
 
 
     return (
         <div className='lg:h-[600px] font-mixed flex justify-center items-center bg-[#e0e0e0]'>
+            {
+                loading && (
+                    <div className='h-40 flex justify-center items-center'>
+                        <span class="loader"></span>
+                    </div>
+                )
+            }
+
             <div className='lg:w-[60%] w-full bg-white p-5'>
                 <div className='flex justify-between items-center '>
                     <div className="w-32 mb-5 rounded-full">
@@ -114,7 +125,7 @@ const UserProfile = () => {
                                 </div>
                                 <div className='flex flex-col w-full'>
                                     <label htmlFor="">Gender</label>
-                                    <select {...register("gender")} defaultValue={userData?.gender} className='border border-[#bbb] py-[6px] rounded-[5px]' name="" id="">
+                                    <select onChange={(e) => setIsGender(e.target.value)} defaultValue={userData?.gender} className='border border-[#bbb] py-[6px] rounded-[5px]' name="" id="">
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                         <option value="Others">Others</option>
@@ -138,6 +149,7 @@ const UserProfile = () => {
                     </div>
                 </Modal>
             </div>
+
         </div>
     );
 };
