@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { FaFacebookF, FaGoogle, FaTwitter } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import axiosSecure from '../utils/axiosSecure';
 
 const SignUp = () => {
 
@@ -19,9 +20,16 @@ const SignUp = () => {
     const onSubmit = async (data) => {
         console.log(data)
         registerSystem(data.email, data.password)
-            .then(res => {
+            .then(async (res) => {
                 console.log(res.user)
-                navigation('/')
+                const userInfo = {
+                    email: data.email,
+                    password: data.password
+                }
+                const response = await axiosSecure.post('/api/user/register', userInfo);
+                if (res.data.success === true) {
+                    navigation('/')
+                }
             })
             .catch(error => {
                 console.log(error.message)

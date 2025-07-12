@@ -8,6 +8,7 @@ import { Link, useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import './Navbar.css'
 import useAuth from '../hooks/useAuth';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
 
@@ -17,6 +18,7 @@ const Navbar = () => {
     const [active, setActive] = useState(false)
     const { pathname } = useLocation()
     const { user, logoutSystem } = useAuth();
+    const { userData, loading, error } = useSelector((state) => state.profile);
 
     console.log(user)
 
@@ -100,8 +102,8 @@ const Navbar = () => {
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 rounded-full">
                                         <img
-                                            alt="Tailwind CSS Navbar component"
-                                            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                            alt={userData?.name || "image"}
+                                            src={userData?.image || "https://i.ibb.co/WcTWxsN/nav-img.png"} />
                                     </div>
                                 </div>
                                 <ul
@@ -128,8 +130,6 @@ const Navbar = () => {
                             </Link>
                         )
                     }
-
-
                     <div className="relative cursor-pointer">
                         <GrFavorite className="lg:text-3xl text-[25px]" />
                         <div className="absolute -top-3 -right-4 rounded-full lg:w-7 lg:h-7 w-5 h-5 bg-[#3BB77E] flex justify-center items-center text-white">
