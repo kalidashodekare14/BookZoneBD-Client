@@ -8,6 +8,8 @@ import { profileData, profileDataUpdate } from '../Redux/profileSlice';
 import useAuth from '../hooks/useAuth';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+const IMG_API_KEY = import.meta.env.VITE_IMG_API_KEY;
+const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 
 const UserProfile = () => {
 
@@ -18,8 +20,8 @@ const UserProfile = () => {
     const [isGender, setIsGender] = useState(null);
     const { userData, loading, error } = useSelector(state => state.profile);
     const dispatch = useDispatch();
-
-    console.log('checking gender', isGender)
+    const [imageHosting, setImageHosting] = useState(null);
+    const [imgHostingLoading, setImgHostingLoading] = useState(false);
 
 
     useEffect(() => {
@@ -40,7 +42,8 @@ const UserProfile = () => {
             date_of_birth: data.date_of_birth,
             gender: isGender,
             address: data.address,
-            contact_number: data.contact_number
+            contact_number: data.contact_number,
+            image: imageHosting
 
         }
         dispatch(profileDataUpdate({ email: user?.email, data: userInfo }));
@@ -49,6 +52,27 @@ const UserProfile = () => {
         }
     }
 
+    const handleImageHosting = async (event) => {
+        console.log('checking event', event)
+        const imageSelected = event.target.files[0];
+        setImgHostingLoading(true)
+        const formData = new FormData()
+        formData.append("image", imageSelected);
+        try {
+            const res = await fetch(`${IMG_HOSTING}`, {
+                method: "POST",
+                body: formData
+            })
+            const data = await res.json();
+            if (data.success) {
+                setImageHosting(data.data.url);
+            }
+        } catch (error) {
+            console.log(error.message);
+        } finally {
+            setImgHostingLoading(false)
+        }
+    }
 
     return (
         <div className='lg:h-[600px] font-mixed flex justify-center items-center bg-[#e0e0e0]'>
@@ -62,10 +86,11 @@ const UserProfile = () => {
 
             <div className='lg:w-[60%] w-full bg-white p-5'>
                 <div className='flex justify-between items-center '>
-                    <div className="w-32 mb-5 rounded-full">
+                    <div className="w-32 h-32 mb-5 rounded-full">
                         <img
-                            alt="Tailwind CSS Navbar component"
-                            src="https://i.ibb.co/WcTWxsN/nav-img.png" />
+                            className='w-full h-full rounded-full'
+                            alt={userData?.name || "image"}
+                            src={userData?.image || "https://i.ibb.co/WcTWxsN/nav-img.png"} />
                     </div>
                     <div onClick={onOpenModal}>
                         <FaEdit className='text-2xl cursor-pointer' />
@@ -104,12 +129,19 @@ const UserProfile = () => {
                 <Modal open={open} onClose={onCloseModal} center>
                     <div className='w-80'>
                         <div className='flex justify-center items-center'>
-                            <div className="relative w-20 mb-5 rounded-full">
+                            <div className="relative w-28 h-28 mb-5 rounded-full">
                                 <img
-                                    alt="Tailwind CSS Navbar component"
-                                    src="https://i.ibb.co/WcTWxsN/nav-img.png" />
-                                <div className='absolute bottom-0 right-0 bg-[#cfcfcf] p-2 rounded-full'>
-                                    <FaCamera className=' text-xl' />
+                                    className='w-full h-full rounded-full'
+                                    src={imageHosting ? imageHosting : "https://i.ibb.co/WcTWxsN/nav-img.png"}
+                                    alt={userData?.name || "image"}
+                                />
+
+                                <div onClick={() => document.querySelector('input[type="file"]').click()} className={`absolute cursor-pointer bottom-0 right-0 ${imgHostingLoading ? "bg-[#39b9ca]" : "bg-[#cfcfcf]"}  p-2 w-10 h-10 flex justify-center items-center rounded-full`}>
+                                    {
+                                        imgHostingLoading ? <span class="loader"></span> : <FaCamera className=' text-xl' />
+                                    }
+
+                                    <input onChange={handleImageHosting} hidden type="file" />
                                 </div>
                             </div>
                         </div>
