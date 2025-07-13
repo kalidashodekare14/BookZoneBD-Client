@@ -8,6 +8,7 @@ import { profileData, profileDataUpdate } from '../Redux/profileSlice';
 import useAuth from '../hooks/useAuth';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 const IMG_API_KEY = import.meta.env.VITE_IMG_API_KEY;
 const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 
@@ -22,6 +23,15 @@ const UserProfile = () => {
     const dispatch = useDispatch();
     const [imageHosting, setImageHosting] = useState(null);
     const [imgHostingLoading, setImgHostingLoading] = useState(false);
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (!user) {
+          navigate("/login");
+          return null;
+        }
+    }, [])
 
 
     useEffect(() => {

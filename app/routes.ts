@@ -1,4 +1,5 @@
-import { type RouteConfig, index, route } from "@react-router/dev/routes";
+import { type RouteConfig, index, layout, route, } from "@react-router/dev/routes";
+
 
 export default [
     index("./pages/Home.jsx"),
@@ -10,7 +11,10 @@ export default [
     route("book/:book_id", "./pages/ViewDetails.jsx"),
     route("login", "./pages/Login.jsx"),
     route("signup", "./pages/SignUp.jsx"),
-    route("profile", "./pages/UserProfile.jsx"),
+    layout("./ProtectedRoute/AuthProtected.jsx", [
+        route("profile", './pages/UserProfile.jsx')
+    ]),
+    // route("profile", "./pages/UserProfile.jsx"),
     // Dashboard 
     route("dashboard", "./pages/Dashboard/dashboard.jsx", [
         index("./pages/Dashboard/HomeDashboard.jsx"),
@@ -22,3 +26,6 @@ export default [
     ])
 
 ] satisfies RouteConfig;
+
+
+
