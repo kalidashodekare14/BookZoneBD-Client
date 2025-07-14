@@ -14,7 +14,8 @@ export default [
     layout("./ProtectedRoute/AuthProtected.jsx", [
         route("profile", './pages/UserProfile.jsx')
     ]),
-    // route("profile", "./pages/UserProfile.jsx"),
+
+    
     // Dashboard 
     route("dashboard", "./pages/Dashboard/dashboard.jsx", [
         index("./pages/Dashboard/HomeDashboard.jsx"),

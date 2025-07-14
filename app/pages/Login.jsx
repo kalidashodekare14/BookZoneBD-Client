@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaFacebookF, FaGoogle, FaTwitter } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import axiosSecure from '../utils/axiosSecure';
 
 const Login = () => {
 
     const { loginSystem, googleAuthSystem, setLoading, loading } = useAuth()
     const navigation = useNavigate()
+    const [idError, setIsError] = useState(false);
 
     const {
         register,
@@ -17,14 +19,33 @@ const Login = () => {
     } = useForm()
 
     const onSubmit = (data) => {
-        console.log(data)
         loginSystem(data.email, data.password)
-            .then(res => {
+            .then(async (res) => {
                 console.log(res.user)
-                navigation('/')
+                const userInfo = {
+                    email: data.email,
+                    password: data.password
+                }
+                try {
+                    setLoading(true)
+                    const response = await axiosSecure.post('/api/user/login', userInfo);
+                    console.log('checking login data', response.data)
+                    if (response.data.success === true) {
+                        localStorage.setItem('token', response.data.data.token);
+                        navigation('/')
+                    }
+
+                } catch (error) {
+                    setIsError(true)
+                    console.log(error.message)
+                } finally {
+                    setLoading(false);
+                }
+
             })
             .catch(error => {
-                console.log(error.message)
+                console.log('checking error', error)
+                setIsError(true)
                 setLoading(false)
             })
     }
@@ -71,6 +92,9 @@ const Login = () => {
                     <input {...register("password", { required: true })} className='input focus:outline-0 w-full' placeholder='Password' type="password" />
                     {errors.password && <span className='text-red-500'>Password must be required</span>}
                 </div>
+                {
+                    idError && <p className='text-red-500'>Your email or password doesn't match.</p>
+                }
                 <div className='flex justify-between items-center my-4'>
                     <div className='flex items-center gap-2'>
                         <input type="checkbox" defaultChecked className="checkbox" />

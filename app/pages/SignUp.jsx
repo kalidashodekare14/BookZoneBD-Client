@@ -21,14 +21,22 @@ const SignUp = () => {
         console.log(data)
         registerSystem(data.email, data.password)
             .then(async (res) => {
-                console.log(res.user)
-                const userInfo = {
-                    email: data.email,
-                    password: data.password
-                }
-                const response = await axiosSecure.post('/api/user/register', userInfo);
-                if (res.data.success === true) {
-                    navigation('/')
+                try {
+                    console.log(res.user)
+                    const userInfo = {
+                        email: data.email,
+                        password: data.password
+                    }
+                    setLoading(true)
+                    const response = await axiosSecure.post('/api/user/register', userInfo);
+                   
+                    if (response.data.success === true) {
+                        navigation('/')
+                    }
+                } catch (error) {
+                    console.log(error.message)
+                } finally {
+                    setLoading(false)
                 }
             })
             .catch(error => {

@@ -20,8 +20,6 @@ const Navbar = () => {
     const { user, logoutSystem } = useAuth();
     const { userData, loading, error } = useSelector((state) => state.profile);
 
-    console.log(user)
-
     const changeLanguage = (lng) => i18n.changeLanguage(lng);
 
     const handleNavToggle = () => {
@@ -81,6 +79,12 @@ const Navbar = () => {
     ]
 
 
+    const handleLogOut = () => {
+        logoutSystem()
+        localStorage.removeItem('token');
+    }
+
+
 
     return (
         <div className=" px-5 font-mixed relative bg-[#003A5A] text-white">
@@ -115,7 +119,7 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                     <li><a className='text-[15px]'>Settings</a></li>
-                                    <li onClick={() => logoutSystem()}><p className='text-[15px]'>Logout</p></li>
+                                    <li onClick={handleLogOut}><p className='text-[15px]'>Logout</p></li>
                                 </ul>
                             </div>
                         ) : (
