@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaFacebookF, FaGoogle, FaTwitter } from 'react-icons/fa';
+import { FaEye, FaFacebookF, FaGoogle, FaRegEyeSlash, FaTwitter } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import axiosSecure from '../utils/axiosSecure';
@@ -8,7 +8,9 @@ import axiosSecure from '../utils/axiosSecure';
 const SignUp = () => {
 
     const { registerSystem, googleAuthSystem, setLoading, loading } = useAuth()
-    const navigation = useNavigate()
+    const navigation = useNavigate();
+    const [passwordHideAndShow, setPasswordHideAndShow] = useState(false)
+    const [isError, setIsError] = useState(false);
 
     const {
         register,
@@ -29,7 +31,7 @@ const SignUp = () => {
                     }
                     setLoading(true)
                     const response = await axiosSecure.post('/api/user/register', userInfo);
-                   
+
                     if (response.data.success === true) {
                         navigation('/')
                     }
@@ -42,6 +44,7 @@ const SignUp = () => {
             .catch(error => {
                 console.log(error.message)
                 setLoading(false)
+                setIsError(true)
             })
     }
 
@@ -54,7 +57,12 @@ const SignUp = () => {
             .catch(error => {
                 console.log(error.message)
                 setLoading(false)
+                setIsError(true)
             })
+    }
+
+    const handlePasswordShowAndPassword = () => {
+        setPasswordHideAndShow(!passwordHideAndShow)
     }
 
 
@@ -85,9 +93,17 @@ const SignUp = () => {
                 <div>
                     <input {...register("email", { required: true })} className='input focus:outline-0 w-full' placeholder='Email address' type="text" />
                     {errors.email && <span className='text-red-500'>Email must be required</span>}
-                    <input {...register("password", { required: true })} className='input focus:outline-0 w-full' placeholder='Password' type="password" />
+                    <div className='flex items-center border border-[#bbb] rounded-[5px]'>
+                        <input {...register("password", { required: true })} className='input border-0 focus:outline-0 w-full' placeholder='Password' type={passwordHideAndShow ? "text" : "password"} />
+                        {
+                            passwordHideAndShow ? <FaRegEyeSlash onClick={handlePasswordShowAndPassword} className='text-xl cursor-pointer' /> : <FaEye onClick={handlePasswordShowAndPassword} className='text-xl cursor-pointer' />
+                        }
+                    </div>
                     {errors.password && <span className='text-red-500'>Password must be required</span>}
                 </div>
+                {
+                    isError && <p className='text-red-500'>Your email already exits</p>
+                }
                 <button type='submit' className='btn w-full text-[16px] bg-[#003A5A] text-white my-5'>
                     {loading ? <span class="loader"></span> : "SignUp"}
                 </button>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaFacebookF, FaGoogle, FaTwitter } from 'react-icons/fa';
+import { FaEye, FaFacebookF, FaGoogle, FaRegEyeSlash, FaTwitter } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import axiosSecure from '../utils/axiosSecure';
@@ -10,6 +10,7 @@ const Login = () => {
     const { loginSystem, googleAuthSystem, setLoading, loading } = useAuth()
     const navigation = useNavigate()
     const [idError, setIsError] = useState(false);
+    const [passwordHideAndShow, setPasswordHideAndShow] = useState(false);
 
     const {
         register,
@@ -62,6 +63,11 @@ const Login = () => {
             })
     }
 
+    const handlePasswordShowAndPassword = () => {
+        setPasswordHideAndShow(!passwordHideAndShow)
+    }
+
+
     return (
         <div className='flex justify-center items-center font-mixed lg:h-[600px]  py-5 bg-[#F0F2F5]'>
             <form onSubmit={handleSubmit(onSubmit)} className='bg-white p-8 lg:w-[30%] w-[95%]'>
@@ -89,7 +95,12 @@ const Login = () => {
                 <div>
                     <input {...register("email", { required: true })} className='input focus:outline-0 w-full' placeholder='Email address' type="text" />
                     {errors.email && <span className='text-red-500'>Email must be required</span>}
-                    <input {...register("password", { required: true })} className='input focus:outline-0 w-full' placeholder='Password' type="password" />
+                    <div className='flex items-center border border-[#bbb] rounded-[5px]'>
+                        <input {...register("password", { required: true })} className='input border-0 focus:outline-0 w-full' placeholder='Password' type={passwordHideAndShow ? "text" : "password"} />
+                        {
+                            passwordHideAndShow ? <FaRegEyeSlash onClick={handlePasswordShowAndPassword} className='text-xl cursor-pointer' /> : <FaEye onClick={handlePasswordShowAndPassword} className='text-xl cursor-pointer' />
+                        }
+                    </div>
                     {errors.password && <span className='text-red-500'>Password must be required</span>}
                 </div>
                 {
