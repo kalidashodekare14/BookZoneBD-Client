@@ -4,10 +4,15 @@ import { Navigate, Outlet, useLocation } from 'react-router';
 import { OrbitProgress } from 'react-loading-indicators';
 
 const AuthProtected = () => {
-    const { user, loading } = useAuth();
+    const { user, loading, logoutSystem } = useAuth();
     const location = useLocation();
     const [wait, setWait] = useState(true);
+    // const [isToken, setIsToken] = useState(null);
 
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     setIsToken(token);
+    // }, [])
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -23,8 +28,6 @@ const AuthProtected = () => {
             <p className='text-xl'>Please wait...</p>
         </div>
     }
-
-
 
     return user ? <Outlet /> : <Navigate to={'/login'} replace state={{ from: location }} />
 

@@ -6,6 +6,213 @@ import './TotalBook.css'
 import { FaBarsStaggered } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
 import InputRange from 'react-input-range';
+import { useCart } from 'react-use-cart';
+
+
+const allBookData = [
+    {
+        "id": 1,
+        "image": "https://i.ibb.co/gMg3m1Zw/potherpachali.png",
+        "title": "পথের পাঁচালী",
+        "author": "বিভূতিভূষণ বন্দ্যোপাধ্যায়",
+        "rating": 5,
+        "price": 2000,
+        "discount": 25,
+        "publisher": "আনন্দ পাবলিশার্স"
+    },
+    {
+        "id": 2,
+        "image": "https://i.ibb.co/BH9jWVcF/image.png",
+        "title": "দেবদাস",
+        "author": "শরৎচন্দ্র চট্টোপাধ্যায়",
+        "rating": 5,
+        "price": 1500,
+        "discount": 30,
+        "publisher": "মৌসুমি প্রকাশনী"
+    },
+    {
+        "id": 3,
+        "image": "https://i.ibb.co/VYHprhzN/image.png",
+        "title": "ফেলুদা সমগ্র",
+        "author": "সত্যজিৎ রায়",
+        "rating": 5,
+        "price": 1800,
+        "discount": 20,
+        "publisher": "পেঙ্গুইন বুকস"
+    },
+    {
+        "id": 4,
+        "image": "https://i.ibb.co/WNP3HVTS/image.png",
+        "title": "হুমায়ূন আহমেদের সেরা উপন্যাস",
+        "author": "হুমায়ূন আহমেদ",
+        "rating": 5,
+        "price": 2500,
+        "discount": 35,
+        "publisher": "অন্যপ্রকাশ"
+    },
+    {
+        "id": 5,
+        "image": "https://i.ibb.co/PsPVwLFk/image.png",
+        "title": "প্রাচীন বাংলা সাহিত্য",
+        "author": "ড. মুহম্মদ এনামুল হক",
+        "rating": 4,
+        "price": 2000,
+        "discount": 40,
+        "publisher": "বাংলা একাডেমি"
+    },
+    {
+        "id": 6,
+        "image": "https://i.ibb.co/VYHprhzN/image.png",
+        "title": "ফেলুদা সমগ্র",
+        "author": "সত্যজিৎ রায়",
+        "rating": 5,
+        "price": 1900,
+        "discount": 20,
+        "publisher": "পেঙ্গুইন বুকস"
+    },
+    {
+        "id": 7,
+        "image": "https://i.ibb.co/0jQHJ58k/image.png",
+        "title": "রবীন্দ্র রচনাবলী",
+        "author": "রবীন্দ্রনাথ ঠাকুর",
+        "rating": 5,
+        "price": 1900,
+        "discount": 20,
+        "publisher": "বিশ্বভারতী"
+    },
+    {
+        "id": 8,
+        "image": "https://i.ibb.co/Z6frB18p/image.png",
+        "title": "অচিন পাখি",
+        "author": "হুমায়ূন আহমেদ",
+        "rating": 5,
+        "price": 1500,
+        "discount": 15,
+        "publisher": "অন্যপ্রকাশ"
+    },
+    {
+        "id": 9,
+        "image": "https://i.ibb.co/PZfFjpKq/image.png",
+        "title": "তিতাস একটি নদীর নাম",
+        "author": "অদ্বৈত মল্লবর্মণ",
+        "rating": 5,
+        "price": 2500,
+        "discount": 10,
+        "publisher": "রোদের বই"
+    },
+    {
+        "id": 10,
+        "image": "https://i.ibb.co/FQzx9zY/image.png",
+        "title": "প্যারাডক্সিকাল সাজিদ",
+        "author": "আরিফ আজাদ",
+        "rating": 5,
+        "price": 2800,
+        "discount": 25,
+        "publisher": "প্যারাডক্স পাবলিকেশন"
+    },
+    {
+        "id": 11,
+        "image": "https://i.ibb.co/Mxw5GTsZ/image.png",
+        "title": "দুই দুয়ারি",
+        "author": "সেলিনা হোসেন",
+        "rating": 4,
+        "price": 2500,
+        "discount": 18,
+        "publisher": "সাহিত্য প্রকাশ"
+    },
+    {
+        "id": 12,
+        "image": "https://i.ibb.co/Mxw5GTsZ/image.png",
+        "title": "আমার বন্ধু রাশেদ",
+        "author": "জাফর ইকবাল",
+        "rating": 5,
+        "price": 3000,
+        "discount": 30,
+        "publisher": "শিশু প্রকাশ"
+    },
+    {
+        "id": 15,
+        "image": "https://i.ibb.co/4w2HZnhX/image.png",
+        "title": "শেষের কবিতা",
+        "author": "রবীন্দ্রনাথ ঠাকুর",
+        "rating": 5,
+        "price": 2000,
+        "discount": 20,
+        "publisher": "বিশ্বভারতী"
+    },
+    {
+        "id": 16,
+        "image": "https://i.ibb.co/sdvsTKyy/image.png",
+        "title": "বাংলা ১ম পত্র - ক্লাস ৫",
+        "author": "জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক",
+        "rating": 4,
+        "price": 180,
+        "discount": 10,
+        "publisher": "এনসিটিবি"
+    },
+    {
+        "id": 17,
+        "image": "https://i.ibb.co/xqRYkCkn/image.png",
+        "title": "গণিত - ক্লাস ৮",
+        "author": "এনসিটিবি",
+        "rating": 5,
+        "price": 200,
+        "discount": 15,
+        "publisher": "এনসিটিবি"
+    },
+    {
+        "id": 18,
+        "image": "https://i.ibb.co/B5FnVZkm/1735721362.webp",
+        "title": "বিশ্ববিদ্যালয় ভর্তি গাইড",
+        "author": "শিক্ষা একাডেমি",
+        "rating": 5,
+        "price": 450,
+        "discount": 20,
+        "publisher": "শিক্ষা একাডেমি"
+    },
+    {
+        "id": 20,
+        "image": "https://i.ibb.co/wNywPdCC/image.png",
+        "title": "সাধারণ জ্ঞান (BCS গাইড)",
+        "author": "সুমন সাহা",
+        "rating": 5,
+        "price": 380,
+        "discount": 18,
+        "publisher": "BCS একাডেমি"
+    },
+    {
+        "id": 20,
+        "image": "https://i.ibb.co/xq1vggjR/61i-w-S0-LX0-L-SY342.jpg",
+        "title": "Programming in C",
+        "author": "ড. জাহাঙ্গীর হোসেন",
+        "rating": 5,
+        "price": 550,
+        "discount": 15,
+        "publisher": "কম্পিউটার বুক হাউস"
+    },
+    {
+        "id": 21,
+        "image": "https://i.ibb.co/B2wHCMFp/viber-image-2022-12-26-14-04-10-447.jpg",
+        "title": "Applied Statistics",
+        "author": "সাদিক হাসান",
+        "rating": 5,
+        "price": 580,
+        "discount": 12,
+        "publisher": "স্ট্যাট প্রকাশনী"
+    },
+    {
+        "id": 22,
+        "image": "https://i.ibb.co/8DKjCCTq/image.png",
+        "title": "বিজ্ঞান - ক্লাস ৯",
+        "author": "এনসিটিবি",
+        "rating": 4,
+        "price": 220,
+        "discount": 12,
+        "publisher": "এনসিটিবি"
+    }
+];
+
+
 
 
 const TotalBook = () => {
@@ -14,177 +221,48 @@ const TotalBook = () => {
     const [ratingFilter, setRatingFilter] = useState(null);
     const [priceFilter, setPriceFilter] = useState({ min: 0, max: 10000 });
     const [discountFilter, setdiscountFilter] = useState({ min: 0, max: 100 });
+    const [selectedAuthors, setSelectedAuthors] = useState([]);
+    const [selectedPublisher, setSelectedPublisher] = useState([]);
+    const { addItem, items } = useCart();
 
 
-    console.log('checking price filter', priceFilter)
 
 
     const handleToggele = () => {
         setToggle(!toggle)
     }
 
-    const allBookData = [
-        {
-            "image": "https://i.ibb.co/gMg3m1Zw/potherpachali.png",
-            "title": "পথের পাঁচালী",
-            "author": "বিভূতিভূষণ বন্দ্যোপাধ্যায়",
-            "rating": 4.8,
-            "price": 2000,
-            "discount": 25
-        },
-        {
-            "image": "https://i.ibb.co/BH9jWVcF/image.png",
-            "title": "দেবদাস",
-            "author": "শরৎচন্দ্র চট্টোপাধ্যায়",
-            "rating": 4.5,
-            "price": 1500,
-            "discount": 30
-        },
-        {
-            "image": "https://i.ibb.co/VYHprhzN/image.png",
-            "title": "ফেলুদা সমগ্র",
-            "author": "সত্যজিৎ রায়",
-            "rating": 4.9,
-            "price": 1800,
-            "discount": 20
-        },
-        {
-            "image": "https://i.ibb.co/WNP3HVTS/image.png",
-            "title": "হুমায়ূন আহমেদের সেরা উপন্যাস",
-            "author": "হুমায়ূন আহমেদ",
-            "rating": 4.7,
-            "price": 2500,
-            "discount": 35
-        },
-        {
-            "image": "https://i.ibb.co/PsPVwLFk/image.png",
-            "title": "প্রাচীন বাংলা সাহিত্য",
-            "author": "ড. মুহম্মদ এনামুল হক",
-            "rating": 4.3,
-            "price": 2000,
-            "discount": 40
-        },
-        {
-            "image": "https://i.ibb.co/VYHprhzN/image.png",
-            "title": "ফেলুদা সমগ্র",
-            "author": "সত্যজিৎ রায়",
-            "rating": 4.9,
-            "price": 1900,
-            "discount": 20
-        },
-        {
-            "image": "https://i.ibb.co/0jQHJ58k/image.png",
-            "title": "রবীন্দ্র রচনাবলী",
-            "author": "রবীন্দ্রনাথ ঠাকুর",
-            "rating": 5.00,
-            "price": 1900,
-            "discount": 20
-        },
-        {
-            "image": "https://i.ibb.co/Z6frB18p/image.png",
-            "title": "অচিন পাখি",
-            "author": "হুমায়ূন আহমেদ",
-            "rating": 4.8,
-            "price": 1500,
-            "discount": 15
-        },
-        {
-            "image": "https://i.ibb.co/PZfFjpKq/image.png",
-            "title": "তিতাস একটি নদীর নাম",
-            "author": "অদ্বৈত মল্লবর্মণ",
-            "rating": 4.6,
-            "price": 2500,
-            "discount": 10
-        },
-        {
-            "image": "https://i.ibb.co/FQzx9zY/image.png",
-            "title": "প্যারাডক্সিকাল সাজিদ",
-            "author": "আরিফ আজাদ",
-            "rating": 4.7,
-            "price": 2800,
-            "discount": 25
-        },
-        {
-            "image": "https://i.ibb.co/Mxw5GTsZ/image.png",
-            "title": "দুই দুয়ারি",
-            "author": "সেলিনা হোসেন",
-            "rating": 4.3,
-            "price": 2500,
-            "discount": 18
-        },
-        {
-            "image": "https://i.ibb.co/Mxw5GTsZ/image.png",
-            "title": "আমার বন্ধু রাশেদ",
-            "author": "জাফর ইকবাল",
-            "rating": 4.9,
-            "price": 3000,
-            "discount": 30
-        },
-        {
-            "image": "https://i.ibb.co/4w2HZnhX/image.png",
-            "title": "শেষের কবিতা",
-            "author": "রবীন্দ্রনাথ ঠাকুর",
-            "rating": 4.8,
-            "price": 2000,
-            "discount": 20
-        },
-        {
-            "image": "https://i.ibb.co/sdvsTKyy/image.png",
-            "title": "বাংলা ১ম পত্র - ক্লাস ৫",
-            "author": "জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক",
-            "rating": 4.5,
-            "price": 180,
-            "discount": 10
-        },
-        {
-            "image": "https://i.ibb.co/xqRYkCkn/image.png",
-            "title": "গণিত - ক্লাস ৮",
-            "author": "এনসিটিবি",
-            "rating": 4.6,
-            "price": 200,
-            "discount": 15
-        },
-        {
-            "image": "https://i.ibb.co/B5FnVZkm/1735721362.webp",
-            "title": "বিশ্ববিদ্যালয় ভর্তি গাইড",
-            "author": "শিক্ষা একাডেমি",
-            "rating": 4.7,
-            "price": 450,
-            "discount": 20
-        },
-        {
-            "image": "https://i.ibb.co/wNywPdCC/image.png",
-            "title": "সাধারণ জ্ঞান (BCS গাইড)",
-            "author": "সুমন সাহা",
-            "rating": 4.6,
-            "price": 380,
-            "discount": 18
-        },
-        {
-            "image": "https://i.ibb.co/xq1vggjR/61i-w-S0-LX0-L-SY342.jpg",
-            "title": "Programming in C",
-            "author": "ড. জাহাঙ্গীর হোসেন",
-            "rating": 4.6,
-            "price": 550,
-            "discount": 15
-        },
-        {
-            "image": "https://i.ibb.co/B2wHCMFp/viber-image-2022-12-26-14-04-10-447.jpg",
-            "title": "Applied Statistics",
-            "author": "সাদিক হাসান",
-            "rating": 4.7,
-            "price": 580,
-            "discount": 12
-        },
-        {
-            "image": "https://i.ibb.co/8DKjCCTq/image.png",
-            "title": "বিজ্ঞান - ক্লাস ৯",
-            "author": "এনসিটিবি",
-            "rating": 4.4,
-            "price": 220,
-            "discount": 12
+    const handleAuthorCheckBox = (author) => {
+        if (selectedAuthors.includes(author)) {
+            setSelectedAuthors(selectedAuthors.filter(item => item !== author));
+        } else {
+            setSelectedAuthors([...selectedAuthors, author]);
         }
-    ]
+    }
+
+    const handlePublisherCheckBox = (publisher) => {
+        if (selectedPublisher.includes(publisher)) {
+            setSelectedPublisher(selectedPublisher.filter(item => item !== publisher));
+        } else {
+            setSelectedPublisher([...selectedPublisher, publisher]);
+        }
+    }
+
+    const categoryFiltering = allBookData.filter((product) => {
+        const discountPrice = product.price * product.discount / 100
+        const matchedPriceRange = discountPrice >= priceFilter.min && discountPrice <= priceFilter.max
+        const matchedDiscountRange = product.discount >= discountFilter.min && product.discount <= discountFilter.max
+        // rating filtering
+        const matchedRating = ratingFilter ? product.rating >= ratingFilter : true;
+        // author filtering
+        const mathcedAuthor = selectedAuthors.length === 0 || selectedAuthors.includes(product.author);
+        // publisher filtering
+        const mathcedPublisher = selectedPublisher.length === 0 || selectedPublisher.includes(product.publisher);
+        return (
+            matchedPriceRange && matchedDiscountRange && mathcedAuthor && matchedRating && mathcedPublisher
+        )
+
+    })
 
 
     return (
@@ -253,10 +331,14 @@ const TotalBook = () => {
                                 <div className="collapse-title font-semibold">Author</div>
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
-                                        allBookData.map(author => (
+                                        [...new Set(allBookData.map(book => book.author))].map((author, index) => (
                                             <div className='flex items-center gap-2 text-[16px]'>
-                                                <input className='' type="checkbox" />
-                                                <p>{author.author}</p>
+                                                <input
+                                                    className=''
+                                                    checked={selectedAuthors.includes(author)}
+                                                    onChange={() => handleAuthorCheckBox(author)}
+                                                    type="checkbox" />
+                                                <p>{author}</p>
                                             </div>
                                         ))
                                     }
@@ -267,10 +349,14 @@ const TotalBook = () => {
                                 <div className="collapse-title font-semibold">Publisher</div>
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
-                                        allBookData.map(author => (
+                                        [...new Set(allBookData.map(book => book.publisher))].map((publisher, index) => (
                                             <div className='flex items-center gap-2 text-[16px]'>
-                                                <input className='' type="checkbox" />
-                                                <p>{author.author}</p>
+                                                <input
+                                                    className=''
+                                                    checked={selectedPublisher.includes(publisher)}
+                                                    onChange={() => handlePublisherCheckBox(publisher)}
+                                                    type="checkbox" />
+                                                <p>{publisher}</p>
                                             </div>
                                         ))
                                     }
@@ -296,7 +382,7 @@ const TotalBook = () => {
                 {/* all data */}
                 <div className='relative mx-5 lg:mx-0  grid grid-cols-1 z-20  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
                     {
-                        allBookData.map(book => (
+                        categoryFiltering.map(book => (
                             <div className=' border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
                                 <img className='w-full h-60 px-5' src={book.image} alt="" />
                                 <div className='mt-3 space-y-2'>
@@ -311,7 +397,7 @@ const TotalBook = () => {
                                         <p>৳{book.price * book.discount / 100}</p>
                                         <p><del>৳{book.price}</del></p>
                                     </div>
-                                    <button className='btn w-full bg-[#003A5A] text-white'>Add to cart</button>
+                                    <button onClick={() => addItem({ ...book, id: book.id })} className='btn w-full bg-[#003A5A] text-white'>Add to cart</button>
                                 </div>
 
                             </div>
@@ -319,7 +405,7 @@ const TotalBook = () => {
                     }
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

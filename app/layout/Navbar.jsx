@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import './Navbar.css'
 import useAuth from '../hooks/useAuth';
 import { useSelector } from 'react-redux';
+import { useCart } from 'react-use-cart';
 
 const Navbar = () => {
 
@@ -19,6 +20,7 @@ const Navbar = () => {
     const { pathname } = useLocation()
     const { user, logoutSystem } = useAuth();
     const { userData, loading, error } = useSelector((state) => state.profile);
+    const { totalItems } = useCart()
 
     const changeLanguage = (lng) => i18n.changeLanguage(lng);
 
@@ -84,8 +86,6 @@ const Navbar = () => {
         localStorage.removeItem('token');
     }
 
-
-
     return (
         <div className=" px-5 font-mixed relative bg-[#003A5A] text-white">
             {/*  */}
@@ -144,7 +144,7 @@ const Navbar = () => {
                         <div className="relative">
                             <FiShoppingCart className="lg:text-3xl text-[25px]" />
                             <div className="absolute -top-3 -right-4 rounded-full lg:w-7 lg:h-7 w-5 h-5 bg-[#3BB77E] flex justify-center items-center text-white">
-                                0
+                                {totalItems}
                             </div>
                         </div>
                         <div className="lg:flex justify-between flex-col hidden ">
