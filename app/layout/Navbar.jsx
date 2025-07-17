@@ -153,18 +153,20 @@ const Navbar = () => {
                             0
                         </div>
                     </div>
-                    <div className="flex justify-between items-center lg:gap-5 gap-2 cursor-pointer">
-                        <div className="relative">
-                            <FiShoppingCart className="lg:text-3xl text-[25px]" />
-                            <div className="absolute -top-3 -right-4 rounded-full lg:w-7 lg:h-7 w-5 h-5 bg-[#3BB77E] flex justify-center items-center text-white">
-                                {totalItems}
+                    <Link to={"/checkout"}>
+                        <div className="flex justify-between items-center lg:gap-5 gap-2 cursor-pointer">
+                            <div className="relative">
+                                <FiShoppingCart className="lg:text-3xl text-[25px]" />
+                                <div className="absolute -top-3 -right-4 rounded-full lg:w-7 lg:h-7 w-5 h-5 bg-[#3BB77E] flex justify-center items-center text-white">
+                                    {totalItems}
+                                </div>
+                            </div>
+                            <div className="lg:flex justify-between flex-col hidden ">
+                                <h3>{t('cart.myCart')}</h3>
+                                <p>$0.00</p>
                             </div>
                         </div>
-                        <div className="lg:flex justify-between flex-col hidden ">
-                            <h3>{t('cart.myCart')}</h3>
-                            <p>$0.00</p>
-                        </div>
-                    </div>
+                    </Link>
                 </div>
             </div>
             <div className=" hidden lg:flex items-center justify-between">
