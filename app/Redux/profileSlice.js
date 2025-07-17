@@ -5,6 +5,7 @@ export const profileData = createAsyncThunk(
     'profile/fetchedProfileData',
     async ({ email }) => {
         const res = await axiosSecure.get(`/api/userInfo/profile/${email}`);
+        console.log('checking data', res);
         return res.data.data
     }
 )

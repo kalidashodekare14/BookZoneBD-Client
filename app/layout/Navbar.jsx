@@ -104,7 +104,7 @@ const Navbar = () => {
                         user ? (
                             <div className="dropdown dropdown-end text-black">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                    <div className="w-10 rounded-full">
+                                    <div className="w-10 rounded-full border-2 border-[#bbb]">
                                         <img
                                             alt={userData?.name || "image"}
                                             src={userData?.image || "https://i.ibb.co/WcTWxsN/nav-img.png"} />

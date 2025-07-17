@@ -25,11 +25,13 @@ const UserProfile = () => {
     const [imgHostingLoading, setImgHostingLoading] = useState(false);
     const navigate = useNavigate();
 
+    console.log('checking error', error);
+
 
     useEffect(() => {
         if (!user) {
-          navigate("/login");
-          return null;
+            navigate("/login");
+            return null;
         }
     }, [])
 
