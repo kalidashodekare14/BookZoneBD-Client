@@ -12,6 +12,7 @@ const Checkout = () => {
         removeItem,
     } = useCart();
 
+
     return (
         <div className='mx-10 my-10 font-mixed min-h-[600px]'>
             <h1 className='text-3xl'>Sopping Card</h1>
@@ -54,7 +55,15 @@ const Checkout = () => {
                                     </tr>
                                 ))
                             }
-
+                            {
+                                isEmpty && (
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>No data</td>
+                                    </tr>
+                                )
+                            }
 
                         </tbody>
                     </table>
