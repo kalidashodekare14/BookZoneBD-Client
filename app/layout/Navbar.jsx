@@ -4,7 +4,7 @@ import { FaBars, FaRegUser } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { GrFavorite } from "react-icons/gr";
 import { IoIosSearch, IoMdClose } from "react-icons/io";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import './Navbar.css'
 import useAuth from '../hooks/useAuth';
@@ -20,7 +20,10 @@ const Navbar = () => {
     const { pathname } = useLocation()
     const { user, logoutSystem } = useAuth();
     const { userData, loading, error } = useSelector((state) => state.profile);
+    const [searchInput, setSearchInput] = useState(null);
+    const navigate = useNavigate();
     const { totalItems } = useCart()
+
 
     const changeLanguage = (lng) => i18n.changeLanguage(lng);
 
@@ -43,7 +46,7 @@ const Navbar = () => {
         {
             id: 2,
             name: t("routes.book"),
-            route: "/book"
+            route: "/books"
         },
         {
             id: 3,
@@ -86,6 +89,14 @@ const Navbar = () => {
         localStorage.removeItem('token');
     }
 
+    const handleSearch = (e) => {
+        e.preventDefault()
+        if (searchInput.trim()) {
+            navigate(`/books?search=${searchInput}`);
+            setSearchInput("")
+        }
+    }
+
     return (
         <div className=" px-5 font-mixed relative bg-[#003A5A] text-white">
             {/*  */}
@@ -93,12 +104,14 @@ const Navbar = () => {
                 <div className="pr-10">
                     <h1 className="lg:text-3xl text-2xl">BookShopBD</h1>
                 </div>
-                <div className="hidden relative w-[50%] lg:flex items-center">
-                    <input className="w-full bg-white text-black focus:outline-0 px-5 py-3 rounded-full border border-[#bbb]" placeholder="Search" type="text" />
+                <form onSubmit={handleSearch} className="hidden relative w-[50%] lg:flex items-center">
+                    <input onChange={(e) => setSearchInput(e.target.value)} value={searchInput} className="w-full bg-white text-black focus:outline-0 px-5 py-3 rounded-full border border-[#bbb]" placeholder="Search" type="text" />
                     <div className="absolute top-0 right-0 bg-[#3BB77E] h-full w-14 rounded-r-full flex justify-center items-center cursor-pointer">
-                        <IoIosSearch className="text-3xl text-white" />
+                        <button type='submit'>
+                            <IoIosSearch className="text-3xl text-white" />
+                        </button>
                     </div>
-                </div>
+                </form>
                 <div className="flex items-center justify-between lg:gap-8 gap-5">
                     {
                         user ? (

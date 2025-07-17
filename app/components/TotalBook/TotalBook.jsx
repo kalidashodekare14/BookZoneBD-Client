@@ -7,6 +7,7 @@ import { FaBarsStaggered } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
 import InputRange from 'react-input-range';
 import { useCart } from 'react-use-cart';
+import { useLocation } from 'react-router';
 
 
 const allBookData = [
@@ -223,8 +224,12 @@ const TotalBook = () => {
     const [discountFilter, setdiscountFilter] = useState({ min: 0, max: 100 });
     const [selectedAuthors, setSelectedAuthors] = useState([]);
     const [selectedPublisher, setSelectedPublisher] = useState([]);
+    const location = useLocation()
+    const queryParams = new URLSearchParams(location.search);
+    const searchInput = queryParams.get('search');
     const { addItem, items } = useCart();
 
+    console.log('checking search params', searchInput)
 
 
 
@@ -249,6 +254,13 @@ const TotalBook = () => {
     }
 
     const categoryFiltering = allBookData.filter((product) => {
+
+        const matchedSearchInput = searchInput ? (
+            product.title.toLowerCase().includes(searchInput.toLowerCase())
+
+        ) : true
+
+
         const discountPrice = product.price * product.discount / 100
         const matchedPriceRange = discountPrice >= priceFilter.min && discountPrice <= priceFilter.max
         const matchedDiscountRange = product.discount >= discountFilter.min && product.discount <= discountFilter.max
@@ -259,7 +271,7 @@ const TotalBook = () => {
         // publisher filtering
         const mathcedPublisher = selectedPublisher.length === 0 || selectedPublisher.includes(product.publisher);
         return (
-            matchedPriceRange && matchedDiscountRange && mathcedAuthor && matchedRating && mathcedPublisher
+            matchedSearchInput && matchedPriceRange && matchedDiscountRange && mathcedAuthor && matchedRating && mathcedPublisher
         )
 
     })
