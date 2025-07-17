@@ -22,7 +22,7 @@ const Navbar = () => {
     const { userData, loading, error } = useSelector((state) => state.profile);
     const [searchInput, setSearchInput] = useState(null);
     const navigate = useNavigate();
-    const { totalItems } = useCart()
+    const { totalUniqueItems, updateItemQuantity } = useCart()
 
 
     const changeLanguage = (lng) => i18n.changeLanguage(lng);
@@ -158,7 +158,7 @@ const Navbar = () => {
                             <div className="relative">
                                 <FiShoppingCart className="lg:text-3xl text-[25px]" />
                                 <div className="absolute -top-3 -right-4 rounded-full lg:w-7 lg:h-7 w-5 h-5 bg-[#3BB77E] flex justify-center items-center text-white">
-                                    {totalItems}
+                                    {totalUniqueItems}
                                 </div>
                             </div>
                             <div className="lg:flex justify-between flex-col hidden ">
