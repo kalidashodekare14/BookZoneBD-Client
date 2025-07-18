@@ -6,6 +6,8 @@ import '@smastrom/react-rating/style.css';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { publicViewBooks } from '../../Redux/slice/viewDetailsBookSlice'
+import { useCart } from 'react-use-cart';
+import { OrbitProgress } from 'react-loading-indicators';
 
 const ViewDetailsPage = () => {
 
@@ -13,10 +15,9 @@ const ViewDetailsPage = () => {
     const reviewRange = [120, 25, 15, 11]
     const [ratingInput, setRatingInput] = useState(null)
     const { bookDetails, loading, error } = useSelector((state) => state.viewDetailBooks)
-    const dispatch = useDispatch()
-    const { book_id } = useParams()
-
-    console.log('checking data', bookDetails)
+    const dispatch = useDispatch();
+    const { book_id } = useParams();
+    const { addItem, items } = useCart();
 
 
     useEffect(() => {
@@ -273,6 +274,13 @@ const ViewDetailsPage = () => {
     ];
 
 
+    if (loading) {
+        return <div className='h-[550px] flex flex-col justify-center items-center'>
+            <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
+            <p className='text-xl'>Please wait...</p>
+        </div>
+    }
+
 
     return (
         <div className='mx-20 my-5 font-mixed'>
@@ -313,7 +321,7 @@ const ViewDetailsPage = () => {
                         <span>৳{bookDetails?.price * bookDetails?.discount / 100}</span>
                     </p>
                     <div className='space-x-3'>
-                        <button className='btn w-52 bg-[#003A5A] text-white'>Add to Cart</button>
+                        <button onClick={() => addItem({ ...bookDetails, id: bookDetails._id })} className='btn w-52 bg-[#003A5A] text-white'>Add to Cart</button>
                         <button className='btn w-52  bg-opacity-0 border bg-opacity-0 border-[#003A5A]'>Preview</button>
                     </div>
                 </div>
