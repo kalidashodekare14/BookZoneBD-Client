@@ -14,6 +14,7 @@ import { useCart } from 'react-use-cart';
 const Navbar = () => {
 
     const { t, i18n } = useTranslation("navbar")
+    const changeLanguage = (lng) => i18n.changeLanguage(lng);
     const [toggle, setToggle] = useState(false);
     const [lanSelect, setLanSelect] = useState("")
     const [active, setActive] = useState(false)
@@ -22,10 +23,7 @@ const Navbar = () => {
     const { userData, loading, error } = useSelector((state) => state.profile);
     const [searchInput, setSearchInput] = useState(null);
     const navigate = useNavigate();
-    const { totalUniqueItems, updateItemQuantity } = useCart()
-
-
-    const changeLanguage = (lng) => i18n.changeLanguage(lng);
+    const { totalUniqueItems } = useCart()
 
     const handleNavToggle = () => {
         setToggle(!toggle)
@@ -131,6 +129,7 @@ const Navbar = () => {
                                             Profile
                                         </Link>
                                     </li>
+                                    <li><Link to={'/dashboard'} className='text-[15px]'>Dashboard</Link></li>
                                     <li><a className='text-[15px]'>Settings</a></li>
                                     <li onClick={handleLogOut}><p className='text-[15px]'>Logout</p></li>
                                 </ul>
