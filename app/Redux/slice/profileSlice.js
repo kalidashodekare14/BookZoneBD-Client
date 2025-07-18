@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosSecure from "../utils/axiosSecure";
+import axiosSecure from "../../utils/axiosSecure";
 
 export const profileData = createAsyncThunk(
-    'profile/fetchedProfileData',
+    'profile/profileData',
     async ({ email }) => {
         const res = await axiosSecure.get(`/api/userInfo/profile/${email}`);
         console.log('checking data', res);

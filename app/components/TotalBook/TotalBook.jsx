@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css'
 import { useState } from 'react';
@@ -8,9 +8,12 @@ import { IoMdClose } from 'react-icons/io';
 import InputRange from 'react-input-range';
 import { useCart } from 'react-use-cart';
 import { useLocation } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { totalPublicBook } from '../../Redux/slice/publicTotalBooks'
+import { OrbitProgress } from 'react-loading-indicators';
 
 
-const allBookData = [
+const totalBook = [
     {
         "id": 1,
         "image": "https://i.ibb.co/gMg3m1Zw/potherpachali.png",
@@ -214,8 +217,6 @@ const allBookData = [
 ];
 
 
-
-
 const TotalBook = () => {
 
     const [toggle, setToggle] = useState(false);
@@ -228,14 +229,18 @@ const TotalBook = () => {
     const queryParams = new URLSearchParams(location.search);
     const searchInput = queryParams.get('search');
     const { addItem, items } = useCart();
-
-    console.log('checking search params', searchInput)
-
+    const { totalBook, loading, error } = useSelector((state) => state.totalBooks);
+    const dispatch = useDispatch();
 
 
     const handleToggele = () => {
         setToggle(!toggle)
     }
+
+
+    useEffect(() => {
+        dispatch(totalPublicBook());
+    }, [])
 
     const handleAuthorCheckBox = (author) => {
         if (selectedAuthors.includes(author)) {
@@ -253,7 +258,8 @@ const TotalBook = () => {
         }
     }
 
-    const categoryFiltering = allBookData.filter((product) => {
+
+    const categoryFiltering = totalBook.filter((product) => {
 
         const matchedSearchInput = searchInput ? (
             product.title.toLowerCase().includes(searchInput.toLowerCase())
@@ -277,6 +283,14 @@ const TotalBook = () => {
     })
 
 
+    if (loading) {
+        return <div className='h-[550px] flex flex-col justify-center items-center'>
+            <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
+            <p className='text-xl'>Please wait...</p>
+        </div>
+    }
+
+
     return (
         <div className='lg:mx-5 my-5 font-mixed'>
             <div className=' flex items-center justify-between my-5'>
@@ -284,7 +298,7 @@ const TotalBook = () => {
                     {
                         toggle ? <IoMdClose className='lg:hidden text-xl' onClick={handleToggele} /> : <FaBarsStaggered className='lg:hidden' onClick={handleToggele} />
                     }
-                    <p className='font-semibold'>Total items {allBookData.length}</p>
+                    <p className='font-semibold'>Total items {totalBook.length}</p>
                 </div>
                 <select defaultValue="Pick a color" className="select w-32 focus:outline-0">
                     <option >All</option>
@@ -343,7 +357,7 @@ const TotalBook = () => {
                                 <div className="collapse-title font-semibold">Author</div>
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
-                                        [...new Set(allBookData.map(book => book.author))].map((author, index) => (
+                                        [...new Set(totalBook.map(book => book.author))].map((author, index) => (
                                             <div className='flex items-center gap-2 text-[16px]'>
                                                 <input
                                                     className=''
@@ -361,7 +375,7 @@ const TotalBook = () => {
                                 <div className="collapse-title font-semibold">Publisher</div>
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
-                                        [...new Set(allBookData.map(book => book.publisher))].map((publisher, index) => (
+                                        [...new Set(totalBook.map(book => book.publisher))].map((publisher, index) => (
                                             <div className='flex items-center gap-2 text-[16px]'>
                                                 <input
                                                     className=''
@@ -395,7 +409,7 @@ const TotalBook = () => {
                 <div className='relative mx-5 lg:mx-0  grid grid-cols-1 z-20  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
                     {
                         categoryFiltering.map(book => (
-                            <div className=' border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
+                            <div key={book._id} className=' border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
                                 <img className='w-full h-60 px-5' src={book.image} alt="" />
                                 <div className='mt-3 space-y-2'>
                                     <h1 className='font-semibold'>{book.title}</h1>

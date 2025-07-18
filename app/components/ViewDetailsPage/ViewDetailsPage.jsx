@@ -362,7 +362,7 @@ const ViewDetailsPage = () => {
                 <div className='space-y-3'>
                     {
                         reviewData.map(review => (
-                            <div className='space-y-3 border-b border-[#bbbbbb8c] pb-3 '>
+                            <div key={review.id} className='space-y-3 border-b border-[#bbbbbb8c] pb-3 '>
                                 <div className='flex items-center gap-2'>
                                     <img className='w-10 h-10 rounded-full' src={review.image} alt="" />
                                     <div className='space-y-1'>

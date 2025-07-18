@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import profileSlice from '../Redux/profileSlice'
+import profileSlice from '../Redux/slice/profileSlice'
+import publicTotalBooks from '../Redux/slice/publicTotalBooks'
 
 const store = configureStore({
     reducer: {
-        profile: profileSlice
+        profile: profileSlice,
+        totalBooks: publicTotalBooks
     }
 })
 

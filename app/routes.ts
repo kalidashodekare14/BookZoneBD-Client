@@ -9,14 +9,14 @@ export default [
     route("writers", "./pages/Writers.jsx"),
     route("publisher", "./pages/Publisher.jsx"),
     route("book/:book_id", "./pages/ViewDetails.jsx"),
-    route('checkout', './pages/Checkout.jsx'),
     route("login", "./pages/Login.jsx"),
     route("signup", "./pages/SignUp.jsx"),
+    // Auth Protected
     layout("./ProtectedRoute/AuthProtected.jsx", [
-        route("profile", './pages/UserProfile.jsx')
+        route("profile", './pages/UserProfile.jsx'),
+        route('checkout', './pages/Checkout.jsx'),
     ]),
 
-    
     // Dashboard 
     route("dashboard", "./pages/Dashboard/dashboard.jsx", [
         index("./pages/Dashboard/HomeDashboard.jsx"),

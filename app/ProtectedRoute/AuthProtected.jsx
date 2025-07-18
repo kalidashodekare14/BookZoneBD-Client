@@ -7,13 +7,8 @@ const AuthProtected = () => {
     const { user, loading, logoutSystem } = useAuth();
     const location = useLocation();
     const [wait, setWait] = useState(true);
-    // const [isToken, setIsToken] = useState(null);
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem('token');
-    //     setIsToken(token);
-    // }, [])
-
+    
     useEffect(() => {
         const timer = setTimeout(() => {
             setWait(false)
