@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router';
 import './ViewDetailsPage.css'
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { publicViewBooks } from '../../Redux/slice/viewDetailsBookSlice'
 
 const ViewDetailsPage = () => {
 
     const floatValues = [4.30, 3.50, 2.20, 1.20]
     const reviewRange = [120, 25, 15, 11]
     const [ratingInput, setRatingInput] = useState(null)
+    const { bookDetails, loading, error } = useSelector((state) => state.viewDetailBooks)
+    const dispatch = useDispatch()
+    const { book_id } = useParams()
+
+    console.log('checking data', bookDetails)
+
+
+    useEffect(() => {
+        dispatch(publicViewBooks({ id: book_id }))
+    }, [])
 
     const allBookData = [
         {
@@ -266,39 +278,39 @@ const ViewDetailsPage = () => {
         <div className='mx-20 my-5 font-mixed'>
             <div className='flex justify-between gap-5'>
                 <div className='cursor-pointer book-shadaw w-80 h-96 overflow-hidden bg-[#bbbbbb6b] border-black '>
-                    <img className='w-full h-96 hover:w-74 hover:duration-300 duration-300' src={allBookData[3].image} alt="" />
+                    <img className='w-full h-96 hover:w-74 hover:duration-300 duration-300' src={bookDetails?.image} alt="" />
                 </div>
                 <div className='space-y-3 w-[40%]'>
-                    <h1 className='text-xl'>পথের পাঁচালী</h1>
+                    <h1 className='text-xl'>{bookDetails?.title}</h1>
                     <div className='flex items-center gap-2'>
                         <img className='w-16 h-16 rounded-full border p-2' src={"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSuFnh8mh6WfiAXU0jGmRiP6EXFQK5PefgnEiQIFNLtsMKGfXby9-mC7zefO-w8aTjLLzQdprFK7byzNd-SWuNbA"} alt="" />
-                        <p>বিভূতিভূষণ বন্দ্যোপাধ্যায়</p>
+                        <p>{bookDetails?.author}</p>
                     </div>
                     <Rating
                         style={{ maxWidth: 100 }}
-                        value={3}
+                        value={bookDetails?.rating}
                         readOnly
                     />
-                    <p>বাংলার গ্রামে দুই ভাইবোন অপু আর দুর্গার বেড়ে ওঠা নিয়েই বিখ্যাত এই উপন্যাস। এই উপন্যাসের ছোটোদের জন্য সংস্করণটির নাম আম আঁটির ভেঁপু। পরবর্তীকালে বিখ্যাত বাঙালি চলচ্চিত্র পরিচালক সত্যজিৎ রায় এই উপন্যাসটি অবলম্বনে পথের পাঁচালী (চলচ্চিত্র) নির্মাণ করেন যা পৃথিবী-বিখ্যাত হয়।</p>
+                    <p>{bookDetails?.description}</p>
                     <div className="">
                         <table className=" text-left w-60">
                             <tr>
                                 <td className='font-semibold'>Publisher</td>
-                                <td>অনুপম প্রকাশনী</td>
+                                <td>{bookDetails?.publisher}</td>
                             </tr>
                             <tr>
                                 <td className='font-semibold'>Language</td>
                                 <td>বাংলা</td>
                             </tr>
                             <tr>
-                                <td className='font-semibold'>Page</td>
-                                <td>5487</td>
+                                <td className='font-semibold'>Stock</td>
+                                <td>{bookDetails?.stock}</td>
                             </tr>
                         </table>
                     </div>
                     <p className='space-x-3 text-xl'>
-                        <del>৳{allBookData[0].price}</del>
-                        <span>৳{allBookData[0].price * allBookData[0].discount / 100}</span>
+                        <del>৳{bookDetails?.price}</del>
+                        <span>৳{bookDetails?.price * bookDetails?.discount / 100}</span>
                     </p>
                     <div className='space-x-3'>
                         <button className='btn w-52 bg-[#003A5A] text-white'>Add to Cart</button>

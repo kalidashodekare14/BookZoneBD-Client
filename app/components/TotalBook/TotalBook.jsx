@@ -7,7 +7,7 @@ import { FaBarsStaggered } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
 import InputRange from 'react-input-range';
 import { useCart } from 'react-use-cart';
-import { useLocation } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { totalPublicBook } from '../../Redux/slice/publicTotalBooks'
 import { OrbitProgress } from 'react-loading-indicators';
@@ -423,7 +423,12 @@ const TotalBook = () => {
                                         <p>৳{book.price * book.discount / 100}</p>
                                         <p><del>৳{book.price}</del></p>
                                     </div>
-                                    <button onClick={() => addItem({ ...book, id: book.id })} className='btn w-full bg-[#003A5A] text-white'>Add to cart</button>
+                                    <div className='flex items-center'>
+                                        <Link to={`/book/${book._id}`}>
+                                            <button className='btn border-[#003A5A] text-black hover:text-white'>View Details</button>
+                                        </Link>
+                                        <button onClick={() => addItem({ ...book, id: book._id })} className='btn bg-[#003A5A] text-white'>Add to cart</button>
+                                    </div>
                                 </div>
 
                             </div>
