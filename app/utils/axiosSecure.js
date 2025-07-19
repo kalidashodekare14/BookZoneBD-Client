@@ -22,6 +22,7 @@ axiosSecure.interceptors.response.use(
     error => {
         const status = error?.response?.status
         if (status === 401 || status === 403 || status === 400) {
+            console.log('show the error');
             const auth = getAuth();
             signOut(auth)
                 .then(() => {

@@ -24,6 +24,7 @@ const UserProfile = () => {
     const [imgHostingLoading, setImgHostingLoading] = useState(false);
     const navigate = useNavigate();
 
+    console.log('check profile data', userData);
 
     useEffect(() => {
         if (!user) {

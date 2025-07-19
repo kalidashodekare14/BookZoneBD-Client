@@ -3,13 +3,16 @@ import profileSlice from '../Redux/slice/profileSlice'
 import publicTotalBooks from '../Redux/slice/publicTotalBooks'
 import publicDetailBooks from '../Redux/slice/viewDetailsBookSlice'
 import adminVerify from '../Redux/slice/adminSlice'
+import dashboardTotalBooks from '../Redux/slice/dashboardSlice/allBookSlice'
 
 const store = configureStore({
     reducer: {
         profile: profileSlice,
         totalBooks: publicTotalBooks,
         viewDetailBooks: publicDetailBooks,
-        isAdmin: adminVerify
+        isAdmin: adminVerify,
+        // dashboard
+        totalBooks: dashboardTotalBooks
     }
 })
 

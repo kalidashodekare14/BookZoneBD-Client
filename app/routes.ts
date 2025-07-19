@@ -17,7 +17,6 @@ export default [
         route('checkout', './pages/Checkout.jsx'),
     ]),
 
-    
     // Dashboard 
     layout("./ProtectedRoute/AdminProtected.jsx", [
         route("dashboard", "./pages/Dashboard/dashboard.jsx", [

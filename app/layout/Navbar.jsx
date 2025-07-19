@@ -25,6 +25,8 @@ const Navbar = () => {
     const navigate = useNavigate();
     const { totalUniqueItems } = useCart()
 
+    
+
     const handleNavToggle = () => {
         setToggle(!toggle)
     }

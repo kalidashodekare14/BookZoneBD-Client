@@ -14,7 +14,7 @@ export const isAdminVerify = createAsyncThunk(
 const adminVerify = createSlice({
     name: "admin",
     initialState: {
-        admin: null,
+        admin: false,
         loading: false,
         error: null
     },

@@ -5,10 +5,12 @@ import { OrbitProgress } from 'react-loading-indicators';
 import useAdmin from '../hooks/useAdmin';
 
 const AdminProtected = () => {
-    const { user, loading } = useAuth();
+    const { user, loading, logoutSystem } = useAuth();
     const location = useLocation();
     const [wait, setWait] = useState(true);
     const [admin] = useAdmin();
+
+    console.log('checking admin', admin);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -18,16 +20,19 @@ const AdminProtected = () => {
     }, [])
 
 
-    if (wait || !admin || loading || !user === undefined) {
+    if (wait || loading || !user === undefined) {
         return <div className='h-[550px] flex flex-col justify-center items-center'>
             <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
             <p className='text-xl'>Please wait...</p>
         </div>
     }
 
-    // 
+    if (user && admin !== true) {
+        logoutSystem()
+        return <Navigate to={"/login"} replace state={{ from: location }} />
+    }
 
-    return user && admin ? <Outlet /> : <Navigate to={"/login"} replace state={{ from: location }} />
+    return user && admin === true ? <Outlet /> : <Navigate to={"/login"} replace state={{ from: location }} />
 };
 
 export default AdminProtected;
