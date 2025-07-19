@@ -1,70 +1,88 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
+import { useDispatch, useSelector } from 'react-redux';
+import { dashboardAllUser } from '../../../Redux/slice/dashboardSlice/allUserSlice';
+import { OrbitProgress } from 'react-loading-indicators';
+
+const allUser = [
+    {
+        "name": "Rahim Uddin",
+        "email": "rahim.uddin@example.com",
+        "image": "https://randomuser.me/api/portraits/men/1.jpg",
+        "phone": "+8801711001100"
+    },
+    {
+        "name": "Karima Akter",
+        "email": "karima.akter@example.com",
+        "image": "https://randomuser.me/api/portraits/women/2.jpg",
+        "phone": "+8801722002200"
+    },
+    {
+        "name": "Sumon Ali",
+        "email": "sumon.ali@example.com",
+        "image": "https://randomuser.me/api/portraits/men/3.jpg",
+        "phone": "+8801733003300"
+    },
+    {
+        "name": "Fatema Khatun",
+        "email": "fatema.khatun@example.com",
+        "image": "https://randomuser.me/api/portraits/women/4.jpg",
+        "phone": "+8801744004400"
+    },
+    {
+        "name": "Nasir Hossain",
+        "email": "nasir.hossain@example.com",
+        "image": "https://randomuser.me/api/portraits/men/5.jpg",
+        "phone": "+8801755005500"
+    },
+    {
+        "name": "Jannatul Ferdous",
+        "email": "jannatul.ferdous@example.com",
+        "image": "https://randomuser.me/api/portraits/women/6.jpg",
+        "phone": "+8801766006600"
+    },
+    {
+        "name": "Alamin Sarker",
+        "email": "alamin.sarker@example.com",
+        "image": "https://randomuser.me/api/portraits/men/7.jpg",
+        "phone": "+8801777007700"
+    },
+    {
+        "name": "Shirin Akhter",
+        "email": "shirin.akhter@example.com",
+        "image": "https://randomuser.me/api/portraits/women/8.jpg",
+        "phone": "+8801788008800"
+    },
+    {
+        "name": "Rafiq Mia",
+        "email": "rafiq.mia@example.com",
+        "image": "https://randomuser.me/api/portraits/men/9.jpg",
+        "phone": "+8801799009900"
+    },
+    {
+        "name": "Nusrat Jahan",
+        "email": "nusrat.jahan@example.com",
+        "image": "https://randomuser.me/api/portraits/women/10.jpg",
+        "phone": "+8801700010000"
+    }
+]
 
 const AllUsers = () => {
 
-    const allUser = [
-        {
-            "name": "Rahim Uddin",
-            "email": "rahim.uddin@example.com",
-            "image": "https://randomuser.me/api/portraits/men/1.jpg",
-            "phone": "+8801711001100"
-        },
-        {
-            "name": "Karima Akter",
-            "email": "karima.akter@example.com",
-            "image": "https://randomuser.me/api/portraits/women/2.jpg",
-            "phone": "+8801722002200"
-        },
-        {
-            "name": "Sumon Ali",
-            "email": "sumon.ali@example.com",
-            "image": "https://randomuser.me/api/portraits/men/3.jpg",
-            "phone": "+8801733003300"
-        },
-        {
-            "name": "Fatema Khatun",
-            "email": "fatema.khatun@example.com",
-            "image": "https://randomuser.me/api/portraits/women/4.jpg",
-            "phone": "+8801744004400"
-        },
-        {
-            "name": "Nasir Hossain",
-            "email": "nasir.hossain@example.com",
-            "image": "https://randomuser.me/api/portraits/men/5.jpg",
-            "phone": "+8801755005500"
-        },
-        {
-            "name": "Jannatul Ferdous",
-            "email": "jannatul.ferdous@example.com",
-            "image": "https://randomuser.me/api/portraits/women/6.jpg",
-            "phone": "+8801766006600"
-        },
-        {
-            "name": "Alamin Sarker",
-            "email": "alamin.sarker@example.com",
-            "image": "https://randomuser.me/api/portraits/men/7.jpg",
-            "phone": "+8801777007700"
-        },
-        {
-            "name": "Shirin Akhter",
-            "email": "shirin.akhter@example.com",
-            "image": "https://randomuser.me/api/portraits/women/8.jpg",
-            "phone": "+8801788008800"
-        },
-        {
-            "name": "Rafiq Mia",
-            "email": "rafiq.mia@example.com",
-            "image": "https://randomuser.me/api/portraits/men/9.jpg",
-            "phone": "+8801799009900"
-        },
-        {
-            "name": "Nusrat Jahan",
-            "email": "nusrat.jahan@example.com",
-            "image": "https://randomuser.me/api/portraits/women/10.jpg",
-            "phone": "+8801700010000"
-        }
-    ]
+    const { totalUser, loading, error } = useSelector((state) => state.totalUser);
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        dispatch(dashboardAllUser())
+    }, [])
+
+    if (loading) {
+        return <div className='h-[550px] flex flex-col justify-center items-center'>
+            <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
+            <p className='text-xl'>Please wait...</p>
+        </div>
+    }
 
 
     return (
@@ -88,14 +106,14 @@ const AllUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            allUser.slice(0, 6).map(user => (
+                            totalUser.slice(0, 6).map(user => (
                                 <tr className='text-[15px]'>
                                     <th>
-                                        <img className='w-14 h-14 rounded-full' src={user.image} alt="" />
+                                        <img className='w-14 h-14 rounded-full' src={user?.image ? user.image : "https://i.ibb.co/WcTWxsN/nav-img.png"} alt="" />
                                     </th>
-                                    <td>{user.name}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.phone}</td>
+                                    <td>{user?.name ? user?.name : "N/A"}</td>
+                                    <td>{user?.email ? user?.email : "N/A"}</td>
+                                    <td>{user?.phone ? user?.phone : "N/A"}</td>
                                     <div className="dropdown dropdown-bottom dropdown-end">
                                         <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
                                         <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">

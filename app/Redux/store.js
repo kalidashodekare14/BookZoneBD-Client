@@ -4,6 +4,7 @@ import publicTotalBooks from '../Redux/slice/publicTotalBooks'
 import publicDetailBooks from '../Redux/slice/viewDetailsBookSlice'
 import adminVerify from '../Redux/slice/adminSlice'
 import dashboardTotalBooks from '../Redux/slice/dashboardSlice/allBookSlice'
+import dashboardTotalUsers from '../Redux/slice/dashboardSlice/allUserSlice'
 
 const store = configureStore({
     reducer: {
@@ -12,7 +13,8 @@ const store = configureStore({
         viewDetailBooks: publicDetailBooks,
         isAdmin: adminVerify,
         // dashboard
-        totalBooks: dashboardTotalBooks
+        totalBooks: dashboardTotalBooks,
+        totalUser: dashboardTotalUsers
     }
 })
 

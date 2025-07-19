@@ -176,8 +176,6 @@ const AllBook = () => {
         dispatch(dashboardTotalBooks());
     }, [])
 
-    console.log('check data', totalBook)
-
     if (loading) {
         return <div className='h-[550px] flex flex-col justify-center items-center'>
             <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
