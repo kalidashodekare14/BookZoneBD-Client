@@ -1,61 +1,73 @@
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { FaUsers } from 'react-icons/fa';
-
-// #3BB77E
-
-import './AdminDashboard.css'
-import { FcLineChart } from 'react-icons/fc';
 import { MdOutlineShowChart } from 'react-icons/md';
-import { Area, AreaChart, CartesianGrid, Pie, PieChart, Tooltip, XAxis, YAxis } from 'recharts';
+import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+import './AdminDashboard.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { totalInformation } from '../../../Redux/slice/dashboardSlice/totalInfoSlice'
+import { useEffect } from 'react';
+import { OrbitProgress } from 'react-loading-indicators';
+const data = [
+    {
+        "name": "Page A",
+        "uv": 4000,
+        "pv": 2400,
+        "amt": 2400
+    },
+    {
+        "name": "Page B",
+        "uv": 3000,
+        "pv": 1398,
+        "amt": 2210
+    },
+    {
+        "name": "Page C",
+        "uv": 2000,
+        "pv": 9800,
+        "amt": 2290
+    },
+    {
+        "name": "Page D",
+        "uv": 2780,
+        "pv": 3908,
+        "amt": 2000
+    },
+    {
+        "name": "Page E",
+        "uv": 1890,
+        "pv": 4800,
+        "amt": 2181
+    },
+    {
+        "name": "Page F",
+        "uv": 2390,
+        "pv": 3800,
+        "amt": 2500
+    },
+    {
+        "name": "Page G",
+        "uv": 3490,
+        "pv": 4300,
+        "amt": 2100
+    }
+]
 
 
 const AdminDashboard = () => {
 
-    const data = [
-        {
-            "name": "Page A",
-            "uv": 4000,
-            "pv": 2400,
-            "amt": 2400
-        },
-        {
-            "name": "Page B",
-            "uv": 3000,
-            "pv": 1398,
-            "amt": 2210
-        },
-        {
-            "name": "Page C",
-            "uv": 2000,
-            "pv": 9800,
-            "amt": 2290
-        },
-        {
-            "name": "Page D",
-            "uv": 2780,
-            "pv": 3908,
-            "amt": 2000
-        },
-        {
-            "name": "Page E",
-            "uv": 1890,
-            "pv": 4800,
-            "amt": 2181
-        },
-        {
-            "name": "Page F",
-            "uv": 2390,
-            "pv": 3800,
-            "amt": 2500
-        },
-        {
-            "name": "Page G",
-            "uv": 3490,
-            "pv": 4300,
-            "amt": 2100
-        }
-    ]
+    const { allInfo, loading, error } = useSelector((state) => state.totalInfo);
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(totalInformation());
+    }, [])
+
+    if (loading) {
+        return <div className='h-[550px] flex flex-col justify-center items-center'>
+            <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
+            <p className='text-xl'>Please wait...</p>
+        </div>
+    }
 
 
     return (
@@ -74,7 +86,7 @@ const AdminDashboard = () => {
                 <div className='bg-[#f8f8f8] rounded-xl p-3 border border-[#bbb] flex flex-col gap-2'>
                     <h1 className='text-[18px]'>Total Users</h1>
                     <div className='flex items-center gap-3'>
-                        <p className='text-2xl font-semibold'>2000</p>
+                        <p className='text-2xl font-semibold'>{allInfo?.totalUsers.value ? allInfo?.totalUsers.value : 0}</p>
                         <p className='text-[14px] flex items-center gap-1 bg-[#3bb77d1c] text-[#3bb77dd0] font-semibold w-20 p-1 rounded-full'>
                             <span>+75%</span>
                             <span><MdOutlineShowChart className='text-[20px]' /></span>
@@ -82,9 +94,9 @@ const AdminDashboard = () => {
                     </div>
                 </div>
                 <div className='bg-[#f8f8f8] rounded-xl p-3 border border-[#bbb] flex flex-col gap-2'>
-                    <h1 className='text-[18px]'>Total Products</h1>
+                    <h1 className='text-[18px]'>Total Books</h1>
                     <div className='flex items-center gap-3'>
-                        <p className='text-2xl font-semibold'>5000</p>
+                        <p className='text-2xl font-semibold'>{allInfo?.totalBooks.value ? allInfo?.totalBooks.value : 0}</p>
                         <p className='text-[14px] flex items-center gap-1 bg-[#3bb77d1c] text-[#3bb77dd0] font-semibold w-20 p-1 rounded-full'>
                             <span>+80%</span>
                             <span><MdOutlineShowChart className='text-[20px]' /></span>
