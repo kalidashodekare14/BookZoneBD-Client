@@ -49,13 +49,34 @@ const Login = () => {
 
     const handleGoogleRegister = () => {
         googleAuthSystem()
-            .then(res => {
-                navigation('/')
+            .then(async (res) => {
+                try {
+                    const userInfo = {
+                        email: res.user.email,
+                        name: res.user.displayName,
+                        image: res.user.photoURL,
+                        isGoogleUser: true,
+                    }
+                    setLoading(true)
+                    const response = await axiosSecure.post('/api/user/google_auth', userInfo);
+                    if (response.data.success === true) {
+                        localStorage.setItem('token', response.data.data.token);
+                        navigation('/');
+                    }
+                } catch (error) {
+                    logoutSystem()
+                    navigation('/login');
+                } finally {
+                    setLoading(false)
+                }
             })
             .catch(error => {
                 setLoading(false)
+                setIsError(true)
             })
     }
+
+
 
     const handlePasswordShowAndPassword = () => {
         setPasswordHideAndShow(!passwordHideAndShow)
