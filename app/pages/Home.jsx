@@ -9,9 +9,6 @@ import useAdmin from '../hooks/useAdmin';
 
 const HomePage = () => {
 
-    const [admin] = useAdmin();
-    console.log('check admin', admin)
-
     return (
         <div className='mx-10 font-hindSiliguri'>
             <Banner />

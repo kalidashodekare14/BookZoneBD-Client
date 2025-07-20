@@ -106,7 +106,7 @@ const AllUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            totalUser.slice(0, 6).map(user => (
+                            totalUser.map(user => (
                                 <tr className='text-[15px]'>
                                     <th>
                                         <img className='w-14 h-14 rounded-full' src={user?.image ? user.image : "https://i.ibb.co/WcTWxsN/nav-img.png"} alt="" />

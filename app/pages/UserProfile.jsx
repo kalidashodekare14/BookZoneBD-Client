@@ -24,7 +24,6 @@ const UserProfile = () => {
     const [imgHostingLoading, setImgHostingLoading] = useState(false);
     const navigate = useNavigate();
 
-    console.log('check profile data', userData);
 
     useEffect(() => {
         if (!user) {
@@ -46,7 +45,6 @@ const UserProfile = () => {
     } = useForm()
 
     const onSubmit = async (data) => {
-        console.log(data)
         const userInfo = {
             name: data.name,
             date_of_birth: data.date_of_birth,
@@ -63,7 +61,6 @@ const UserProfile = () => {
     }
 
     const handleImageHosting = async (event) => {
-        console.log('checking event', event)
         const imageSelected = event.target.files[0];
         setImgHostingLoading(true)
         const formData = new FormData()

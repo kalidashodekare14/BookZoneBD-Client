@@ -22,7 +22,6 @@ const Login = () => {
     const onSubmit = (data) => {
         loginSystem(data.email, data.password)
             .then(async (res) => {
-                console.log(res.user)
                 const userInfo = {
                     email: data.email,
                     password: data.password
@@ -30,7 +29,6 @@ const Login = () => {
                 try {
                     setLoading(true)
                     const response = await axiosSecure.post('/api/user/login', userInfo);
-                    console.log('checking login data', response.data)
                     if (response.data.success === true) {
                         localStorage.setItem('token', response.data.data.token);
                         navigation('/')
@@ -38,14 +36,12 @@ const Login = () => {
 
                 } catch (error) {
                     setIsError(true)
-                    console.log(error.message)
                 } finally {
                     setLoading(false);
                 }
 
             })
             .catch(error => {
-                console.log('checking error', error)
                 setIsError(true)
                 setLoading(false)
             })
@@ -54,11 +50,9 @@ const Login = () => {
     const handleGoogleRegister = () => {
         googleAuthSystem()
             .then(res => {
-                console.log(res.user)
                 navigation('/')
             })
             .catch(error => {
-                console.log(error.message)
                 setLoading(false)
             })
     }

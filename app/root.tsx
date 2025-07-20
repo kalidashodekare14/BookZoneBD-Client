@@ -33,7 +33,6 @@ export const links: Route.LinksFunction = () => [
 export function Layout({ children }: { children: React.ReactNode }) {
 
   const { pathname } = useLocation()
-  console.log('main location', pathname)
 
   const dashboardLoaction = pathname.startsWith("/dashboard");
 

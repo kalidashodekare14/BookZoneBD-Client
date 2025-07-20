@@ -7,7 +7,7 @@ import axiosSecure from '../utils/axiosSecure';
 
 const SignUp = () => {
 
-    const { registerSystem, googleAuthSystem, setLoading, loading } = useAuth()
+    const { registerSystem, googleAuthSystem, setLoading, loading, logoutSystem } = useAuth()
     const navigation = useNavigate();
     const [passwordHideAndShow, setPasswordHideAndShow] = useState(false)
     const [isError, setIsError] = useState(false);
@@ -20,29 +20,25 @@ const SignUp = () => {
     } = useForm()
 
     const onSubmit = async (data) => {
-        console.log(data)
         registerSystem(data.email, data.password)
             .then(async (res) => {
                 try {
-                    console.log(res.user)
                     const userInfo = {
                         email: data.email,
                         password: data.password
                     }
                     setLoading(true)
                     const response = await axiosSecure.post('/api/user/register', userInfo);
-
                     if (response.data.success === true) {
-                        navigation('/')
+                        localStorage.setItem('token', response.data.data.token);
+                        navigation('/');
                     }
                 } catch (error) {
-                    console.log(error.message)
                 } finally {
                     setLoading(false)
                 }
             })
             .catch(error => {
-                console.log(error.message)
                 setLoading(false)
                 setIsError(true)
             })
@@ -50,12 +46,28 @@ const SignUp = () => {
 
     const handleGoogleRegister = () => {
         googleAuthSystem()
-            .then(res => {
-                console.log(res.user)
-                navigation('/')
+            .then(async (res) => {
+                try {
+                    const userInfo = {
+                        email: res.user.email,
+                        name: res.user.displayName,
+                        image: res.user.photoURL,
+                        isGoogleUser: true,
+                    }
+                    setLoading(true)
+                    const response = await axiosSecure.post('/api/user/google_auth', userInfo);
+                    if (response.data.success === true) {
+                        localStorage.setItem('token', response.data.data.token);
+                        navigation('/');
+                    }
+                } catch (error) {
+                    logoutSystem()
+                    navigation('/signup');
+                } finally {
+                    setLoading(false)
+                }
             })
             .catch(error => {
-                console.log(error.message)
                 setLoading(false)
                 setIsError(true)
             })

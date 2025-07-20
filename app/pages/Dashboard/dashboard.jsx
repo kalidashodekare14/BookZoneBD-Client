@@ -8,7 +8,6 @@ const dashboard = () => {
 
     const [isToggle, setIstoggle] = useState(false)
     const [admin] = useAdmin()
-    console.log('checking dashboard admin', admin);
 
     const handleToggle = () => {
         setIstoggle(!isToggle)
