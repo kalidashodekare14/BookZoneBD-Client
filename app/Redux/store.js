@@ -10,7 +10,7 @@ import dashboardTotalInfo from '../Redux/slice/dashboardSlice/totalInfoSlice'
 const store = configureStore({
     reducer: {
         profile: profileSlice,
-        totalBooks: publicTotalBooks,
+        publicAllBooks: publicTotalBooks,
         viewDetailBooks: publicDetailBooks,
         isAdmin: adminVerify,
         // dashboard

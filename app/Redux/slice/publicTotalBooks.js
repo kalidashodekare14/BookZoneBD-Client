@@ -6,6 +6,7 @@ export const totalPublicBook = createAsyncThunk(
     "totalBooks/totalPublicBook",
     async () => {
         const res = await axiosPublic.get('/api/public/all_books')
+        console.log('checking books data', res.data.data)
         return res.data.data
     }
 )
@@ -14,7 +15,7 @@ export const totalPublicBook = createAsyncThunk(
 const publicTotalBooks = createSlice({
     name: "books",
     initialState: {
-        totalBook: [],
+        allBooks: [],
         loading: false,
         error: null
     },
@@ -26,7 +27,7 @@ const publicTotalBooks = createSlice({
             })
             .addCase(totalPublicBook.fulfilled, (state, action) => {
                 state.loading = false;
-                state.totalBook = action.payload;
+                state.allBooks = action.payload;
             })
             .addCase(totalPublicBook.rejected, (state, action) => {
                 state.loading = false;

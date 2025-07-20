@@ -229,7 +229,7 @@ const TotalBook = () => {
     const queryParams = new URLSearchParams(location.search);
     const searchInput = queryParams.get('search');
     const { addItem, items } = useCart();
-    const { totalBook, loading, error } = useSelector((state) => state.totalBooks);
+    const { allBooks, loading, error } = useSelector((state) => state.publicAllBooks);
     const dispatch = useDispatch();
 
 
@@ -241,6 +241,7 @@ const TotalBook = () => {
     useEffect(() => {
         dispatch(totalPublicBook());
     }, [])
+
 
     const handleAuthorCheckBox = (author) => {
         if (selectedAuthors.includes(author)) {
@@ -259,7 +260,7 @@ const TotalBook = () => {
     }
 
 
-    const categoryFiltering = totalBook.filter((product) => {
+    const categoryFiltering = allBooks.filter((product) => {
 
         const matchedSearchInput = searchInput ? (
             product.title.toLowerCase().includes(searchInput.toLowerCase())
@@ -298,7 +299,7 @@ const TotalBook = () => {
                     {
                         toggle ? <IoMdClose className='lg:hidden text-xl' onClick={handleToggele} /> : <FaBarsStaggered className='lg:hidden' onClick={handleToggele} />
                     }
-                    <p className='font-semibold'>Total items {totalBook.length}</p>
+                    <p className='font-semibold'>Total items {allBooks.length}</p>
                 </div>
                 <select defaultValue="Pick a color" className="select w-32 focus:outline-0">
                     <option >All</option>
@@ -357,7 +358,7 @@ const TotalBook = () => {
                                 <div className="collapse-title font-semibold">Author</div>
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
-                                        [...new Set(totalBook.map(book => book.author))].map((author, index) => (
+                                        [...new Set(allBooks.map(book => book.author))].map((author, index) => (
                                             <div className='flex items-center gap-2 text-[16px]'>
                                                 <input
                                                     className=''
@@ -375,7 +376,7 @@ const TotalBook = () => {
                                 <div className="collapse-title font-semibold">Publisher</div>
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
-                                        [...new Set(totalBook.map(book => book.publisher))].map((publisher, index) => (
+                                        [...new Set(allBooks.map(book => book.publisher))].map((publisher, index) => (
                                             <div className='flex items-center gap-2 text-[16px]'>
                                                 <input
                                                     className=''
