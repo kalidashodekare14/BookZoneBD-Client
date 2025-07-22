@@ -3,11 +3,12 @@ import { FaEdit, FaInfo, FaLock } from 'react-icons/fa';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import { FaCamera } from "react-icons/fa";
-import { useDispatch, useSelector } from 'react-redux';
-import { profileData, profileDataUpdate } from '../Redux/slice/profileSlice';
+import { useDispatch } from 'react-redux';
+import { profileDataUpdate } from '../Redux/slice/profileSlice';
 import useAuth from '../hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import useUser from '../hooks/useUser';
 const IMG_API_KEY = import.meta.env.VITE_IMG_API_KEY;
 const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 
@@ -18,11 +19,12 @@ const UserProfile = () => {
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
     const [isGender, setIsGender] = useState(null);
-    const { userData, loading, error } = useSelector(state => state.profile);
-    const dispatch = useDispatch();
     const [imageHosting, setImageHosting] = useState(null);
     const [imgHostingLoading, setImgHostingLoading] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const [userData, loading, error] = useUser()
 
 
     useEffect(() => {
@@ -33,14 +35,9 @@ const UserProfile = () => {
     }, [])
 
 
-    useEffect(() => {
-        dispatch(profileData({ email: user?.email }))
-    }, [user])
-
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm()
 
