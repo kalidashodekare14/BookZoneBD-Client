@@ -1,15 +1,12 @@
 import React from 'react';
 import { IoIosCloseCircle } from 'react-icons/io';
 import { useCart } from 'react-use-cart';
-import axiosSecure from '../utils/axiosSecure';
-import useUser from '../hooks/useUser';
+
+import { Link } from 'react-router';
 
 const Checkout = () => {
 
-    const [userData, loading, error] = useUser()
     const salesTaxRate = 0.1
-
-
     const {
         isEmpty,
         totalUniqueItems,
@@ -28,49 +25,6 @@ const Checkout = () => {
     const grandTotal = discountedCartTotal + salesTax
 
 
-    const handlePaymentSystem = async () => {
-
-        try {
-            const products = items.map(product => ({
-                product_name: product.title,
-                product_category: product.category,
-                prodcut_quantity: product.quantity,
-                product_image: product.image
-            }))
-
-            const paymentInfo = {
-                tran_id: "dfkjeikd",
-                customar_name: userData?.name,
-                customar_email: userData?.email,
-                amount: grandTotal,
-                image: userData?.image,
-                products,
-                addressInfo: {
-                    country: "Bangladesh",
-                    address: userData?.address,
-                    postal_code: "5200",
-                    phone_number: userData?.contact_number,
-                    state: "Dhaka",
-                },
-                currency: "BDT",
-                status: "Pending"
-            }
-
-            console.log('checking data for paymentInfo', paymentInfo)
-
-            axiosSecure.post('/api/payment/payment_integration', paymentInfo)
-                .then(res => {
-                    console.log('checking payment data', res)
-                })
-
-
-        } catch (error) {
-            console.log('check error', error)
-        }
-
-
-
-    }
 
 
     return (
@@ -151,7 +105,9 @@ const Checkout = () => {
                         </div>
                     </div>
                     <div className='flex justify-center items-center mt-5'>
-                        <button onClick={handlePaymentSystem} className='btn w-32 bg-[#003a5a] text-white'>Checkout</button>
+                        <Link to={"/checkout_payment"} >
+                            <button className='btn w-52 bg-[#003a5a] text-white'>Proceed to checkout</button>
+                        </Link>
                     </div>
                 </div>
             </div>
