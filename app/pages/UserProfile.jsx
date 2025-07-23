@@ -46,8 +46,13 @@ const UserProfile = () => {
             name: data.name,
             date_of_birth: data.date_of_birth,
             gender: isGender,
+            country: data.country,
+            city: data.city,
+            state: data.state,
+            union: data.union,
             address: data.address,
             contact_number: data.contact_number,
+            alternative_phone_number: data.alternative_phone_number,
             image: imageHosting
 
         }
@@ -79,7 +84,7 @@ const UserProfile = () => {
     }
 
     return (
-        <div className='lg:h-[600px] font-mixed flex justify-center items-center bg-[#e0e0e0]'>
+        <div className='py-10 font-mixed flex justify-center items-center bg-[#e0e0e0]'>
             {
                 loading && (
                     <div className='h-40 flex justify-center items-center'>
@@ -113,25 +118,48 @@ const UserProfile = () => {
                         <div className='flex flex-col w-full'>
                             <label htmlFor="">Gender</label>
                             <p className='input w-full rounded-[5px]'>{userData?.gender}</p>
-
                         </div>
                     </div>
                     <div className='flex flex-col w-full'>
                         <label htmlFor="">Email</label>
                         <p className='input focus:outline-0 w-full'>{userData?.email && userData?.email}</p>
                     </div>
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+                        <div className='flex flex-col w-full'>
+                            <label htmlFor="">Country</label>
+                            <p className='input focus:outline-0 w-full' >{userData?.country}</p>
+                        </div>
+                        <div className='flex flex-col w-full'>
+                            <label htmlFor="">City</label>
+                            <p className='input focus:outline-0 w-full' >{userData?.city}</p>
+                        </div>
+                        <div className='flex flex-col w-full'>
+                            <label htmlFor="">State</label>
+                            <p className='input focus:outline-0 w-full' >{userData?.state}</p>
+                        </div>
+                        <div className='flex flex-col w-full'>
+                            <label htmlFor="">Union</label>
+                            <p className='input focus:outline-0 w-full' >{userData?.union}</p>
+                        </div>
+                    </div>
                     <div className='flex flex-col w-full'>
                         <label htmlFor="">Address</label>
                         <p className='input focus:outline-0 w-full' >{userData?.address}</p>
                     </div>
-                    <div className='flex flex-col w-full'>
-                        <label htmlFor="">Contact Number</label>
-                        <p className='input focus:outline-0 w-full'>{userData?.contact_number}</p>
+                    <div className='flex items-center gap-5'>
+                        <div className='flex flex-col w-full'>
+                            <label htmlFor="">Phone Number</label>
+                            <p className='input focus:outline-0 w-full'>{userData?.contact_number}</p>
+                        </div>
+                        <div className='flex flex-col w-full'>
+                            <label htmlFor="">Alternative Phone Number</label>
+                            <p className='input focus:outline-0 w-full'>{userData?.alternative_phone_number}</p>
+                        </div>
                     </div>
                 </div>
                 {/* Modal */}
                 <Modal open={open} onClose={onCloseModal} center>
-                    <div className='w-80'>
+                    <div className='w-96'>
                         <div className='flex justify-center items-center'>
                             <div className="relative w-28 h-28 mb-5 rounded-full">
                                 <img
@@ -168,6 +196,24 @@ const UserProfile = () => {
                                     </select>
                                 </div>
                             </div>
+                            <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+                                <div className='flex flex-col w-full'>
+                                    <label htmlFor="">Country</label>
+                                    <input {...register("country")} defaultValue={userData?.country} className='input focus:outline-0 w-full' type="text" />
+                                </div>
+                                <div className='flex flex-col w-full'>
+                                    <label htmlFor="">City</label>
+                                    <input {...register("city")} defaultValue={userData?.city} className='input focus:outline-0 w-full' type="text" />
+                                </div>
+                                <div className='flex flex-col w-full'>
+                                    <label htmlFor="">State</label>
+                                    <input {...register("state")} defaultValue={userData?.state} className='input focus:outline-0 w-full' type="text" />
+                                </div>
+                                <div className='flex flex-col w-full'>
+                                    <label htmlFor="">Union</label>
+                                    <input {...register("union")} defaultValue={userData?.union} className='input focus:outline-0 w-full' type="text" />
+                                </div>
+                            </div>
                             <div className='flex flex-col w-full'>
                                 <label htmlFor="">Address</label>
                                 <input {...register("address")} defaultValue={userData?.address} className='input focus:outline-0 w-full' type="text" />
@@ -175,6 +221,10 @@ const UserProfile = () => {
                             <div className='flex flex-col w-full'>
                                 <label htmlFor="">Contact Number</label>
                                 <input {...register("contact_number")} defaultValue={userData?.contact_number} className='input focus:outline-0 w-full' type="text" />
+                            </div>
+                            <div className='flex flex-col w-full'>
+                                <label htmlFor="">Alternative Phone Number</label>
+                                <input {...register("alternative_phone_number")} defaultValue={userData?.alternative_phone_number} className='input focus:outline-0 w-full' type="text" />
                             </div>
                             <div className='flex justify-center items-center'>
                                 <button className='btn bg-[#003A5A] text-white'>

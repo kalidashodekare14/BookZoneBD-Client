@@ -16,11 +16,7 @@ const CheckoutPayment = () => {
 
 
     const {
-        isEmpty,
-        totalUniqueItems,
         items,
-        updateItemQuantity,
-        cartTotal,
         removeItem,
     } = useCart();
 
@@ -49,11 +45,14 @@ const CheckoutPayment = () => {
                 image: userData?.image,
                 products,
                 addressInfo: {
-                    country: "Bangladesh",
+                    country: userData?.country,
                     address: userData?.address,
-                    postal_code: "5200",
+                    postal_code: "N/A",
                     phone_number: userData?.contact_number,
-                    state: "Dhaka",
+                    alternative_phone_number: userData?.alternative_phone_number,
+                    state: userData?.state,
+                    city: userData?.city,
+                    union: userData?.union
                 },
                 currency: "BDT",
                 status: "Pending"
@@ -62,8 +61,8 @@ const CheckoutPayment = () => {
             const res = await axiosSecure.post('/api/payment/payment_integration', paymentInfo)
             const redirecUrl = res.data.paymentUrl;
             if (res.data.success === true) {
-                window.location.replace(redirecUrl)
                 removeItem()
+                window.location.replace(redirecUrl)
             }
 
         } catch (error) {
@@ -86,7 +85,6 @@ const CheckoutPayment = () => {
             setIsSslcommerz(true)
             setIsCashOnDalivery(false)
         }
-
     }
 
     return (
@@ -94,45 +92,49 @@ const CheckoutPayment = () => {
             <div className='flex gap-20'>
                 <div className='w-[65%] space-y-5'>
                     {/* Shipping Address */}
-                    <div className='bg-[#f8f8f8] p-5'>
-                        <h1 className='text-xl'>Shipping Address</h1>
-                        <div className='w-full'>
-                            <div className='flex flex-col w-full'>
-                                <label htmlFor="">Name</label>
-                                <input className='input focus:outline-0 w-full' type="text" />
+                    {
+                        (!userData?.name || !userData?.email || !userData?.country || !userData?.address || !userData?.contact_number || !userData?.alternative_phone_number || !userData?.state || !userData?.city || !userData?.union) && (
+                            <div className='bg-[#f8f8f8] p-5'>
+                                <h1 className='text-xl'>Shipping Address</h1>
+                                <div className='w-full'>
+                                    <div className='flex flex-col w-full'>
+                                        <label htmlFor="">Name</label>
+                                        <input className='input focus:outline-0 w-full' defaultValue={userData?.name} type="text" />
+                                    </div>
+                                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-2 '>
+                                        <div className='flex flex-col gap-1 w-full'>
+                                            <label htmlFor="">Phone Number</label>
+                                            <input className='input focus:outline-0 w-full' defaultValue={userData?.contact_number} type="text" />
+                                        </div>
+                                        <div className='flex flex-col gap-1 w-full'>
+                                            <label htmlFor="">Alternative Phone Number</label>
+                                            <input className='input focus:outline-0 w-full' defaultValue={userData?.alternative_phone_number} type="text" />
+                                        </div>
+                                        <div className='flex flex-col gap-1 w-full'>
+                                            <label htmlFor="">Country</label>
+                                            <input className='input focus:outline-0 w-full' defaultValue={userData?.country} type="text" />
+                                        </div>
+                                        <div className='flex flex-col gap-1 w-full'>
+                                            <label htmlFor="">City</label>
+                                            <input className='input focus:outline-0 w-full' defaultValue={userData?.city} type="text" />
+                                        </div>
+                                        <div className='flex flex-col gap-1 w-full'>
+                                            <label htmlFor="">State</label>
+                                            <input className='input focus:outline-0 w-full' defaultValue={userData?.state} type="text" />
+                                        </div>
+                                        <div className='flex flex-col gap-1 w-full'>
+                                            <label htmlFor="">Union</label>
+                                            <input className='input focus:outline-0 w-full' defaultValue={userData?.union} type="text" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="">Address</label>
+                                        <textarea className='textarea focus:outline-0 w-full h-32' defaultValue={userData?.address} placeholder='বাসা/ফ্ল্যাট, পাড়া-মহল্লার নাম, পরিচিতি এলাকা উল্লেখ করুন' name="" id=""></textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div className='grid grid-cols-1 lg:grid-cols-2 gap-2 '>
-                                <div className='flex flex-col gap-1 w-full'>
-                                    <label htmlFor="">Phone Number</label>
-                                    <input className='input focus:outline-0 w-full' type="text" />
-                                </div>
-                                <div className='flex flex-col gap-1 w-full'>
-                                    <label htmlFor="">Alternative Phone Number</label>
-                                    <input className='input focus:outline-0 w-full' type="text" />
-                                </div>
-                                <div className='flex flex-col gap-1 w-full'>
-                                    <label htmlFor="">Country</label>
-                                    <input className='input focus:outline-0 w-full' type="text" />
-                                </div>
-                                <div className='flex flex-col gap-1 w-full'>
-                                    <label htmlFor="">City</label>
-                                    <input className='input focus:outline-0 w-full' type="text" />
-                                </div>
-                                <div className='flex flex-col gap-1 w-full'>
-                                    <label htmlFor="">State</label>
-                                    <input className='input focus:outline-0 w-full' type="text" />
-                                </div>
-                                <div className='flex flex-col gap-1 w-full'>
-                                    <label htmlFor="">Union</label>
-                                    <input className='input focus:outline-0 w-full' type="text" />
-                                </div>
-                            </div>
-                            <div>
-                                <label htmlFor="">Address</label>
-                                <textarea className='textarea focus:outline-0 w-full h-32' placeholder='বাসা/ফ্ল্যাট, পাড়া-মহল্লার নাম, পরিচিতি এলাকা উল্লেখ করুন' name="" id=""></textarea>
-                            </div>
-                        </div>
-                    </div>
+                        )
+                    }
 
                     {/* Payment method */}
                     <div className='bg-white p-5'>
@@ -175,7 +177,7 @@ const CheckoutPayment = () => {
                         </div>
                     </div>
                 </div>
-                <div className='fixed right-20 w-96 h-52 border border-[#bbb] p-3 bg-[#f8f8f8] '>
+                <div className='right-20 w-96 h-52 border border-[#bbb] p-3 bg-[#f8f8f8] '>
                     <div >
                         <p>Enter Promo Code</p>
                         <div className='flex items-center'>
