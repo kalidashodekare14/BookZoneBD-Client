@@ -1,12 +1,12 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axiosPublic from "../../utils/axiosPublic";
 
 
 export const totalPublicBook = createAsyncThunk(
     "totalBooks/totalPublicBook",
-    async () => {
-        const res = await axiosPublic.get('/api/public/all_books')
-        console.log('checking books data', res.data.data)
+    async ({ params }) => {
+        const res = await axiosPublic.get(`/api/public/all_books?${params}`)
+        console.log('checking books data', res.data.data.books)
         return res.data.data
     }
 )
@@ -16,6 +16,10 @@ const publicTotalBooks = createSlice({
     name: "books",
     initialState: {
         allBooks: [],
+        filteringData: [],
+        totalPages: 0,
+        totalItems: 0,
+        currentPage: 0,
         loading: false,
         error: null
     },
@@ -27,7 +31,11 @@ const publicTotalBooks = createSlice({
             })
             .addCase(totalPublicBook.fulfilled, (state, action) => {
                 state.loading = false;
-                state.allBooks = action.payload;
+                state.allBooks = action.payload.books;
+                state.filteringData = action.payload.filteringData;
+                state.totalPages = action.payload.totalPages;
+                state.totalItems = action.payload.totalItems;
+                state.currentPage = action.payload.currentPage;
             })
             .addCase(totalPublicBook.rejected, (state, action) => {
                 state.loading = false;

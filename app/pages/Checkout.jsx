@@ -165,9 +165,10 @@ const Checkout = () => {
                             </div>
                         </div>
                         <div className='flex justify-center items-center mt-5'>
-                            <Link to={"/checkout_payment"} >
-                                <button className='btn w-52 bg-[#003a5a] text-white'>Proceed to checkout</button>
+                            <Link to={isEmpty ? "" : "/checkout_payment"} >
+                                <button disabled={isEmpty} className='btn w-52 bg-[#003a5a] text-white'>Proceed to checkout</button>
                             </Link>
+
                         </div>
                     </div>
                 </div>
@@ -204,8 +205,8 @@ const Checkout = () => {
                         </div>
                     </form>
                 </Modal>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 

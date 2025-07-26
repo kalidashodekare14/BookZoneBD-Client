@@ -1,6 +1,5 @@
 @import "react-input-range/lib/css/index.css";
 
-
 .filter-shadaw {
     box-shadow: 1px 1px 4px black;
 }
@@ -27,4 +26,17 @@
 .input-range__label--max,
 .input-range__label {
     display: none;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    gap: 10px;
+}
+
+.active {}
+
+.page_item {
+    
 }

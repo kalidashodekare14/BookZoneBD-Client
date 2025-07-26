@@ -15,7 +15,10 @@ export default [
     layout("./ProtectedRoute/AuthProtected.jsx", [
         route("profile", './pages/UserProfile.jsx'),
         route('checkout', './pages/Checkout.jsx'),
-        route('checkout_payment', './pages/CheckoutPayment.jsx')
+        route('checkout_payment', './pages/CheckoutPayment.jsx'),
+        route("payment_success", "./pages/PaymentSuccess.jsx"),
+        route("payment_fail", "./pages/PaymentFail.jsx"),
+        route("payment_cancel", "./pages/PaymentCancel.jsx"),
     ]),
 
     // Dashboard 

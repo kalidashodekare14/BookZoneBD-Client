@@ -11,6 +11,7 @@ import { Link, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { totalPublicBook } from '../../Redux/slice/publicTotalBooks'
 import { OrbitProgress } from 'react-loading-indicators';
+import ReactPaginate from 'react-paginate';
 
 
 const totalBook = [
@@ -229,18 +230,45 @@ const TotalBook = () => {
     const queryParams = new URLSearchParams(location.search);
     const searchInput = queryParams.get('search');
     const { addItem, items } = useCart();
-    const { allBooks, loading, error } = useSelector((state) => state.publicAllBooks);
+    const { allBooks, filteringData, loading, totalPages, error } = useSelector((state) => state.publicAllBooks);
     const dispatch = useDispatch();
+
+    // // pagination
+    const [currentPage, setCurrentPage] = useState(0);
+    const limit = 10
+
+
+
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected)
+    }
 
 
     const handleToggele = () => {
         setToggle(!toggle)
     }
 
+    console.log('current page', currentPage)
+    console.log('price', priceFilter)
+
+
 
     useEffect(() => {
-        dispatch(totalPublicBook());
-    }, [])
+        const params = new URLSearchParams({
+            search: searchInput || "",
+            minPrice: priceFilter.min,
+            maxPrice: priceFilter.max,
+            minDiscount: discountFilter.min,
+            maxDiscount: discountFilter.max,
+            rating: ratingFilter || "",
+            authors: selectedAuthors.join(','),
+            publishers: selectedPublisher.join(','),
+            page: currentPage,
+            limit: limit
+        })
+
+        dispatch(totalPublicBook({ params: params.toString() }));
+    }, [searchInput, priceFilter, discountFilter, ratingFilter, selectedAuthors, selectedPublisher, currentPage, limit])
 
 
     const handleAuthorCheckBox = (author) => {
@@ -259,29 +287,6 @@ const TotalBook = () => {
         }
     }
 
-
-    const categoryFiltering = allBooks.filter((product) => {
-
-        const matchedSearchInput = searchInput ? (
-            product.title.toLowerCase().includes(searchInput.toLowerCase())
-
-        ) : true
-
-
-        const discountPrice = product.price * product.discount / 100
-        const matchedPriceRange = discountPrice >= priceFilter.min && discountPrice <= priceFilter.max
-        const matchedDiscountRange = product.discount >= discountFilter.min && product.discount <= discountFilter.max
-        // rating filtering
-        const matchedRating = ratingFilter ? product.rating >= ratingFilter : true;
-        // author filtering
-        const mathcedAuthor = selectedAuthors.length === 0 || selectedAuthors.includes(product.author);
-        // publisher filtering
-        const mathcedPublisher = selectedPublisher.length === 0 || selectedPublisher.includes(product.publisher);
-        return (
-            matchedSearchInput && matchedPriceRange && matchedDiscountRange && mathcedAuthor && matchedRating && mathcedPublisher
-        )
-
-    })
 
 
     if (loading) {
@@ -358,16 +363,22 @@ const TotalBook = () => {
                                 <div className="collapse-title font-semibold">Author</div>
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
-                                        [...new Set(allBooks.map(book => book.author))].map((author, index) => (
-                                            <div className='flex items-center gap-2 text-[16px]'>
-                                                <input
-                                                    className=''
-                                                    checked={selectedAuthors.includes(author)}
-                                                    onChange={() => handleAuthorCheckBox(author)}
-                                                    type="checkbox" />
-                                                <p>{author}</p>
-                                            </div>
-                                        ))
+                                        allBooks.length !== 0 ? (
+                                            [...new Set(filteringData?.map(book => book.author))].map((author, index) => (
+                                                <div className='flex items-center gap-2 text-[16px]'>
+                                                    <input
+                                                        className=''
+                                                        checked={selectedAuthors.includes(author)}
+                                                        onChange={() => handleAuthorCheckBox(author)}
+                                                        type="checkbox" />
+                                                    <p>{author}</p>
+                                                </div>
+                                            )
+
+                                            )
+                                        ) : (
+                                            <p>No Data</p>
+                                        )
                                     }
                                 </div>
                             </div>
@@ -376,16 +387,20 @@ const TotalBook = () => {
                                 <div className="collapse-title font-semibold">Publisher</div>
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
-                                        [...new Set(allBooks.map(book => book.publisher))].map((publisher, index) => (
-                                            <div className='flex items-center gap-2 text-[16px]'>
-                                                <input
-                                                    className=''
-                                                    checked={selectedPublisher.includes(publisher)}
-                                                    onChange={() => handlePublisherCheckBox(publisher)}
-                                                    type="checkbox" />
-                                                <p>{publisher}</p>
-                                            </div>
-                                        ))
+                                        allBooks.length !== 0 ? (
+                                            [...new Set(filteringData?.map(book => book.publisher))].map((publisher, index) => (
+                                                <div className='flex items-center gap-2 text-[16px]'>
+                                                    <input
+                                                        className=''
+                                                        checked={selectedPublisher.includes(publisher)}
+                                                        onChange={() => handlePublisherCheckBox(publisher)}
+                                                        type="checkbox" />
+                                                    <p>{publisher}</p>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p>No Data</p>
+                                        )
                                     }
                                 </div>
                             </div>
@@ -408,8 +423,8 @@ const TotalBook = () => {
                 </div>
                 {/* all data */}
                 <div className='relative mx-5 lg:mx-0  grid grid-cols-1 z-20  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
-                    {
-                        categoryFiltering.map(book => (
+                    {allBooks.length !== 0 ? (
+                        allBooks.map(book => (
                             <div key={book._id} className=' border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
                                 <img className='w-full h-60 px-5' src={book.image} alt="" />
                                 <div className='mt-3 space-y-2'>
@@ -434,8 +449,40 @@ const TotalBook = () => {
 
                             </div>
                         ))
+                    ) : (
+                        <div>
+                            <div className='h-[500px] flex justify-center items-center'>
+                                <p>No Data</p>
+                            </div>
+                        </div>
+                    )
+
                     }
                 </div>
+            </div>
+            <div className='flex justify-center items-center my-10'>
+                {
+                    allBooks.length !== 0 ? (
+                        <ReactPaginate
+                            forcePage={currentPage}
+                            previousLabel={'← Previous'}
+                            nextLabel={'Next →'}
+                            breakLabel={'...'}
+                            pageCount={totalPages}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={3}
+                            onPageChange={handlePageClick}
+                            containerClassName={'pagination'}
+                            activeClassName={'bg-[#003a5a] text-white'}
+                            pageClassName={'px-3 py-2 border cursor-pointer'}
+                            previousClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
+                            nextClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
+                            breakClassName={'px-3 py-2 border cursor-pointer'}
+                        />
+                    ) : (
+                        <p>No pagination</p>
+                    )
+                }
             </div>
         </div >
     );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cashImage from '../../public/cash.png'
 import sslcommerzImage from '../../public/sllcommerz.png'
 import { useCart } from 'react-use-cart';
@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { profileDataUpdate } from '../Redux/slice/profileSlice';
 import useAuth from '../hooks/useAuth';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 const CheckoutPayment = () => {
 
@@ -21,6 +23,8 @@ const CheckoutPayment = () => {
     const [isAddressText, setIsAddressText] = useState(userData?.address);
     const dispatch = useDispatch();
     const { user } = useAuth();
+    const navigate = useNavigate();
+
 
     const {
         register,
@@ -30,9 +34,19 @@ const CheckoutPayment = () => {
     } = useForm()
 
     const {
+        emptyCart,
         items,
         removeItem,
+        isEmpty
     } = useCart();
+
+
+    // useEffect(() => {
+    //     if (isEmpty) {
+    //         return navigate('/checkout')
+    //     }
+    // }, [isEmpty, navigate])
+
 
     const discountedCartTotal = items.reduce((total, item) => {
         const discountedPrice = item.price - (item.price * item.discount / 100);
@@ -41,6 +55,56 @@ const CheckoutPayment = () => {
 
     const salesTax = discountedCartTotal * salesTaxRate;
     const grandTotal = discountedCartTotal + salesTax
+
+    const handleCashOnDelivarySystem = async () => {
+        try {
+            const products = items.map(product => ({
+                product_name: product.title,
+                product_category: product.category,
+                prodcut_quantity: product.quantity,
+                product_image: product.image
+            }))
+
+            const paymentInfo = {
+                customar_name: userData?.name,
+                customar_email: userData?.email,
+                amount: grandTotal,
+                image: userData?.image,
+                products,
+                addressInfo: {
+                    country: userData?.country,
+                    address: userData?.address,
+                    postal_code: "N/A",
+                    phone_number: userData?.contact_number,
+                    alternative_phone_number: userData?.alternative_phone_number,
+                    state: userData?.state,
+                    city: userData?.city,
+                    union: userData?.union
+                },
+                currency: "BDT",
+                status: "Pending"
+            }
+            setPaymentLoading(true);
+            const res = await axiosSecure.post('/api/payment/cash_on_payment', paymentInfo)
+            if (res.data.success === true) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Your order successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate('/')
+                emptyCart()
+            }
+
+        } catch (error) {
+            console.log('check error', error)
+            setPaymentLoading(false)
+        } finally {
+            setPaymentLoading(false)
+        }
+    }
 
     const handlePaymentSystem = async () => {
         try {
@@ -75,8 +139,9 @@ const CheckoutPayment = () => {
             const res = await axiosSecure.post('/api/payment/payment_integration', paymentInfo)
             const redirecUrl = res.data.paymentUrl;
             if (res.data.success === true) {
-                removeItem()
+                emptyCart()
                 window.location.replace(redirecUrl)
+
             }
 
         } catch (error) {
@@ -196,7 +261,7 @@ const CheckoutPayment = () => {
                         </div>
                         <div className='flex justify-center items-center my-5'>
                             {
-                                isCashOnDalivery && <button type={shipppingAddress ? "submit" : "button"} className='btn w-40 p-5 bg-[#003a5a] text-white'>Confirm Order</button>
+                                isCashOnDalivery && <button type={shipppingAddress ? "submit" : "button"} onClick={handleCashOnDelivarySystem} className='btn w-40 p-5 bg-[#003a5a] text-white'>Confirm Order</button>
                             }
                             {
                                 isSslcommerz && (
