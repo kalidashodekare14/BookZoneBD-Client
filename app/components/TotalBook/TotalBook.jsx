@@ -237,6 +237,7 @@ const TotalBook = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const limit = 10
 
+    console.log('checking currentPage', currentPage)
 
 
     const handlePageClick = (data) => {
@@ -247,9 +248,6 @@ const TotalBook = () => {
     const handleToggele = () => {
         setToggle(!toggle)
     }
-
-    console.log('current page', currentPage)
-    console.log('price', priceFilter)
 
 
 
@@ -263,7 +261,7 @@ const TotalBook = () => {
             rating: ratingFilter || "",
             authors: selectedAuthors.join(','),
             publishers: selectedPublisher.join(','),
-            page: currentPage,
+            page: currentPage + 1,
             limit: limit
         })
 
