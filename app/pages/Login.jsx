@@ -126,7 +126,9 @@ const Login = () => {
                         <input type="checkbox" defaultChecked className="checkbox" />
                         <p className='text-[#5a5a5a]'>Remember me</p>
                     </div>
-                    <p className='text-[#3BB77E] cursor-pointer'>Forget Password?</p>
+                    <Link to={'/forget_password'} >
+                        <p className='text-[#3BB77E] cursor-pointer'>Forget Password?</p>
+                    </Link>
                 </div>
                 <button type='submit' className='btn w-full text-[16px] bg-[#003A5A] text-white'>
                     {loading ? <span class="loader"></span> : "Login"}

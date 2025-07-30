@@ -11,6 +11,7 @@ export default [
     route("book/:book_id", "./pages/ViewDetails.jsx"),
     route("login", "./pages/Login.jsx"),
     route("signup", "./pages/SignUp.jsx"),
+    route('email_varify', './pages/PasswordResetForm.jsx'),
     // Auth Protected
     layout("./ProtectedRoute/AuthProtected.jsx", [
         route("profile", './pages/UserProfile.jsx'),

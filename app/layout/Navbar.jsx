@@ -1,5 +1,5 @@
 import '../i18n';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars, FaRegUser } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { GrFavorite } from "react-icons/gr";
@@ -10,6 +10,9 @@ import './Navbar.css'
 import useAuth from '../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { useCart } from 'react-use-cart';
+import logo from '../../public/logo.png'
+import axiosPublic from '../utils/axiosPublic';
+import axiosSecure from '../utils/axiosSecure';
 
 const Navbar = () => {
 
@@ -24,8 +27,21 @@ const Navbar = () => {
     const [searchInput, setSearchInput] = useState(null);
     const navigate = useNavigate();
     const { totalUniqueItems } = useCart()
+    const [userImage, setUserImage] = useState("")
 
-    
+
+    // useEffect(() => {
+    //     const navImage = async () => {
+    //         try {
+    //             const userEmail = { email: user?.email }
+    //             const res = await axiosSecure.get(`/api/userInfo/nav_info/${user?.email}`);
+    //             console.log('checking image', res.data)
+    //         } catch (error) {
+    //             console.log('error navbar')
+    //         }
+    //     }
+    //     navImage()
+    // }, [user])
 
     const handleNavToggle = () => {
         setToggle(!toggle)
@@ -102,7 +118,8 @@ const Navbar = () => {
             {/*  */}
             <div className="flex items-center justify-between py-5">
                 <div className="pr-10">
-                    <h1 className="lg:text-3xl text-2xl">BookShopBD</h1>
+                    {/* <h1 className="lg:text-3xl text-2xl">BookShopBD</h1> */}
+                    <img className='w-52' src={logo} alt="" />
                 </div>
                 <form onSubmit={handleSearch} className="hidden relative w-[50%] lg:flex items-center">
                     <input onChange={(e) => setSearchInput(e.target.value)} value={searchInput} className="w-full bg-white text-black focus:outline-0 px-5 py-3 rounded-full border border-[#bbb]" placeholder="Search" type="text" />

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosPublic from "../../utils/axiosPublic";
 
 
@@ -6,7 +6,7 @@ export const totalPublicBook = createAsyncThunk(
     "totalBooks/totalPublicBook",
     async ({ params }) => {
         const res = await axiosPublic.get(`/api/public/all_books?${params}`)
-        console.log('checking books data', res.data.data.books)
+        console.log('checking recent books data', res.data.data.books)
         return res.data.data
     }
 )

@@ -12,6 +12,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { totalPublicBook } from '../../Redux/slice/publicTotalBooks'
 import { OrbitProgress } from 'react-loading-indicators';
 import ReactPaginate from 'react-paginate';
+import axiosPublic from '../../utils/axiosPublic';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 const totalBook = [
@@ -232,13 +235,13 @@ const TotalBook = () => {
     const { addItem, items } = useCart();
     const { allBooks, filteringData, loading, totalPages, error } = useSelector((state) => state.publicAllBooks);
     const dispatch = useDispatch();
-
+    const cardLoading = 10
     // // pagination
     const [currentPage, setCurrentPage] = useState(0);
     const limit = 10
 
-    console.log('checking currentPage', currentPage)
 
+    console.log('checking all data', allBooks)
 
     const handlePageClick = (data) => {
         setCurrentPage(data.selected)
@@ -248,6 +251,8 @@ const TotalBook = () => {
     const handleToggele = () => {
         setToggle(!toggle)
     }
+
+
 
 
 
@@ -264,7 +269,6 @@ const TotalBook = () => {
             page: currentPage + 1,
             limit: limit
         })
-
         dispatch(totalPublicBook({ params: params.toString() }));
     }, [searchInput, priceFilter, discountFilter, ratingFilter, selectedAuthors, selectedPublisher, currentPage, limit])
 
@@ -318,7 +322,7 @@ const TotalBook = () => {
                 )}
 
                 {/* filtering layout */}
-                <div className={`${toggle ? "translate-x-0 left-0 duration-300" : "-translate-x-full duration-300"}  px-5 lg:mx-0 absolute -left-10 lg:translate-x-0  lg:static z-30  bg-white w-[85%] p-5 pl-0 pt-0 lg:w-96 lg:h-screen space-y-3`}>
+                <div className={`${toggle ? "translate-x-0 left-0 duration-300" : "-translate-x-full duration-300"}  px-5 lg:mx-0 absolute -left-10 lg:translate-x-0  lg:static z-30  bg-white w-[85%] p-5 pl-0 pt-0 lg:w-96  space-y-3`}>
                     <div className='filter-shadaw pt-2 pb-2 rounded-xl'>
                         <div className='border-b'>
                             <p className='text-xl py-4 pl-2 border-[#bbb] font-semibold'>Shop by Price</p>
@@ -361,7 +365,7 @@ const TotalBook = () => {
                                 <div className="collapse-title font-semibold">Author</div>
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
-                                        allBooks.length !== 0 ? (
+                                        filteringData.length !== 0 ? (
                                             [...new Set(filteringData?.map(book => book.author))].map((author, index) => (
                                                 <div className='flex items-center gap-2 text-[16px]'>
                                                     <input
@@ -385,7 +389,7 @@ const TotalBook = () => {
                                 <div className="collapse-title font-semibold">Publisher</div>
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
-                                        allBooks.length !== 0 ? (
+                                        filteringData.length !== 0 ? (
                                             [...new Set(filteringData?.map(book => book.publisher))].map((publisher, index) => (
                                                 <div className='flex items-center gap-2 text-[16px]'>
                                                     <input
@@ -420,43 +424,63 @@ const TotalBook = () => {
                     </div>
                 </div>
                 {/* all data */}
-                <div className='relative mx-5 lg:mx-0  grid grid-cols-1 z-20  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
-                    {allBooks.length !== 0 ? (
-                        allBooks.map(book => (
-                            <div key={book._id} className=' border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
-                                <img className='w-full h-60 px-5' src={book.image} alt="" />
-                                <div className='mt-3 space-y-2'>
-                                    <h1 className='font-semibold'>{book.title}</h1>
-                                    <p>{book.author}</p>
-                                    <Rating
-                                        style={{ maxWidth: 100 }}
-                                        value={book.rating}
-                                        readOnly
-                                    />
-                                    <div className='flex justify-between items-center'>
-                                        <p>৳{book.price * book.discount / 100}</p>
-                                        <p><del>৳{book.price}</del></p>
+                {allBooks.length !== 0 ? (
+                    <div className='relative mx-5 lg:mx-0  grid grid-cols-1 z-20  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
+                        {
+                            allBooks.map(book => (
+                                <div key={book._id} className='border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
+                                    <img className='w-full h-60 px-5' src={book.image} alt="" />
+                                    <div className='mt-3 space-y-2'>
+                                        <h1 className='font-semibold'>{book.title}</h1>
+                                        <p>{book.author}</p>
+                                        <Rating
+                                            style={{ maxWidth: 100 }}
+                                            value={book.rating}
+                                            readOnly
+                                        />
+                                        <div className='flex justify-between items-center'>
+                                            <p>৳{book.price * book.discount / 100}</p>
+                                            <p><del>৳{book.price}</del></p>
+                                        </div>
+                                        <div className='flex items-center'>
+                                            <Link to={`/book/${book._id}`}>
+                                                <button className='btn border-[#003A5A] text-black hover:text-white'>View Details</button>
+                                            </Link>
+                                            <button onClick={() => addItem({ ...book, id: book._id })} className='btn bg-[#003A5A] text-white'>Add to cart</button>
+                                        </div>
                                     </div>
-                                    <div className='flex items-center'>
-                                        <Link to={`/book/${book._id}`}>
-                                            <button className='btn border-[#003A5A] text-black hover:text-white'>View Details</button>
-                                        </Link>
-                                        <button onClick={() => addItem({ ...book, id: book._id })} className='btn bg-[#003A5A] text-white'>Add to cart</button>
+
+                                </div>
+                            ))
+                        }
+                    </div>
+                ) : (
+                    <div className='w-full grid grid-cols-1 lg:grid-cols-4'>
+                        {[...Array(cardLoading)].map((_, index) => (
+                            <div className='border border-[#bbb] w-60 p-5'>
+                                <div className="flex w-52 flex-col gap-4">
+                                    <div className="skeleton h-52 w-full"></div>
+                                    <div className="skeleton h-4 w-40"></div>
+                                    <div className="skeleton h-4 w-32"></div>
+                                    <div className="skeleton h-4 w-40"></div>
+                                    <div className='flex items-center gap-5'>
+                                        <div className="skeleton h-4 w-full"></div>
+                                        <div className="skeleton h-4 w-full"></div>
+                                    </div>
+                                    <div className='flex items-center gap-5'>
+                                        <div className="skeleton h-8 w-full"></div>
+                                        <div className="skeleton h-8 w-full"></div>
                                     </div>
                                 </div>
-
                             </div>
-                        ))
-                    ) : (
-                        <div>
-                            <div className='h-[500px] flex justify-center items-center'>
-                                <p>No Data</p>
-                            </div>
-                        </div>
-                    )
+                        ))}
+                    </div>
 
-                    }
-                </div>
+
+                )}
+
+
+
             </div>
             <div className='flex justify-center items-center my-10'>
                 {
@@ -478,7 +502,9 @@ const TotalBook = () => {
                             breakClassName={'px-3 py-2 border cursor-pointer'}
                         />
                     ) : (
-                        <p>No pagination</p>
+                        <div>
+
+                        </div>
                     )
                 }
             </div>
