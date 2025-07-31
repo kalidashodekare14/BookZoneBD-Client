@@ -9,6 +9,7 @@ import adminVerify from '../Redux/slice/adminSlice'
 import dashboardTotalBooks from '../Redux/slice/dashboardSlice/allBookSlice'
 import dashboardTotalUsers from '../Redux/slice/dashboardSlice/allUserSlice'
 import dashboardTotalInfo from '../Redux/slice/dashboardSlice/totalInfoSlice'
+import dashboardTotalAuthor from '../Redux/slice/dashboardSlice/authorsManageSlice'
 
 const store = configureStore({
     reducer: {
@@ -22,7 +23,8 @@ const store = configureStore({
         // dashboard
         totalInfo: dashboardTotalInfo,
         totalBooks: dashboardTotalBooks,
-        totalUser: dashboardTotalUsers
+        totalUser: dashboardTotalUsers,
+        totalAuthors: dashboardTotalAuthor,
     }
 })
 

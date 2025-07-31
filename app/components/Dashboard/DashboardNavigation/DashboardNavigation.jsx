@@ -4,7 +4,7 @@ import { FaCartFlatbedSuitcase } from 'react-icons/fa6'
 import { GiStarsStack } from 'react-icons/gi'
 import { IoIosHome } from 'react-icons/io'
 import { IoBookSharp } from 'react-icons/io5'
-import { MdDashboard } from 'react-icons/md'
+import { MdDashboard, MdManageAccounts } from 'react-icons/md'
 import { Link, useLocation } from 'react-router'
 
 const DashboardNavigation = ({ isToggle }) => {
@@ -13,43 +13,49 @@ const DashboardNavigation = ({ isToggle }) => {
 
     const dashboardLinks = [
         {
-            id: "1",
+            id: 1,
             name: "Dashboard",
             path: "/dashboard",
             icon: <MdDashboard />
         },
         {
-            id: "2",
+            id: 2,
             name: "All Book",
             path: "/dashboard/all_book",
             icon: <IoBookSharp />
         },
         {
-            id: "3",
+            id: 3,
             name: "Manage Users",
             path: "/dashboard/manage_users",
             icon: <FaUsers />
         },
         {
-            id: "3",
+            id: 4,
             name: "Author Create",
             path: "/dashboard/author-create",
             icon: <FaUserPlus />
         },
         {
-            id: "4",
+            id: 5,
+            name: "Author Manage",
+            path: "/dashboard/author-manage",
+            icon: <MdManageAccounts className='text-xl' />
+        },
+        {
+            id: 6,
             name: "Add Book",
             path: "/dashboard/add_book",
             icon: <BiSolidBookAdd />
         },
         {
-            id: "5",
+            id: 7,
             name: "View Order",
             path: "/dashboard/view_order",
             icon: <FaCartFlatbedSuitcase />
         },
         {
-            id: "6",
+            id: 8,
             name: "View Reviews",
             path: "/dashboard/view-review",
             icon: <GiStarsStack />
