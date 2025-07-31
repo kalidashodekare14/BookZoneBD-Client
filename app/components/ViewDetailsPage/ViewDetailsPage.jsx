@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { publicViewBooks } from '../../Redux/slice/publicDataSlice/viewDetailsBookSlice'
 import { useCart } from 'react-use-cart';
 import { OrbitProgress } from 'react-loading-indicators';
+import { FaCheckCircle } from 'react-icons/fa';
 
 const ViewDetailsPage = () => {
 
@@ -291,8 +292,8 @@ const ViewDetailsPage = () => {
                 <div className='space-y-3 w-[40%]'>
                     <h1 className='text-xl'>{bookDetails?.title}</h1>
                     <div className='flex items-center gap-2'>
-                        <img className='w-16 h-16 rounded-full border p-2' src={"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSuFnh8mh6WfiAXU0jGmRiP6EXFQK5PefgnEiQIFNLtsMKGfXby9-mC7zefO-w8aTjLLzQdprFK7byzNd-SWuNbA"} alt="" />
-                        <p>{bookDetails?.author}</p>
+                        {/* <img className='w-16 h-16 rounded-full border p-2' src={"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSuFnh8mh6WfiAXU0jGmRiP6EXFQK5PefgnEiQIFNLtsMKGfXby9-mC7zefO-w8aTjLLzQdprFK7byzNd-SWuNbA"} alt="" /> */}
+                        <p>By: {bookDetails?.author}</p>
                     </div>
                     <Rating
                         style={{ maxWidth: 100 }}
@@ -303,16 +304,20 @@ const ViewDetailsPage = () => {
                     <div className="">
                         <table className=" text-left w-60">
                             <tr>
-                                <td className='font-semibold'>Publisher</td>
+                                <td className='font-semibold'>Category :</td>
+                                <td>{bookDetails?.category}</td>
+                            </tr>
+                            <tr>
+                                <td className='font-semibold'>Publisher :</td>
                                 <td>{bookDetails?.publisher}</td>
                             </tr>
+
                             <tr>
-                                <td className='font-semibold'>Language</td>
-                                <td>বাংলা</td>
-                            </tr>
-                            <tr>
-                                <td className='font-semibold'>Stock</td>
-                                <td>{bookDetails?.stock}</td>
+                                <td className='font-semibold flex items-center gap-2'>
+                                    <span><FaCheckCircle className='text-[#57d500]' /></span>
+                                    <span>In Stock :</span>
+                                </td>
+                                <td>{bookDetails?.stock}+ copies available</td>
                             </tr>
                         </table>
                     </div>
