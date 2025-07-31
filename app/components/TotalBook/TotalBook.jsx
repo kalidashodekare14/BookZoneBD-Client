@@ -482,7 +482,7 @@ const TotalBook = () => {
 
 
             </div>
-            <div className='flex justify-center items-center my-10'>
+            <div className='flex justify-center items-center my-10 px-2'>
                 {
                     allBooks.length !== 0 ? (
                         <ReactPaginate
@@ -494,7 +494,7 @@ const TotalBook = () => {
                             marginPagesDisplayed={2}
                             pageRangeDisplayed={3}
                             onPageChange={handlePageClick}
-                            containerClassName={'pagination'}
+                            containerClassName={'flex flex-wrap items-center gap-2'}
                             activeClassName={'bg-[#003a5a] text-white'}
                             pageClassName={'px-3 py-2 border cursor-pointer'}
                             previousClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}

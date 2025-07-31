@@ -3,8 +3,8 @@ import axiosSecure from "../../../utils/axiosSecure";
 
 export const dashboardTotalBooks = createAsyncThunk(
     "totalBooks/dashboardTotalBooks",
-    async () => {
-        const res = await axiosSecure.get('/api/dashboard/total_books');
+    async ({ paramsData }) => {
+        const res = await axiosSecure.get(`/api/dashboard/total_books?${paramsData}`);
         return res.data.data
     }
 )
@@ -14,6 +14,7 @@ const dashboardAllBook = createSlice({
     name: "allBook",
     initialState: {
         totalBook: [],
+        totalPages: 0,
         loading: false,
         error: null
     },
@@ -25,7 +26,8 @@ const dashboardAllBook = createSlice({
             })
             .addCase(dashboardTotalBooks.fulfilled, (state, action) => {
                 state.loading = false;
-                state.totalBook = action.payload;
+                state.totalBook = action.payload.books;
+                state.totalPages = action.payload.totalPages;
             })
             .addCase(dashboardTotalBooks.rejected, (state, action) => {
                 state.loading = false;

@@ -28,12 +28,12 @@
     display: none;
 }
 
-.pagination {
+/* .pagination {
     display: flex;
     align-items: center;
     justify-items: center;
     gap: 10px;
-}
+} */
 
 .active {}
 

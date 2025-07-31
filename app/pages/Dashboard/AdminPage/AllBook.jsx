@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import { dashboardTotalBooks } from '../../../Redux/slice/dashboardSlice/allBookSlice'
 import { OrbitProgress } from 'react-loading-indicators';
+import ReactPaginate from 'react-paginate';
+import { CiSearch } from "react-icons/ci";
+
 const allBookData = [
     {
         "image": "https://i.ibb.co/gMg3m1Zw/potherpachali.png",
@@ -169,12 +172,36 @@ const allBookData = [
 
 const AllBook = () => {
 
-    const { totalBook, loading, error } = useSelector((state) => state.totalBooks);
+    const { totalBook, totalPages, loading, error } = useSelector((state) => state.totalBooks);
     const dispatch = useDispatch();
+    const [currentPage, setCurrentPage] = useState(0);
+    const limit = 10;
+    const [isSearch, setIsSearch] = useState(null);
+
+    console.log('checking currentpage', currentPage)
 
     useEffect(() => {
-        dispatch(dashboardTotalBooks());
-    }, [])
+        const paramsData = new URLSearchParams(
+            {
+                page: currentPage + 1,
+                limit: limit,
+                search: isSearch || ""
+            }
+        )
+        dispatch(dashboardTotalBooks({ paramsData }));
+    }, [currentPage, isSearch, limit])
+
+
+    const handleSearch = (event) => {
+        event.preventDefault();
+        const search = event.target.search.value;
+        setIsSearch(search)
+    }
+
+
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected)
+    }
 
     if (loading) {
         return <div className='h-[550px] flex flex-col justify-center items-center'>
@@ -187,9 +214,12 @@ const AllBook = () => {
         <div className='px-5 py-5 bg-[#E0E0E0] font-mixed space-y-3'>
             <div className='flex justify-between items-center bg-white p-3 rounded-xl'>
                 <p className='font-semibold'>All Book</p>
-                <div>
-                    <input className='input focus:outline-0 border-[#bbb] w-60' placeholder='Search...' type="text" />
-                </div>
+                <form onSubmit={handleSearch} className='flex items-center border border-[#bbb] rounded-[10px] p-2'>
+                    <input className='focus:outline-0 border-[#bbb] w-60' name='search' placeholder='Search...' type="text" />
+                    <button type='submit'>
+                        <CiSearch className='cursor-pointer text-xl' />
+                    </button>
+                </form>
             </div>
             <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
                 <table className="table">
@@ -226,6 +256,24 @@ const AllBook = () => {
                         }
                     </tbody>
                 </table>
+                <div className='my-10 flex justify-center items-center'>
+                    <ReactPaginate
+                        forcePage={currentPage}
+                        previousLabel={'← Previous'}
+                        nextLabel={'Next →'}
+                        breakLabel={'...'}
+                        pageCount={totalPages}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={3}
+                        onPageChange={handlePageClick}
+                        containerClassName={'flex flex-wrap items-center gap-2'}
+                        activeClassName={'bg-[#003a5a] text-white'}
+                        pageClassName={'px-3 py-2 border cursor-pointer'}
+                        previousClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
+                        nextClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
+                        breakClassName={'px-3 py-2 border cursor-pointer'}
+                    />
+                </div>
             </div>
         </div>
     );
