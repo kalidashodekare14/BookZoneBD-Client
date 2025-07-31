@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import profileSlice from '../Redux/slice/profileSlice'
-import publicTotalBooks from '../Redux/slice/publicTotalBooks'
-import publicDetailBooks from '../Redux/slice/viewDetailsBookSlice'
+import publicTotalBooks from '../Redux/slice/publicDataSlice/publicTotalBooks'
+import publicDetailBooks from '../Redux/slice/publicDataSlice/viewDetailsBookSlice'
+import specialDiscount from '../Redux/slice/publicDataSlice/specialDiscountSlice'
 import adminVerify from '../Redux/slice/adminSlice'
 import dashboardTotalBooks from '../Redux/slice/dashboardSlice/allBookSlice'
 import dashboardTotalUsers from '../Redux/slice/dashboardSlice/allUserSlice'
@@ -12,6 +13,7 @@ const store = configureStore({
         profile: profileSlice,
         publicAllBooks: publicTotalBooks,
         viewDetailBooks: publicDetailBooks,
+        specialDiscountBooks: specialDiscount,
         isAdmin: adminVerify,
         // dashboard
         totalInfo: dashboardTotalInfo,

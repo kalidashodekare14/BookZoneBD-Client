@@ -9,7 +9,7 @@ import InputRange from 'react-input-range';
 import { useCart } from 'react-use-cart';
 import { Link, useLocation } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { totalPublicBook } from '../../Redux/slice/publicTotalBooks'
+import { totalPublicBook } from '../../Redux/slice/publicDataSlice/publicTotalBooks'
 import { OrbitProgress } from 'react-loading-indicators';
 import ReactPaginate from 'react-paginate';
 import axiosPublic from '../../utils/axiosPublic';

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosPublic from "../../utils/axiosPublic";
+import axiosPublic from "../../../utils/axiosPublic";
 
 
 export const totalPublicBook = createAsyncThunk(

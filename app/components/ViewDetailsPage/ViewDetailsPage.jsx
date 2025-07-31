@@ -5,7 +5,7 @@ import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { publicViewBooks } from '../../Redux/slice/viewDetailsBookSlice'
+import { publicViewBooks } from '../../Redux/slice/publicDataSlice/viewDetailsBookSlice'
 import { useCart } from 'react-use-cart';
 import { OrbitProgress } from 'react-loading-indicators';
 

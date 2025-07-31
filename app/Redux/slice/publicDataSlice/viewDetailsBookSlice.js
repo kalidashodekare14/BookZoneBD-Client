@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosSecure from "../../utils/axiosSecure";
+import axiosSecure from "../../../utils/axiosSecure";
 
 
 export const publicViewBooks = createAsyncThunk(
