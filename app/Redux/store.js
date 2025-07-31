@@ -3,6 +3,7 @@ import profileSlice from '../Redux/slice/profileSlice'
 import publicTotalBooks from '../Redux/slice/publicDataSlice/publicTotalBooks'
 import publicDetailBooks from '../Redux/slice/publicDataSlice/viewDetailsBookSlice'
 import specialDiscount from '../Redux/slice/publicDataSlice/specialDiscountSlice'
+import trendingBooksData from '../Redux/slice/publicDataSlice/trendingBooksSlice'
 import adminVerify from '../Redux/slice/adminSlice'
 import dashboardTotalBooks from '../Redux/slice/dashboardSlice/allBookSlice'
 import dashboardTotalUsers from '../Redux/slice/dashboardSlice/allUserSlice'
@@ -14,6 +15,7 @@ const store = configureStore({
         publicAllBooks: publicTotalBooks,
         viewDetailBooks: publicDetailBooks,
         specialDiscountBooks: specialDiscount,
+        trendingBooks: trendingBooksData,
         isAdmin: adminVerify,
         // dashboard
         totalInfo: dashboardTotalInfo,
