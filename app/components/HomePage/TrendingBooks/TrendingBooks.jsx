@@ -81,6 +81,7 @@ const TrendingBooks = () => {
     const dispatch = useDispatch()
     const cardLoading = 10;
 
+    
 
     useEffect(() => {
         dispatch(trendingBooksFetched());

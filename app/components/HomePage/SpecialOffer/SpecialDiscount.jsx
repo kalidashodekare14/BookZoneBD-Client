@@ -15,6 +15,7 @@ import SwiperNavButton from '../../SwiperCustomization/SwiperNavButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { specialDiscountFetched } from '../../../Redux/slice/publicDataSlice/specialDiscountSlice'
+import { Link } from 'react-router';
 const cardData = [
     {
         "image": "https://i.ibb.co/gMg3m1Zw/potherpachali.png",
@@ -73,7 +74,6 @@ const SpecialDiscount = () => {
     const { t } = useTranslation("homeTitle");
     const cardLoading = 10;
 
-    console.log('checking discount data', discountData)
 
     useEffect(() => {
         dispatch(specialDiscountFetched());
@@ -123,7 +123,7 @@ const SpecialDiscount = () => {
                                         <div className='border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
                                             <img className='w-full h-60 px-5' src={data.image} alt="" />
                                             <div className='mt-3 space-y-2'>
-                                                <h1 className='font-semibold'>{data.title}</h1>
+                                                <h1 className='font-semibold'>{data.title.slice(0, 25)} {data.title.length >= 25 && "..."} </h1>
                                                 <p>{data.author}</p>
                                                 <Rating
                                                     style={{ maxWidth: 100 }}
@@ -134,7 +134,9 @@ const SpecialDiscount = () => {
                                                     <p>৳{data.price * data.discount / 100}</p>
                                                     <p><del>৳{data.price}</del></p>
                                                 </div>
-                                                <button className='btn w-full bg-[#003A5A] text-white'>Add to cart</button>
+                                                <Link to={`/book/${data._id}`}>
+                                                    <button className='btn w-full bg-[#003A5A] text-white'>View Details</button>
+                                                </Link>
                                             </div>
 
                                         </div>
