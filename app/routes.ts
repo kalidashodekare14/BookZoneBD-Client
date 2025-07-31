@@ -31,6 +31,7 @@ export default [
             route("/dashboard/add_book", "./pages/Dashboard/AdminPage/AddBook.jsx"),
             route("/dashboard/view_order", "./pages/Dashboard/AdminPage/ViewOrder.jsx"),
             route("/dashboard/view-review", "./pages/Dashboard/AdminPage/ViewReview.jsx"),
+            route("/dashboard/author-create", "./pages/Dashboard/AdminPage/AuthorCreate.jsx"),
         ])
     ])
 

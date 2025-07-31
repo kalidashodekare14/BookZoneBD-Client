@@ -1,5 +1,5 @@
 import { BiSolidBookAdd } from 'react-icons/bi'
-import { FaUsers } from 'react-icons/fa'
+import { FaUserPlus, FaUsers } from 'react-icons/fa'
 import { FaCartFlatbedSuitcase } from 'react-icons/fa6'
 import { GiStarsStack } from 'react-icons/gi'
 import { IoIosHome } from 'react-icons/io'
@@ -29,6 +29,12 @@ const DashboardNavigation = ({ isToggle }) => {
             name: "Manage Users",
             path: "/dashboard/manage_users",
             icon: <FaUsers />
+        },
+        {
+            id: "3",
+            name: "Author Create",
+            path: "/dashboard/author-create",
+            icon: <FaUserPlus />
         },
         {
             id: "4",

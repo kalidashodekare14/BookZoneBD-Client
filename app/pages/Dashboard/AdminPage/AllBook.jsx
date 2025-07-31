@@ -235,7 +235,7 @@ const AllBook = () => {
                     </thead>
                     <tbody>
                         {
-                            totalBook.slice(0, 6).map(books => (
+                            totalBook.map(books => (
                                 <tr className='text-[15px]'>
                                     <th>
                                         <img className='w-14 h-14 rounded-full' src={books.image} alt="" />
