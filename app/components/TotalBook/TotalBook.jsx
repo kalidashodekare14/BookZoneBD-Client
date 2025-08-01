@@ -366,7 +366,7 @@ const TotalBook = () => {
                                 <div className="overflow-auto max-h-72 px-3">
                                     {
                                         filteringData.length !== 0 ? (
-                                            [...new Set(filteringData?.map(book => book.author))].map((author, index) => (
+                                            [...new Set(filteringData?.map(book => book.author.author_name))].map((author, index) => (
                                                 <div className='flex items-center gap-2 text-[16px]'>
                                                     <input
                                                         className=''
@@ -432,7 +432,7 @@ const TotalBook = () => {
                                     <img className='w-full h-60 px-5' src={book.image} alt="" />
                                     <div className='mt-3 space-y-2'>
                                         <h1 className='font-semibold'>{book.title}</h1>
-                                        <p>{book.author}</p>
+                                        <p>{book?.author?.author_name}</p>
                                         <Rating
                                             style={{ maxWidth: 100 }}
                                             value={book.rating}

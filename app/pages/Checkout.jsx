@@ -88,29 +88,33 @@ const Checkout = () => {
                         </thead>
                         <tbody>
                             {
-                                items.map(item => (
-                                    <tr>
-                                        <th>
-                                            <div className='flex items-center gap-3'>
-                                                <img className='w-14' src={item.image} alt="" />
-                                                <div>
-                                                    <p className='font-semibold'>{item.title}</p>
-                                                    <p className='font-normal'>{item.author}</p>
+                                items.map(item => {
+ 
+                                    return (
+                                        <tr>
+                                            <th>
+                                                <div className='flex items-center gap-3'>
+                                                    <img className='w-14' src={item.image} alt="" />
+                                                    <div>
+                                                        <p className='font-semibold'>{item.title}</p>
+                                                        <p className='font-normal'>{item?.author?.author_name}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <td>৳{item.price - (item.price * item.discount / 100)}</td>
-                                        <td>
-                                            <div className='flex flex-row items-center'>
-                                                <button onClick={() => updateItemQuantity(item.id, Math.max(1, item.quantity - 1))} className='btn text-xl font-normal hover:bg-[#003a5a] hover:text-white border-[#003a5a]'>-</button>
-                                                <input value={item.quantity} className='text-center input focus:outline-0 w-20' type="text" />
-                                                <button onClick={() => updateItemQuantity(item.id, item.quantity + 1)} className='btn text-xl font-normal hover:bg-[#003a5a] hover:text-white border-[#003a5a]'>+</button>
-                                            </div>
-                                        </td>
-                                        <td>৳{((item.price - (item.price * item.discount / 100)) * item.quantity)}</td>
-                                        <td onClick={() => removeItem(item.id)}><IoIosCloseCircle className='text-red-500 text-2xl cursor-pointer' /></td>
-                                    </tr>
-                                ))
+                                            </th>
+
+                                            <td>৳{item.price - (item.price * item.discount / 100).toFixed(2)}</td>
+                                            <td>
+                                                <div className='flex flex-row items-center'>
+                                                    <button onClick={() => updateItemQuantity(item.id, Math.max(1, item.quantity - 1))} className='btn text-xl font-normal hover:bg-[#003a5a] hover:text-white border-[#003a5a]'>-</button>
+                                                    <input value={item.quantity} className='text-center input focus:outline-0 w-20' type="text" />
+                                                    <button onClick={() => updateItemQuantity(item.id, item.quantity + 1)} className='btn text-xl font-normal hover:bg-[#003a5a] hover:text-white border-[#003a5a]'>+</button>
+                                                </div>
+                                            </td>
+                                            <td>৳{((item.price - (item.price * item.discount / 100)) * item.quantity).toFixed(2)}</td>
+                                            <td onClick={() => removeItem(item.id)}><IoIosCloseCircle className='text-red-500 text-2xl cursor-pointer' /></td>
+                                        </tr>
+                                    )
+                                })
                             }
                             {
                                 isEmpty && (
@@ -153,15 +157,15 @@ const Checkout = () => {
                         <div className='space-y-2 mt-3'>
                             <div className='flex justify-between items-center '>
                                 <p>Subtotal:</p>
-                                <p>৳{discountedCartTotal}</p>
+                                <p>৳{discountedCartTotal.toFixed(2)}</p>
                             </div>
                             <div className='flex justify-between items-center '>
                                 <p>Sales Tax:</p>
-                                <p>৳{salesTax}</p>
+                                <p>৳{salesTax.toFixed(2)}</p>
                             </div>
                             <div className='flex justify-between items-center '>
                                 <p>Grand Total: </p>
-                                <p>৳{grandTotal}</p>
+                                <p>৳{grandTotal.toFixed(2)}</p>
                             </div>
                         </div>
                         <div className='flex justify-center items-center mt-5'>

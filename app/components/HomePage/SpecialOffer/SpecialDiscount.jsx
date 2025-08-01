@@ -124,7 +124,7 @@ const SpecialDiscount = () => {
                                             <img className='w-full h-60 px-5' src={data.image} alt="" />
                                             <div className='mt-3 space-y-2'>
                                                 <h1 className='font-semibold'>{data.title.slice(0, 25)} {data.title.length >= 25 && "..."} </h1>
-                                                <p>{data.author}</p>
+                                                <p>{data?.author?.author_name}</p>
                                                 <Rating
                                                     style={{ maxWidth: 100 }}
                                                     value={3}

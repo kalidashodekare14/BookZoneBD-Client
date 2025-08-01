@@ -241,7 +241,7 @@ const AllBook = () => {
                                         <img className='w-14 h-14 rounded-full' src={books.image} alt="" />
                                     </th>
                                     <td>{books.title}</td>
-                                    <td>{books.author}</td>
+                                    <td>{books?.author?.author_name}</td>
                                     <td>৳{books.price}</td>
                                     <td>{books.discount}%</td>
                                     <div className="dropdown dropdown-bottom dropdown-end">
