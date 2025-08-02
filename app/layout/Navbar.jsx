@@ -26,21 +26,7 @@ const Navbar = () => {
     const [searchInput, setSearchInput] = useState(null);
     const navigate = useNavigate();
     const { totalUniqueItems } = useCart()
-    const [userImage, setUserImage] = useState("")
-    console.log('loading', loadingAuth)
 
-    // useEffect(() => {
-    //     const navImage = async () => {
-    //         try {
-    //             const userEmail = { email: user?.email }
-    //             const res = await axiosSecure.get(`/api/userInfo/nav_info/${user?.email}`);
-    //             console.log('checking image', res.data)
-    //         } catch (error) {
-    //             console.log('error navbar')
-    //         }
-    //     }
-    //     navImage()
-    // }, [user])
 
     const handleNavToggle = () => {
         setToggle(!toggle)
