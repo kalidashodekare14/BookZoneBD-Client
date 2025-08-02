@@ -31,6 +31,7 @@ export default [
             route("/dashboard/manage_users", "./pages/Dashboard/AdminPage/AllUser.jsx"),
             route("/dashboard/add_book", "./pages/Dashboard/AdminPage/AddBook.jsx"),
             route("/dashboard/view_order", "./pages/Dashboard/AdminPage/ViewOrder.jsx"),
+            route("/dashboard/view_order/details/:order_id", "./pages/Dashboard/AdminPage/OrderDetails.jsx"),
             route("/dashboard/view-review", "./pages/Dashboard/AdminPage/ViewReview.jsx"),
             route("/dashboard/author-manage", "./pages/Dashboard/AdminPage/AuthorManage.jsx"),
             route("/dashboard/author-create", "./pages/Dashboard/AdminPage/AuthorCreate.jsx"),

@@ -4,6 +4,7 @@ import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderManageFatched } from '../../../Redux/slice/dashboardSlice/orderManageSlice'
 import { HiDotsVertical } from 'react-icons/hi';
+import { Link } from 'react-router';
 
 const ViewOrder = () => {
 
@@ -89,7 +90,9 @@ const ViewOrder = () => {
                                         <div className="dropdown dropdown-bottom dropdown-end">
                                             <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
                                             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                                <li><a>Item 1</a></li>
+                                                <li>
+                                                    <Link to={`details/${order._id}`}>Order Details</Link>
+                                                </li>
                                                 <li><a>Item 2</a></li>
                                             </ul>
                                         </div>
