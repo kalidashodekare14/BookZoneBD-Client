@@ -15,7 +15,7 @@ const OrderDetails = () => {
     }, [])
 
     return (
-        <div className='px-5 py-5 font-mixed bg-[#E0E0E0] min-h-screen'>
+        <div className='px-5 py-5 font-mixed bg-[#E0E0E0] min-h-screen w-full'>
             <div className="overflow-x-auto bg-[#ffffffc9]">
                 <div className='flex justify-between items-center bg-[#ffffffc9] p-3 rounded-xl'>
                     <p className='font-semibold text-[15px] lg:text-xl'>Orders Manage</p>
@@ -50,7 +50,7 @@ const OrderDetails = () => {
                 </div>
                 <div className='bg-[#ffffffc9] p-5 w-full'>
                     <p className='text-2xl mb-5'>Shipping Address</p>
-                    <div className="overflow-x-auto">
+                    <div className="overflow-auto rounded-box border border-base-content/5 bg-base-100">
                         <table className="table">
                             <tbody className='text-[16px]'>
                                 <tr>

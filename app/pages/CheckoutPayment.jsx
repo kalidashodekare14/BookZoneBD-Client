@@ -62,7 +62,8 @@ const CheckoutPayment = () => {
                 product_name: product.title,
                 product_category: product.category,
                 prodcut_quantity: product.quantity,
-                product_image: product.image
+                product_image: product.image,
+                product_price: product.price
             }))
 
             const paymentInfo = {

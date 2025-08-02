@@ -14,9 +14,9 @@ const dashboard = () => {
     }
 
     return (
-        <div className='flex'>
+        <div className='flex overflow-hidden'>
             <DashboardNavigation isToggle={isToggle} />
-            <div className='w-full'>
+            <div className='w-full overflow-x-auto'>
                 <DashboardHeader isToggle={isToggle} handleToggle={handleToggle} />
                 <Outlet />
             </div>
