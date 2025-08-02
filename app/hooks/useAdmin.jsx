@@ -5,16 +5,16 @@ import useAuth from './useAuth';
 import { OrbitProgress } from 'react-loading-indicators';
 
 const useAdmin = () => {
-    const { admin, loading, error } = useSelector((state) => state.isAdmin);
+    const { admin, loading: adminLoading, error } = useSelector((state) => state.isAdmin);
     const dispatch = useDispatch();
     const { user, loading: authLoading } = useAuth();
 
-    if (authLoading) {
-        return <div className='h-[550px] flex flex-col justify-center items-center'>
-            <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
-            <p className='text-xl'>Please wait...</p>
-        </div>
-    }
+    // if (authLoading) {
+    //     return <div className='h-[550px] flex flex-col justify-center items-center'>
+    //         <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
+    //         <p className='text-xl'>Please wait...</p>
+    //     </div>
+    // }
 
     useEffect(() => {
         if (user?.email) {
@@ -23,7 +23,7 @@ const useAdmin = () => {
 
     }, [user?.email, dispatch])
 
-    return [admin];
+    return [admin, adminLoading, authLoading];
 };
 
 export default useAdmin;

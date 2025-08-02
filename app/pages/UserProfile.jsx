@@ -14,14 +14,14 @@ const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 
 const UserProfile = () => {
 
-    const { user } = useAuth()
+    const { user, userImageUpdate } = useAuth()
     const [userData, loading, error] = useUser()
     const [open, setOpen] = useState(false);
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
-    const [imageHosting, setImageHosting] = useState(userData?.image || "");
+    const [imageHosting, setImageHosting] = useState("");
     const [imgHostingLoading, setImgHostingLoading] = useState(false);
-    const [isGender, setIsGender] = useState(userData.gender || "");
+    const [isGender, setIsGender] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -31,6 +31,18 @@ const UserProfile = () => {
             return null;
         }
     }, [])
+
+    useEffect(() => {
+        if (userData?.image) {
+            setImageHosting(userData.image)
+        }
+    }, [userData?.image])
+
+    useEffect(() => {
+        if (userData?.gender) {
+            setIsGender(userData.gender)
+        }
+    }, [userData?.image])
 
 
     const {
@@ -55,6 +67,7 @@ const UserProfile = () => {
 
         }
         dispatch(profileDataUpdate({ email: user?.email, data: userInfo }));
+        userImageUpdate(imageHosting)
         if (loading === false) {
             onCloseModal()
         }

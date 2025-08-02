@@ -8,9 +8,7 @@ const AdminProtected = () => {
     const { user, loading, logoutSystem } = useAuth();
     const location = useLocation();
     const [wait, setWait] = useState(true);
-    const [admin] = useAdmin();
-
-    console.log('checking admin', admin);
+    const [admin, adminLoading, authLoading] = useAdmin();
 
     useEffect(() => {
         const timer = setTimeout(() => {

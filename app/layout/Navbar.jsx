@@ -1,5 +1,5 @@
 import '../i18n';
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { FaBars, FaRegUser } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { GrFavorite } from "react-icons/gr";
@@ -11,8 +11,7 @@ import useAuth from '../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { useCart } from 'react-use-cart';
 import logo from '../../public/logo.png'
-import axiosPublic from '../utils/axiosPublic';
-import axiosSecure from '../utils/axiosSecure';
+
 
 const Navbar = () => {
 
@@ -22,13 +21,13 @@ const Navbar = () => {
     const [lanSelect, setLanSelect] = useState("")
     const [active, setActive] = useState(false)
     const { pathname } = useLocation()
-    const { user, logoutSystem } = useAuth();
+    const { user, loading: loadingAuth, logoutSystem } = useAuth();
     const { userData, loading, error } = useSelector((state) => state.profile);
     const [searchInput, setSearchInput] = useState(null);
     const navigate = useNavigate();
     const { totalUniqueItems } = useCart()
     const [userImage, setUserImage] = useState("")
-
+    console.log('loading', loadingAuth)
 
     // useEffect(() => {
     //     const navImage = async () => {
@@ -131,13 +130,15 @@ const Navbar = () => {
                 </form>
                 <div className="flex items-center justify-between lg:gap-8 gap-5">
                     {
-                        user ? (
+                        loadingAuth ? (
+                            <div className="skeleton w-10 h-10 rounded-full"></div>
+                        ) : user ? (
                             <div className="dropdown dropdown-end text-black">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 rounded-full border-2 border-[#bbb]">
                                         <img
                                             alt={userData?.name || "image"}
-                                            src={userData?.image || "https://i.ibb.co/WcTWxsN/nav-img.png"} />
+                                            src={user?.photoURL || "https://i.ibb.co/WcTWxsN/nav-img.png"} />
                                     </div>
                                 </div>
                                 <ul
