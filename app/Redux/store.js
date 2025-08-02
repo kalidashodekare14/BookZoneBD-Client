@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import profileSlice from '../Redux/slice/profileSlice'
 import publicTotalBooks from '../Redux/slice/publicDataSlice/publicTotalBooks'
 import publicDetailBooks from '../Redux/slice/publicDataSlice/viewDetailsBookSlice'
+import publicDetailWriter from '../Redux/slice/publicDataSlice/writerDetailsSlice'
 import specialDiscount from '../Redux/slice/publicDataSlice/specialDiscountSlice'
 import trendingBooksData from '../Redux/slice/publicDataSlice/trendingBooksSlice'
 import academicBooksData from '../Redux/slice/publicDataSlice/academicBooksSlice'
@@ -18,6 +19,7 @@ const store = configureStore({
         profile: profileSlice,
         publicAllBooks: publicTotalBooks,
         viewDetailBooks: publicDetailBooks,
+        viewDetailWriter: publicDetailWriter,
         specialDiscountBooks: specialDiscount,
         trendingBooks: trendingBooksData,
         academicBooks: academicBooksData,

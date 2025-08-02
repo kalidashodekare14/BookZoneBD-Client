@@ -9,6 +9,7 @@ export default [
     route("writers", "./pages/Writers.jsx"),
     route("publisher", "./pages/Publisher.jsx"),
     route("book/:book_id", "./pages/ViewDetails.jsx"),
+    route("writer/:writer_id", "./pages/WriterDetails.jsx"),
     route("login", "./pages/Login.jsx"),
     route("signup", "./pages/SignUp.jsx"),
     route('email_varify', './pages/PasswordResetForm.jsx'),

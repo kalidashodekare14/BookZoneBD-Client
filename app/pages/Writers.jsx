@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { totalWriterFetched } from '../Redux/slice/publicDataSlice/totalWritersSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router';
 const writersInfo = [
     {
         "name": "রবীন্দ্রনাথ ঠাকুর",
@@ -87,7 +88,9 @@ const Writers = () => {
                             <div className='border-2 border-[#bbb] hover:border-[#003A5A] hover:duration-300 rounded-2xl cursor-pointer  flex flex-col justify-center items-center p-5 space-y-3'>
                                 <img className='w-32 h-32 rounded-full' src={writer?.author_image} alt="" />
                                 <p className='text-xl'>{writer?.author_name}</p>
-                                <button className='btn w-52 bg-[#003A5A] text-white'>View Details</button>
+                                <Link to={`/writer/${writer._id}`}>
+                                    <button className='btn w-52 bg-[#003A5A] text-white'>View Details</button>
+                                </Link>
                             </div>
                         ))
                     ) : (

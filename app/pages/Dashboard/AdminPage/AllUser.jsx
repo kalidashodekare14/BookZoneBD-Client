@@ -86,11 +86,11 @@ const AllUsers = () => {
 
     useEffect(() => {
         const params = new URLSearchParams({
-            search: isSearch,
+            search: isSearch || "",
             page: currentPage + 1,
             limit: limit
         })
-        dispatch(dashboardAllUser({ params }))
+        dispatch(dashboardAllUser({ params: params.toString() }))
     }, [isSearch, currentPage, limit])
 
 
@@ -112,7 +112,7 @@ const AllUsers = () => {
             <div className='flex justify-between items-center bg-white p-3 rounded-xl'>
                 <p className='font-semibold'>Users Manager</p>
                 <form onSubmit={handleSearch} className='flex items-center border border-[#bbb] rounded-[10px] p-2'>
-                    <input className='focus:outline-0 border-[#bbb] w-60' name='search' placeholder='Search...' type="text" />
+                    <input className='focus:outline-0 border-[#bbb] w-60' name='search' placeholder='Search email' type="text" />
                     <button type='submit'>
                         <CiSearch className='cursor-pointer text-xl' />
                     </button>
@@ -138,7 +138,7 @@ const AllUsers = () => {
                                     </th>
                                     <td>{user?.name ? user?.name : "N/A"}</td>
                                     <td>{user?.email ? user?.email : "N/A"}</td>
-                                    <td>{user?.phone ? user?.phone : "N/A"}</td>
+                                    <td>{user?.contact_number ? user?.contact_number : "N/A"}</td>
                                     <div className="dropdown dropdown-bottom dropdown-end">
                                         <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
                                         <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">

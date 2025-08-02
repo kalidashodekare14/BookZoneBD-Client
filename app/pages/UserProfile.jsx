@@ -15,17 +15,15 @@ const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 const UserProfile = () => {
 
     const { user } = useAuth()
+    const [userData, loading, error] = useUser()
     const [open, setOpen] = useState(false);
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
-    const [isGender, setIsGender] = useState(null);
-    const [imageHosting, setImageHosting] = useState(null);
+    const [imageHosting, setImageHosting] = useState(userData?.image || "");
     const [imgHostingLoading, setImgHostingLoading] = useState(false);
+    const [isGender, setIsGender] = useState(userData.gender || "");
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const [userData, loading, error] = useUser()
-
 
     useEffect(() => {
         if (!user) {

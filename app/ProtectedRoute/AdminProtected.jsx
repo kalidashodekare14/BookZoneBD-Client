@@ -27,10 +27,10 @@ const AdminProtected = () => {
         </div>
     }
 
-    // if (user && admin !== true) {
-    //     logoutSystem()
-    //     return <Navigate to={"/login"} replace state={{ from: location }} />
-    // }
+    if (user && admin !== true) {
+        logoutSystem()
+        return <Navigate to={"/login"} replace state={{ from: location }} />
+    }
 
     return user && admin === true ? <Outlet /> : <Navigate to={"/login"} replace state={{ from: location }} />
 };
