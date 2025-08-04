@@ -15,7 +15,7 @@ const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 const UserProfile = () => {
 
     const { user, userImageUpdate } = useAuth()
-    const [userData, loading, error] = useUser()
+    const { userData, loading, error } = useUser()
     const [open, setOpen] = useState(false);
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);

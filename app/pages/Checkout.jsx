@@ -13,7 +13,7 @@ import useAuth from '../hooks/useAuth';
 
 const Checkout = () => {
 
-    const [userData, loading, error] = useUser();
+    const { userData, loading, error } = useUser();
     const { user } = useAuth();
     const [open, setOpen] = useState(false);
     const onOpenModal = () => setOpen(true);
@@ -89,7 +89,7 @@ const Checkout = () => {
                         <tbody>
                             {
                                 items.map(item => {
- 
+
                                     return (
                                         <tr>
                                             <th>

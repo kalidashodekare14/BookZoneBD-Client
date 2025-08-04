@@ -12,7 +12,7 @@ const useUser = () => {
         dispatch(profileData({ email: user?.email }))
     }, [user?.email, dispatch])
 
-    return [userData, loading, error]
+    return { userData, loading, error }
 };
 
 export default useUser;

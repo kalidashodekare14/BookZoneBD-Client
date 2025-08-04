@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router';
 
 const CheckoutPayment = () => {
 
-    const [userData, loading, error] = useUser()
+    const { userData, loading, error } = useUser()
     const [paymentLoading, setPaymentLoading] = useState(false);
     const salesTaxRate = 0.1
     const [isCashOnDalivery, setIsCashOnDalivery] = useState(false);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router';
 import './ViewDetailsPage.css'
 import { Rating } from '@smastrom/react-rating';
@@ -6,276 +6,313 @@ import '@smastrom/react-rating/style.css';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { publicViewBooks } from '../../Redux/slice/publicDataSlice/viewDetailsBookSlice'
+import { reviewCreate, totalReviews } from '../../Redux/slice/publicDataSlice/productReviewSlice';
 import { useCart } from 'react-use-cart';
 import { OrbitProgress } from 'react-loading-indicators';
 import { FaCheckCircle } from 'react-icons/fa';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
+import useUser from '../../hooks/useUser';
+const allBookData = [
+    {
+        "image": "https://i.ibb.co/gMg3m1Zw/potherpachali.png",
+        "title": "পথের পাঁচালী",
+        "author": {
+            "name": "বিভূতিভূষণ বন্দ্যোপাধ্যায়",
+            "image": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSuFnh8mh6WfiAXU0jGmRiP6EXFQK5PefgnEiQIFNLtsMKGfXby9-mC7zefO-w8aTjLLzQdprFK7byzNd-SWuNbA"
+        },
+        "rating": 4.8,
+        "price": 2000,
+        "discount": 25
+    },
+    {
+        "image": "https://i.ibb.co/BH9jWVcF/image.png",
+        "title": "দেবদাস",
+        "author": "শরৎচন্দ্র চট্টোপাধ্যায়",
+        "rating": 4.5,
+        "price": 1500,
+        "discount": 30
+    },
+    {
+        "image": "https://i.ibb.co/VYHprhzN/image.png",
+        "title": "ফেলুদা সমগ্র",
+        "author": "সত্যজিৎ রায়",
+        "rating": 4.9,
+        "price": 1800,
+        "discount": 20
+    },
+    {
+        "image": "https://i.ibb.co/WNP3HVTS/image.png",
+        "title": "হুমায়ূন আহমেদের সেরা উপন্যাস",
+        "author": "হুমায়ূন আহমেদ",
+        "rating": 4.7,
+        "price": 2500,
+        "discount": 35
+    },
+    {
+        "image": "https://i.ibb.co/PsPVwLFk/image.png",
+        "title": "প্রাচীন বাংলা সাহিত্য",
+        "author": "ড. মুহম্মদ এনামুল হক",
+        "rating": 4.3,
+        "price": 2000,
+        "discount": 40
+    },
+    {
+        "image": "https://i.ibb.co/VYHprhzN/image.png",
+        "title": "ফেলুদা সমগ্র",
+        "author": "সত্যজিৎ রায়",
+        "rating": 4.9,
+        "price": 1900,
+        "discount": 20
+    },
+    {
+        "image": "https://i.ibb.co/0jQHJ58k/image.png",
+        "title": "রবীন্দ্র রচনাবলী",
+        "author": "রবীন্দ্রনাথ ঠাকুর",
+        "rating": 5.00,
+        "price": 1900,
+        "discount": 20
+    },
+    {
+        "image": "https://i.ibb.co/Z6frB18p/image.png",
+        "title": "অচিন পাখি",
+        "author": "হুমায়ূন আহমেদ",
+        "rating": 4.8,
+        "price": 1500,
+        "discount": 15
+    },
+    {
+        "image": "https://i.ibb.co/PZfFjpKq/image.png",
+        "title": "তিতাস একটি নদীর নাম",
+        "author": "অদ্বৈত মল্লবর্মণ",
+        "rating": 4.6,
+        "price": 2500,
+        "discount": 10
+    },
+    {
+        "image": "https://i.ibb.co/FQzx9zY/image.png",
+        "title": "প্যারাডক্সিকাল সাজিদ",
+        "author": "আরিফ আজাদ",
+        "rating": 4.7,
+        "price": 2800,
+        "discount": 25
+    },
+    {
+        "image": "https://i.ibb.co/Mxw5GTsZ/image.png",
+        "title": "দুই দুয়ারি",
+        "author": "সেলিনা হোসেন",
+        "rating": 4.3,
+        "price": 2500,
+        "discount": 18
+    },
+    {
+        "image": "https://i.ibb.co/Mxw5GTsZ/image.png",
+        "title": "আমার বন্ধু রাশেদ",
+        "author": "জাফর ইকবাল",
+        "rating": 4.9,
+        "price": 3000,
+        "discount": 30
+    },
+    {
+        "image": "https://i.ibb.co/4w2HZnhX/image.png",
+        "title": "শেষের কবিতা",
+        "author": "রবীন্দ্রনাথ ঠাকুর",
+        "rating": 4.8,
+        "price": 2000,
+        "discount": 20
+    },
+    {
+        "image": "https://i.ibb.co/sdvsTKyy/image.png",
+        "title": "বাংলা ১ম পত্র - ক্লাস ৫",
+        "author": "জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক",
+        "rating": 4.5,
+        "price": 180,
+        "discount": 10
+    },
+    {
+        "image": "https://i.ibb.co/xqRYkCkn/image.png",
+        "title": "গণিত - ক্লাস ৮",
+        "author": "এনসিটিবি",
+        "rating": 4.6,
+        "price": 200,
+        "discount": 15
+    },
+    {
+        "image": "https://i.ibb.co/B5FnVZkm/1735721362.webp",
+        "title": "বিশ্ববিদ্যালয় ভর্তি গাইড",
+        "author": "শিক্ষা একাডেমি",
+        "rating": 4.7,
+        "price": 450,
+        "discount": 20
+    },
+    {
+        "image": "https://i.ibb.co/wNywPdCC/image.png",
+        "title": "সাধারণ জ্ঞান (BCS গাইড)",
+        "author": "সুমন সাহা",
+        "rating": 4.6,
+        "price": 380,
+        "discount": 18
+    },
+    {
+        "image": "https://i.ibb.co/xq1vggjR/61i-w-S0-LX0-L-SY342.jpg",
+        "title": "Programming in C",
+        "author": "ড. জাহাঙ্গীর হোসেন",
+        "rating": 4.6,
+        "price": 550,
+        "discount": 15
+    },
+    {
+        "image": "https://i.ibb.co/B2wHCMFp/viber-image-2022-12-26-14-04-10-447.jpg",
+        "title": "Applied Statistics",
+        "author": "সাদিক হাসান",
+        "rating": 4.7,
+        "price": 580,
+        "discount": 12
+    },
+    {
+        "image": "https://i.ibb.co/8DKjCCTq/image.png",
+        "title": "বিজ্ঞান - ক্লাস ৯",
+        "author": "এনসিটিবি",
+        "rating": 4.4,
+        "price": 220,
+        "discount": 12
+    }
+]
+const reviewData = [
+    {
+        id: 1,
+        name: "Dip Roy",
+        reviewText: "বইটা অনেক ভালো আমি পড়েছি",
+        rating: 0,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEfVLHWUhPZlg06EslP51HN86z95tdlvBCfg&s",
+        date: "2025-06-10"
+    },
+    {
+        id: 2,
+        name: "Jui Akter",
+        reviewText: "এই বইটা আমাকে অনেক অনুপ্রাণিত করেছে।",
+        rating: 4,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsGTA3_R57qEqb53kD5xDRi6kCfCQJntwGqA&s",
+        date: "2025-06-12"
+    },
+    {
+        id: 3,
+        name: "Rafi Hasan",
+        reviewText: "ভালো লাগেনি, লেখার স্টাইল একটু দুর্বল ছিল।",
+        rating: 2,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnCoKANE7UwhA8ABKR3pFi-PKMgtqAUdHtuA&s",
+        date: "2025-06-13"
+    },
+    {
+        id: 4,
+        name: "Mim Chowdhury",
+        reviewText: "ছবিগুলো অসাধারণ ছিল, ছোটদের জন্য একদম পারফেক্ট।",
+        rating: 5,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkFjmoZpOMsbGHmtinZvZOdiJhpAMmGOV-Bg&s",
+        date: "2025-06-15"
+    },
+    {
+        id: 5,
+        name: "Sabbir Rahman",
+        reviewText: "একদম সময়ের অপচয়, কনটেন্ট ভালো না।",
+        rating: 1,
+        image: "https://i.pinimg.com/originals/9e/e0/ae/9ee0ae4e22cfcaff074e0e5716961dd8.jpg",
+        date: "2025-06-16"
+    },
+    {
+        id: 6,
+        name: "Nusrat Jahan",
+        reviewText: "গল্পের প্লট ভালো ছিল, তবে আরও গভীরতা প্রয়োজন ছিল।",
+        rating: 3,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa9QoegeBaHUIHLbm17sqLdbQaKe7vm_F4zQ&s",
+        date: "2025-06-14"
+    },
+    {
+        id: 7,
+        name: "Tanvir Ahmed",
+        reviewText: "এক কথায় অসাধারণ! লেখকের কাজকে সাধুবাদ জানাই।",
+        rating: 5,
+        image: "https://www.mgi.org/assets/images/team/d3.jpg",
+        date: "2025-06-17"
+    },
+    {
+        id: 8,
+        name: "Lamia Haque",
+        reviewText: "ভালোই ছিল, তবে শেষে কিছুটা দুর্বল মনে হয়েছে।",
+        rating: 3,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUgw32e5TJHzaXcI4-6dwv66UWPCRPMisumQ&s",
+        date: "2025-06-11"
+    },
+    {
+        id: 9,
+        name: "Anik Das",
+        reviewText: "বইটি অনেক ইনফরমেটিভ ছিল, নতুন অনেক কিছু শিখলাম।",
+        rating: 4,
+        image: "https://avatars.githubusercontent.com/u/16396161?v=4",
+        date: "2025-06-09"
+    },
+    {
+        id: 10,
+        name: "Shimu Khatun",
+        reviewText: "ভাষা সহজবোধ্য ছিল, নতুন পাঠকদের জন্য ভালো।",
+        rating: 4,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhVcG80PEkE7iYOPa6644rMQHF_OglGye2pQ&s",
+        date: "2025-06-08"
+    }
+];
 
 const ViewDetailsPage = () => {
 
     const floatValues = [4.30, 3.50, 2.20, 1.20]
     const reviewRange = [120, 25, 15, 11]
+    const { userData, loading: userLoading, error: userError } = useUser()
+    const { bookDetails, loading: bookLoading, error: bookError } = useSelector((state) => state.viewDetailBooks)
+    const { reviewsData, loading: reviewLoading, error: reviewError } = useSelector((state) => state.productReviews)
     const [ratingInput, setRatingInput] = useState(null)
-    const { bookDetails, loading, error } = useSelector((state) => state.viewDetailBooks)
     const dispatch = useDispatch();
     const { book_id } = useParams();
     const { addItem, items } = useCart();
+    const [open, setOpen] = useState(false);
+    const onOpenModal = () => setOpen(true);
+    const onCloseModal = () => setOpen(false);
+    const ratingRef = useRef(null);
+    const [rating, setRating] = useState(0);
 
+
+
+    useEffect(() => {
+        dispatch(totalReviews({ id: bookDetails?._id }))
+    }, [userData?._id, dispatch])
 
     useEffect(() => {
         dispatch(publicViewBooks({ id: book_id }))
     }, [])
 
-    const allBookData = [
-        {
-            "image": "https://i.ibb.co/gMg3m1Zw/potherpachali.png",
-            "title": "পথের পাঁচালী",
-            "author": {
-                "name": "বিভূতিভূষণ বন্দ্যোপাধ্যায়",
-                "image": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSuFnh8mh6WfiAXU0jGmRiP6EXFQK5PefgnEiQIFNLtsMKGfXby9-mC7zefO-w8aTjLLzQdprFK7byzNd-SWuNbA"
-            },
-            "rating": 4.8,
-            "price": 2000,
-            "discount": 25
-        },
-        {
-            "image": "https://i.ibb.co/BH9jWVcF/image.png",
-            "title": "দেবদাস",
-            "author": "শরৎচন্দ্র চট্টোপাধ্যায়",
-            "rating": 4.5,
-            "price": 1500,
-            "discount": 30
-        },
-        {
-            "image": "https://i.ibb.co/VYHprhzN/image.png",
-            "title": "ফেলুদা সমগ্র",
-            "author": "সত্যজিৎ রায়",
-            "rating": 4.9,
-            "price": 1800,
-            "discount": 20
-        },
-        {
-            "image": "https://i.ibb.co/WNP3HVTS/image.png",
-            "title": "হুমায়ূন আহমেদের সেরা উপন্যাস",
-            "author": "হুমায়ূন আহমেদ",
-            "rating": 4.7,
-            "price": 2500,
-            "discount": 35
-        },
-        {
-            "image": "https://i.ibb.co/PsPVwLFk/image.png",
-            "title": "প্রাচীন বাংলা সাহিত্য",
-            "author": "ড. মুহম্মদ এনামুল হক",
-            "rating": 4.3,
-            "price": 2000,
-            "discount": 40
-        },
-        {
-            "image": "https://i.ibb.co/VYHprhzN/image.png",
-            "title": "ফেলুদা সমগ্র",
-            "author": "সত্যজিৎ রায়",
-            "rating": 4.9,
-            "price": 1900,
-            "discount": 20
-        },
-        {
-            "image": "https://i.ibb.co/0jQHJ58k/image.png",
-            "title": "রবীন্দ্র রচনাবলী",
-            "author": "রবীন্দ্রনাথ ঠাকুর",
-            "rating": 5.00,
-            "price": 1900,
-            "discount": 20
-        },
-        {
-            "image": "https://i.ibb.co/Z6frB18p/image.png",
-            "title": "অচিন পাখি",
-            "author": "হুমায়ূন আহমেদ",
-            "rating": 4.8,
-            "price": 1500,
-            "discount": 15
-        },
-        {
-            "image": "https://i.ibb.co/PZfFjpKq/image.png",
-            "title": "তিতাস একটি নদীর নাম",
-            "author": "অদ্বৈত মল্লবর্মণ",
-            "rating": 4.6,
-            "price": 2500,
-            "discount": 10
-        },
-        {
-            "image": "https://i.ibb.co/FQzx9zY/image.png",
-            "title": "প্যারাডক্সিকাল সাজিদ",
-            "author": "আরিফ আজাদ",
-            "rating": 4.7,
-            "price": 2800,
-            "discount": 25
-        },
-        {
-            "image": "https://i.ibb.co/Mxw5GTsZ/image.png",
-            "title": "দুই দুয়ারি",
-            "author": "সেলিনা হোসেন",
-            "rating": 4.3,
-            "price": 2500,
-            "discount": 18
-        },
-        {
-            "image": "https://i.ibb.co/Mxw5GTsZ/image.png",
-            "title": "আমার বন্ধু রাশেদ",
-            "author": "জাফর ইকবাল",
-            "rating": 4.9,
-            "price": 3000,
-            "discount": 30
-        },
-        {
-            "image": "https://i.ibb.co/4w2HZnhX/image.png",
-            "title": "শেষের কবিতা",
-            "author": "রবীন্দ্রনাথ ঠাকুর",
-            "rating": 4.8,
-            "price": 2000,
-            "discount": 20
-        },
-        {
-            "image": "https://i.ibb.co/sdvsTKyy/image.png",
-            "title": "বাংলা ১ম পত্র - ক্লাস ৫",
-            "author": "জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক",
-            "rating": 4.5,
-            "price": 180,
-            "discount": 10
-        },
-        {
-            "image": "https://i.ibb.co/xqRYkCkn/image.png",
-            "title": "গণিত - ক্লাস ৮",
-            "author": "এনসিটিবি",
-            "rating": 4.6,
-            "price": 200,
-            "discount": 15
-        },
-        {
-            "image": "https://i.ibb.co/B5FnVZkm/1735721362.webp",
-            "title": "বিশ্ববিদ্যালয় ভর্তি গাইড",
-            "author": "শিক্ষা একাডেমি",
-            "rating": 4.7,
-            "price": 450,
-            "discount": 20
-        },
-        {
-            "image": "https://i.ibb.co/wNywPdCC/image.png",
-            "title": "সাধারণ জ্ঞান (BCS গাইড)",
-            "author": "সুমন সাহা",
-            "rating": 4.6,
-            "price": 380,
-            "discount": 18
-        },
-        {
-            "image": "https://i.ibb.co/xq1vggjR/61i-w-S0-LX0-L-SY342.jpg",
-            "title": "Programming in C",
-            "author": "ড. জাহাঙ্গীর হোসেন",
-            "rating": 4.6,
-            "price": 550,
-            "discount": 15
-        },
-        {
-            "image": "https://i.ibb.co/B2wHCMFp/viber-image-2022-12-26-14-04-10-447.jpg",
-            "title": "Applied Statistics",
-            "author": "সাদিক হাসান",
-            "rating": 4.7,
-            "price": 580,
-            "discount": 12
-        },
-        {
-            "image": "https://i.ibb.co/8DKjCCTq/image.png",
-            "title": "বিজ্ঞান - ক্লাস ৯",
-            "author": "এনসিটিবি",
-            "rating": 4.4,
-            "price": 220,
-            "discount": 12
+
+
+
+    const handleReviewForm = (event) => {
+        event.preventDefault()
+        const comment = event.target.comment.value
+        try {
+            const reviewInfo = {
+                user_name: userData?.name,
+                user_image: userData?.image,
+                product_id: bookDetails?._id,
+                rating: rating,
+                comment: comment
+            }
+            dispatch(reviewCreate({ data: reviewInfo }))
+            if (reviewLoading === false) {
+                onCloseModal()
+            }
+        } catch (error) {
+            console.log('review create problem', error.message);
         }
-    ]
-
-    const reviewData = [
-        {
-            id: 1,
-            name: "Dip Roy",
-            reviewText: "বইটা অনেক ভালো আমি পড়েছি",
-            rating: 0,
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEfVLHWUhPZlg06EslP51HN86z95tdlvBCfg&s",
-            date: "2025-06-10"
-        },
-        {
-            id: 2,
-            name: "Jui Akter",
-            reviewText: "এই বইটা আমাকে অনেক অনুপ্রাণিত করেছে।",
-            rating: 4,
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsGTA3_R57qEqb53kD5xDRi6kCfCQJntwGqA&s",
-            date: "2025-06-12"
-        },
-        {
-            id: 3,
-            name: "Rafi Hasan",
-            reviewText: "ভালো লাগেনি, লেখার স্টাইল একটু দুর্বল ছিল।",
-            rating: 2,
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnCoKANE7UwhA8ABKR3pFi-PKMgtqAUdHtuA&s",
-            date: "2025-06-13"
-        },
-        {
-            id: 4,
-            name: "Mim Chowdhury",
-            reviewText: "ছবিগুলো অসাধারণ ছিল, ছোটদের জন্য একদম পারফেক্ট।",
-            rating: 5,
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkFjmoZpOMsbGHmtinZvZOdiJhpAMmGOV-Bg&s",
-            date: "2025-06-15"
-        },
-        {
-            id: 5,
-            name: "Sabbir Rahman",
-            reviewText: "একদম সময়ের অপচয়, কনটেন্ট ভালো না।",
-            rating: 1,
-            image: "https://i.pinimg.com/originals/9e/e0/ae/9ee0ae4e22cfcaff074e0e5716961dd8.jpg",
-            date: "2025-06-16"
-        },
-        {
-            id: 6,
-            name: "Nusrat Jahan",
-            reviewText: "গল্পের প্লট ভালো ছিল, তবে আরও গভীরতা প্রয়োজন ছিল।",
-            rating: 3,
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa9QoegeBaHUIHLbm17sqLdbQaKe7vm_F4zQ&s",
-            date: "2025-06-14"
-        },
-        {
-            id: 7,
-            name: "Tanvir Ahmed",
-            reviewText: "এক কথায় অসাধারণ! লেখকের কাজকে সাধুবাদ জানাই।",
-            rating: 5,
-            image: "https://www.mgi.org/assets/images/team/d3.jpg",
-            date: "2025-06-17"
-        },
-        {
-            id: 8,
-            name: "Lamia Haque",
-            reviewText: "ভালোই ছিল, তবে শেষে কিছুটা দুর্বল মনে হয়েছে।",
-            rating: 3,
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUgw32e5TJHzaXcI4-6dwv66UWPCRPMisumQ&s",
-            date: "2025-06-11"
-        },
-        {
-            id: 9,
-            name: "Anik Das",
-            reviewText: "বইটি অনেক ইনফরমেটিভ ছিল, নতুন অনেক কিছু শিখলাম।",
-            rating: 4,
-            image: "https://avatars.githubusercontent.com/u/16396161?v=4",
-            date: "2025-06-09"
-        },
-        {
-            id: 10,
-            name: "Shimu Khatun",
-            reviewText: "ভাষা সহজবোধ্য ছিল, নতুন পাঠকদের জন্য ভালো।",
-            rating: 4,
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhVcG80PEkE7iYOPa6644rMQHF_OglGye2pQ&s",
-            date: "2025-06-08"
-        }
-    ];
+    }
 
 
-    if (loading) {
+    if (bookLoading) {
         return <div className='h-[550px] flex flex-col justify-center items-center'>
             <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
             <p className='text-xl'>Please wait...</p>
@@ -366,7 +403,7 @@ const ViewDetailsPage = () => {
                             onChange={setRatingInput}
                             isRequired
                         />
-                        <button className='btn bg-[#003A5A] text-white'>রিভিউ লিখুন</button>
+                        <button onClick={onOpenModal} className='btn bg-[#003A5A] text-white'>রিভিউ লিখুন</button>
                     </div>
                     <div>
                         <h1 className='text-3xl'>4.50</h1>
@@ -386,23 +423,23 @@ const ViewDetailsPage = () => {
                 </div>
                 <div className='space-y-3'>
                     {
-                        reviewData.map(review => (
+                        reviewsData.map(review => (
                             <div key={review.id} className='space-y-3 border-b border-[#bbbbbb8c] pb-3 '>
                                 <div className='flex items-center gap-2'>
-                                    <img className='w-10 h-10 rounded-full' src={review.image} alt="" />
+                                    <img className='w-10 h-10 rounded-full' src={review?.user_image} alt="" />
                                     <div className='space-y-1'>
                                         <p className='space-x-3'>
-                                            <span className='font-semibold'>{review.name}</span>
-                                            <span>{review.date}</span>
+                                            <span className='font-semibold'>{review?.user_name}</span>
+                                            <span>{ new Date(review?.createdAt).toLocaleDateString()}</span>
                                         </p>
                                         <Rating
                                             style={{ maxWidth: 80 }}
-                                            value={3}
+                                            value={review?.rating}
                                             readOnly
                                         />
                                     </div>
                                 </div>
-                                <p>{review.reviewText}</p>
+                                <p>{review?.comment}</p>
                                 <div className='flex  items-center gap-3'>
                                     <button className='btn '>
                                         <AiOutlineLike className='text-xl' />
@@ -418,6 +455,27 @@ const ViewDetailsPage = () => {
                     }
                 </div>
             </div>
+            <Modal open={open} onClose={onCloseModal} center>
+                <form onSubmit={handleReviewForm} className='w-96'>
+                    <h2 className='text-xl pb-2'>Write your review</h2>
+                    <div className='flex flex-col justify-center items-center border-t border-b border-[#bbb] p-3'>
+                        <p>Please rate this product</p>
+                        <Rating
+                            style={{ maxWidth: 120 }}
+                            value={rating}
+                            ref={ratingRef}
+                            onChange={setRating}
+                            isRequired
+                        />
+                    </div>
+                    <div>
+                        <textarea className='textarea w-full h-32 focus:outline-0 my-2' name="comment" id=""></textarea>
+                    </div>
+                    <div className='flex justify-center items-center'>
+                        <button className='btn w-32 bg-[#003a5a] text-white'>Submit</button>
+                    </div>
+                </form>
+            </Modal>
         </div>
     );
 };
