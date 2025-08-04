@@ -75,7 +75,6 @@ const ViewOrder = () => {
                                                 <span>{order?.addressData?.phone_number ? order?.addressData?.phone_number : "N/A"}</span>
                                             </div>
                                         </td>
-                                        {/* <td></td> */}
                                         <td className=''>{order?.tran_id}</td>
                                         <td>{order?.products.length}</td>
                                         <td>৳{order?.amount}</td>

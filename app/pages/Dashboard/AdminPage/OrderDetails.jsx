@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router';
 import { orderDetailsFetched } from '../../../Redux/slice/dashboardSlice/orderDetailsSlice'
+import axiosSecure from '../../../utils/axiosSecure';
+import { OrbitProgress } from 'react-loading-indicators';
 
 const OrderDetails = () => {
     const { order_id } = useParams()
     const { orderDetails, loading, error } = useSelector((state) => state.viewOrderDetails);
     const dispatch = useDispatch();
+    const [dawnloadLoading, setDawnloadLoading] = useState(false);
 
     console.log('checking order detials', orderDetails)
 
@@ -14,11 +17,37 @@ const OrderDetails = () => {
         dispatch(orderDetailsFetched({ id: order_id }))
     }, [])
 
+    const handleOrderReceiptDawnload = async () => {
+        try {
+            setDawnloadLoading(true)
+            const res = await axiosSecure.get(`/api/dashboard/order_receipt/${orderDetails._id}`, {
+                responseType: 'blob'
+            });
+            const blob = new Blob([res.data], { type: 'application.pdf' });
+            const url = window.URL.createObjectURL(blob);
+            // automation url
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `payment_${orderDetails._id}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            console.log('checking pdf', res);
+        } catch (error) {
+            console.log('pdf dawnload problem', error.message);
+        } finally {
+            setDawnloadLoading(false);
+        }
+    }
+
     return (
         <div className='px-5 py-5 font-mixed bg-[#E0E0E0] min-h-screen w-full'>
             <div className="overflow-x-auto bg-[#ffffffc9]">
                 <div className='flex justify-between items-center bg-[#ffffffc9] p-3 rounded-xl'>
                     <p className='font-semibold text-[15px] lg:text-xl'>Orders Manage</p>
+                    <button onClick={handleOrderReceiptDawnload} className='btn bg-[#003a5a] text-white'>
+                        {dawnloadLoading ? <span class="loader"></span> : "Dawnload Receipt"}
+                    </button>
                 </div>
             </div>
             <div className='my-5 grid grid-cols-1 lg:grid-cols-3 gap-5'>
