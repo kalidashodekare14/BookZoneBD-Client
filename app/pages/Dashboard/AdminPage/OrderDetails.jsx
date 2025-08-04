@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { orderDetailsFetched } from '../../../Redux/slice/dashboardSlice/orderDetailsSlice'
 
 const OrderDetails = () => {
@@ -92,7 +92,9 @@ const OrderDetails = () => {
                                 </tr>
                                 <tr>
                                     <th>Payment Status</th>
-                                    <td>{orderDetails?.status ? orderDetails?.status : "N/A"}</td>
+                                    <td>
+                                        <p className={`${orderDetails.status === "Success" && "bg-[#59b15a] text-white"} ${orderDetails.status === "Pending" && "bg-[#cc554c] text-white"} p-2 rounded-full`}>{orderDetails?.status ? orderDetails?.status : "N/A"}</p>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -105,10 +107,11 @@ const OrderDetails = () => {
                         <tr>
                             <th>Image</th>
                             <th>Items Name</th>
-                            <th>Tran Id</th>
+                            <th>Product Id</th>
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>Total Price</th>
+                            <th>View Product</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,8 +122,15 @@ const OrderDetails = () => {
                                         <img className='w-14 h-14 rounded-full' src={`${item?.product_image ? item?.product_image : "https://i.ibb.co/WcTWxsN/nav-img.png"}`} alt="" />
                                     </th>
                                     <td>{item?.product_name ? item?.product_name : "N/A"}</td>
-                                    <td>df5465454</td>
+                                    <td>{item?.product_id ? item?.product_id : "N/A"}</td>
                                     <td>{item?.prodcut_quantity ? item?.prodcut_quantity : "N/A"}</td>
+                                    <td>৳{item?.product_price ? item?.product_price : "N/A"}</td>
+                                    <td>৳{item?.product_total_price ? item?.product_total_price : "N/A"}</td>
+                                    <td>
+                                        <Link to={`/book/${item.product_id}`}>
+                                            <button className='btn bg-[#003a5a] text-white'>View Product</button>
+                                        </Link>
+                                    </td>
                                 </tr>
                             ))
                         }

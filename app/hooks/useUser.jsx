@@ -10,7 +10,7 @@ const useUser = () => {
 
     useEffect(() => {
         dispatch(profileData({ email: user?.email }))
-    }, [user])
+    }, [user?.email, dispatch])
 
     return [userData, loading, error]
 };

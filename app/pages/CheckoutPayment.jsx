@@ -7,10 +7,11 @@ import { ThreeDot } from 'react-loading-indicators';
 import axiosSecure from '../utils/axiosSecure';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { profileDataUpdate } from '../Redux/slice/profileSlice';
+import { profileDataUpdate, profileData } from '../Redux/slice/profileSlice';
 import useAuth from '../hooks/useAuth';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
+
 
 const CheckoutPayment = () => {
 
@@ -20,12 +21,17 @@ const CheckoutPayment = () => {
     const [isCashOnDalivery, setIsCashOnDalivery] = useState(false);
     const [isSslcommerz, setIsSslcommerz] = useState(false);
     const shipppingAddress = !userData?.name || !userData?.email || !userData?.country || !userData?.address || !userData?.contact_number || !userData?.alternative_phone_number || !userData?.state || !userData?.city || !userData?.union
-    const [isAddressText, setIsAddressText] = useState(userData?.address);
+    const [isAddressText, setIsAddressText] = useState("");
     const dispatch = useDispatch();
     const { user } = useAuth();
     const navigate = useNavigate();
 
 
+    useEffect(() => {
+        setIsAddressText(userData?.address)
+    }, [])
+
+    // Shipping Info Form
     const {
         register,
         handleSubmit,
@@ -33,6 +39,7 @@ const CheckoutPayment = () => {
         formState: { errors },
     } = useForm()
 
+    // Product Cart
     const {
         emptyCart,
         items,
@@ -40,14 +47,9 @@ const CheckoutPayment = () => {
         isEmpty
     } = useCart();
 
+    console.log('checking item', items)
 
-    // useEffect(() => {
-    //     if (isEmpty) {
-    //         return navigate('/checkout')
-    //     }
-    // }, [isEmpty, navigate])
-
-
+    // product discount 
     const discountedCartTotal = items.reduce((total, item) => {
         const discountedPrice = item.price - (item.price * item.discount / 100);
         return total + discountedPrice * item.quantity;
@@ -56,32 +58,71 @@ const CheckoutPayment = () => {
     const salesTax = discountedCartTotal * salesTaxRate;
     const grandTotal = discountedCartTotal + salesTax
 
+    // Shipping info submit form
+    const onSubmit = async (data) => {
+        console.log(data)
+        if (isAddressText.length === 0) {
+            return console.log('address must required');
+        }
+        const shippingInfoData = {
+            name: data.name,
+            contact_number: data.contact_number,
+            alternative_phone_number: data.alternative_phone_number,
+            country: data.country,
+            city: data.city,
+            state: data.state,
+            union: data.union,
+            address: isAddressText
+        }
+        console.log('checking info', shippingInfoData);
+        try {
+            await dispatch(profileDataUpdate({ email: user?.email, data: shippingInfoData })).unwrap()
+            await dispatch(profileData({ email: user?.email })).unwrap();
+            if (isCashOnDalivery) {
+                await handleCashOnDelivarySystem();
+            } else if (isSslcommerz) {
+                await handlePaymentSystem();
+            } else {
+                console.log('please select payment method');
+            }
+        } catch (error) {
+            console.log('Failed to update profile or procceess payment', error);
+        }
+    }
+
+    // Cash on dalivary function
     const handleCashOnDelivarySystem = async () => {
         try {
+
+            const updateUserData = await dispatch(profileData({ email: user?.email })).unwrap();
+            const customar_info = {
+                country: updateUserData?.country,
+                address: updateUserData?.address,
+                postal_code: "N/A",
+                phone_number: updateUserData?.contact_number,
+                alternative_phone_number: updateUserData?.alternative_phone_number,
+                state: updateUserData?.state,
+                city: updateUserData?.city,
+                union: updateUserData?.union
+            }
+
             const products = items.map(product => ({
+                product_id: product._id,
                 product_name: product.title,
                 product_category: product.category,
                 prodcut_quantity: product.quantity,
                 product_image: product.image,
-                product_price: product.price
+                product_price: product.price,
+                product_total_price: product.price * product.quantity
             }))
 
             const paymentInfo = {
-                customar_name: userData?.name,
-                customar_email: userData?.email,
+                customar_name: updateUserData?.name,
+                customar_email: updateUserData?.email,
                 amount: grandTotal,
-                image: userData?.image,
+                image: updateUserData?.image,
                 products,
-                addressInfo: {
-                    country: userData?.country,
-                    address: userData?.address,
-                    postal_code: "N/A",
-                    phone_number: userData?.contact_number,
-                    alternative_phone_number: userData?.alternative_phone_number,
-                    state: userData?.state,
-                    city: userData?.city,
-                    union: userData?.union
-                },
+                addressInfo: customar_info,
                 currency: "BDT",
                 status: "Pending"
             }
@@ -107,32 +148,38 @@ const CheckoutPayment = () => {
         }
     }
 
+    // SSLCommerz dalivary function
     const handlePaymentSystem = async () => {
         try {
+            const updateUserData = await dispatch(profileData({ email: user?.email })).unwrap();
+            const customar_info = {
+                country: updateUserData?.country,
+                address: updateUserData?.address,
+                postal_code: "N/A",
+                phone_number: updateUserData?.contact_number,
+                alternative_phone_number: updateUserData?.alternative_phone_number,
+                state: updateUserData?.state,
+                city: updateUserData?.city,
+                union: updateUserData?.union
+            }
+
             const products = items.map(product => ({
+                product_id: product._id,
                 product_name: product.title,
                 product_category: product.category,
                 prodcut_quantity: product.quantity,
-                product_image: product.image
+                product_image: product.image,
+                product_price: product.price,
+                product_total_price: product.price * product.quantity
             }))
 
             const paymentInfo = {
-                // tran_id: "dfkjeikd",
-                customar_name: userData?.name,
-                customar_email: userData?.email,
+                customar_name: updateUserData?.name,
+                customar_email: updateUserData?.email,
                 amount: grandTotal,
-                image: userData?.image,
+                image: updateUserData?.image,
                 products,
-                addressInfo: {
-                    country: userData?.country,
-                    address: userData?.address,
-                    postal_code: "N/A",
-                    phone_number: userData?.contact_number,
-                    alternative_phone_number: userData?.alternative_phone_number,
-                    state: userData?.state,
-                    city: userData?.city,
-                    union: userData?.union
-                },
+                addressInfo: customar_info,
                 currency: "BDT",
                 status: "Pending"
             }
@@ -142,7 +189,6 @@ const CheckoutPayment = () => {
             if (res.data.success === true) {
                 emptyCart()
                 window.location.replace(redirecUrl)
-
             }
 
         } catch (error) {
@@ -151,25 +197,6 @@ const CheckoutPayment = () => {
         } finally {
             setPaymentLoading(false)
         }
-    }
-
-    const onSubmit = (data) => {
-        console.log(data)
-        if (isAddressText.length === 0) {
-            return console.log('address must required');
-        }
-        const shippingInfoData = {
-            name: data.name,
-            contact_number: data.contact_number,
-            alternative_phone_number: data.alternative_phone_number,
-            country: data.country,
-            city: data.city,
-            state: data.state,
-            union: data.union,
-            address: isAddressText
-        }
-        console.log('checking datas', shippingInfoData)
-        dispatch(profileDataUpdate({ email: user?.email, data: shippingInfoData }))
     }
 
     const handleCashOnDalivery = () => {
@@ -262,11 +289,11 @@ const CheckoutPayment = () => {
                         </div>
                         <div className='flex justify-center items-center my-5'>
                             {
-                                isCashOnDalivery && <button type={shipppingAddress ? "submit" : "button"} onClick={handleCashOnDelivarySystem} className='btn w-40 p-5 bg-[#003a5a] text-white'>Confirm Order</button>
+                                isCashOnDalivery && <button type={"submit"} className='btn w-40 p-5 bg-[#003a5a] text-white'>Confirm Order</button>
                             }
                             {
                                 isSslcommerz && (
-                                    <button type={shipppingAddress ? "submit" : "button"} onClick={handlePaymentSystem} className='btn w-40 p-5 bg-[#003a5a] text-white'>
+                                    <button type={"submit"} className='btn w-40 p-5 bg-[#003a5a] text-white'>
                                         {
                                             paymentLoading ? <ThreeDot color="#ffffff" size="small" text="" textColor="" /> : "Confirm Order"
                                         }

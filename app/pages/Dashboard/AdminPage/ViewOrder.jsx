@@ -50,7 +50,7 @@ const ViewOrder = () => {
                             <tr className='text-[16px]'>
                                 <th>Image</th>
                                 <th>Info</th>
-                                <th>Contact Number</th>
+                                {/* <th>Contact Number</th> */}
                                 <th>Tran Id</th>
                                 <th>Total order</th>
                                 <th>Amount</th>
@@ -72,9 +72,10 @@ const ViewOrder = () => {
                                             <div className='flex flex-col gap-1'>
                                                 <span className='font-bold'>{order?.customar_name ? order?.customar_name : "N/A"}</span>
                                                 <span>{order?.customar_email ? order?.customar_email : "N/A"}</span>
+                                                <span>{order?.addressData?.phone_number ? order?.addressData?.phone_number : "N/A"}</span>
                                             </div>
                                         </td>
-                                        <td>{order?.addressData?.phone_number ? order?.addressData?.phone_number : "N/A"}</td>
+                                        {/* <td></td> */}
                                         <td className=''>{order?.tran_id}</td>
                                         <td>{order?.products.length}</td>
                                         <td>৳{order?.amount}</td>
