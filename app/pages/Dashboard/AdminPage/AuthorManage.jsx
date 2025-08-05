@@ -43,11 +43,11 @@ const AuthorManage = () => {
 
 
     return (
-        <div className='px-5 py-5 bg-[#E0E0E0] font-mixed space-y-3'>
+        <div className='lg:px-5 px-2 py-5 bg-[#E0E0E0] font-mixed space-y-3'>
             <div className='flex justify-between items-center bg-white p-3 rounded-xl'>
-                <p className='font-semibold'>Authors Manage</p>
+                <p className='font-semibold '>Authors Manage</p>
                 <form onSubmit={handleSearch} className='flex items-center border border-[#bbb] rounded-[10px] p-2'>
-                    <input className='focus:outline-0 border-[#bbb] w-60' name='search' placeholder='Search...' type="text" />
+                    <input className='focus:outline-0 border-[#bbb] lg:w-60' name='search' placeholder='Search...' type="text" />
                     <button type='submit'>
                         <CiSearch className='cursor-pointer text-xl' />
                     </button>
@@ -57,7 +57,7 @@ const AuthorManage = () => {
                 <table className="table">
                     <thead>
                         <tr className='text-[16px]'>
-                            <th></th>
+                            <th>Image</th>
                             <th>Name</th>
                             <th>Nationality</th>
                             <th>Date Of Birth</th>

@@ -79,9 +79,9 @@ const AuthorCreate = () => {
 
     return (
         <div className='px-5 py-5 bg-[#E0E0E0] font-mixed min-h-screen'>
-            <div className='flex  gap-10'>
+            <div className='flex flex-col-reverse lg:flex-row  gap-10'>
                 <form onSubmit={handleSubmit(onSubmit)} className='bg-white p-5 space-y-2 w-full'>
-                    <div className='flex items-center gap-5'>
+                    <div className='flex flex-col lg:flex-row items-center gap-5'>
                         <div className='flex flex-col gap-1 w-full'>
                             <label htmlFor="">Name</label>
                             <input {...register("author_name", { required: true })} className={`input focus:outline-0 w-full ${errors.author_name && "border border-red-400"}`} placeholder='Name' type="text" />
@@ -102,7 +102,7 @@ const AuthorCreate = () => {
                         <button type='submit' className='btn bg-[#003a5a] text-white'>{loading ? <OrbitProgress color="#ffffff" size="small" text="" textColor="" /> : "Create Author"}</button>
                     </div>
                 </form>
-                <div className='flex flex-col justify-center items-center bg-white border-5 border-[#bbb] border-dotted rounded-2xl w-[50%]'>
+                <div className='flex flex-col justify-center items-center bg-white border-5 border-[#bbb] border-dotted rounded-2xl lg:w-[50%] p-2'>
                     <div className='border-2 rounded-full mb-5'>
                         <img className='w-32 h-32 rounded-full' src={`${isAuthorImage ? isAuthorImage : "https://i.ibb.co/WcTWxsN/nav-img.png"}`} alt="" />
                     </div>

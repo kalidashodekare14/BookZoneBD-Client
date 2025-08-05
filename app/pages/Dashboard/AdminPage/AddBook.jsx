@@ -93,7 +93,7 @@ const AddBook = () => {
 
     return (
         <div className='font-mixed bg-[#E0E0E0]'>
-            <div className='flex p-3 gap-5'>
+            <div className='flex flex-col lg:flex-row p-3 gap-5'>
                 <form onSubmit={handleSubmit(onSubmit)} className='w-full space-y-3'>
                     <div className='bg-white p-3 rounded-xl'>
                         <h1 className='text-xl my-2'>General Information</h1>
@@ -153,7 +153,7 @@ const AddBook = () => {
                         </div>
                     </div>
                 </form>
-                <div className='flex flex-col justify-center items-center bg-white border-5 border-[#bbb] border-dotted rounded-2xl w-[50%]'>
+                <div className='flex flex-col justify-center items-center bg-white border-5 border-[#bbb] border-dotted rounded-2xl lg:w-[50%] w-full'>
                     <div className=' mb-5'>
                         <img className='w-52 h-52' src={`${isBookImage ? isBookImage : "https://i.ibb.co/99NrFg3J/photo.png"}`} alt="" />
                     </div>

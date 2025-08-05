@@ -211,11 +211,11 @@ const AllBook = () => {
     }
 
     return (
-        <div className='px-5 py-5 bg-[#E0E0E0] font-mixed space-y-3'>
+        <div className='lg:px-5 px-2 py-5 bg-[#E0E0E0] font-mixed space-y-3'>
             <div className='flex justify-between items-center bg-white p-3 rounded-xl'>
                 <p className='font-semibold'>All Book</p>
                 <form onSubmit={handleSearch} className='flex items-center border border-[#bbb] rounded-[10px] p-2'>
-                    <input className='focus:outline-0 border-[#bbb] w-60' name='search' placeholder='Search...' type="text" />
+                    <input className='focus:outline-0 border-[#bbb] lg:w-60' name='search' placeholder='Search...' type="text" />
                     <button type='submit'>
                         <CiSearch className='cursor-pointer text-xl' />
                     </button>
@@ -225,7 +225,7 @@ const AllBook = () => {
                 <table className="table">
                     <thead>
                         <tr className='text-[16px]'>
-                            <th></th>
+                            <th>Image</th>
                             <th>Name</th>
                             <th>Author</th>
                             <th>Price</th>
@@ -256,24 +256,24 @@ const AllBook = () => {
                         }
                     </tbody>
                 </table>
-                <div className='my-10 flex justify-center items-center'>
-                    <ReactPaginate
-                        forcePage={currentPage}
-                        previousLabel={'← Previous'}
-                        nextLabel={'Next →'}
-                        breakLabel={'...'}
-                        pageCount={totalPages}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={3}
-                        onPageChange={handlePageClick}
-                        containerClassName={'flex flex-wrap items-center gap-2'}
-                        activeClassName={'bg-[#003a5a] text-white'}
-                        pageClassName={'px-3 py-2 border cursor-pointer'}
-                        previousClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
-                        nextClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
-                        breakClassName={'px-3 py-2 border cursor-pointer'}
-                    />
-                </div>
+            </div>
+            <div className='my-10 flex justify-center items-center'>
+                <ReactPaginate
+                    forcePage={currentPage}
+                    previousLabel={'← Previous'}
+                    nextLabel={'Next →'}
+                    breakLabel={'...'}
+                    pageCount={totalPages}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={handlePageClick}
+                    containerClassName={'flex flex-wrap items-center gap-2'}
+                    activeClassName={'bg-[#003a5a] text-white'}
+                    pageClassName={'px-3 py-2 border cursor-pointer'}
+                    previousClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
+                    nextClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
+                    breakClassName={'px-3 py-2 border cursor-pointer'}
+                />
             </div>
         </div>
     );
