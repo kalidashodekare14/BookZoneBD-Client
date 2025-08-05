@@ -15,7 +15,7 @@ import dashboardTotalInfo from '../Redux/slice/dashboardSlice/totalInfoSlice'
 import dashboardTotalAuthor from '../Redux/slice/dashboardSlice/authorsManageSlice'
 import dashboardTotalOrder from '../Redux/slice/dashboardSlice/orderManageSlice'
 import dashboardOrderDetils from '../Redux/slice/dashboardSlice/orderDetailsSlice'
-
+import dashboardTotalReview from '../Redux/slice/dashboardSlice/totalReviewSlice';
 
 const store = configureStore({
     reducer: {
@@ -35,7 +35,8 @@ const store = configureStore({
         totalUser: dashboardTotalUsers,
         totalAuthors: dashboardTotalAuthor,
         totalOrders: dashboardTotalOrder,
-        viewOrderDetails: dashboardOrderDetils
+        viewOrderDetails: dashboardOrderDetils,
+        totalReview: dashboardTotalReview
     }
 })
 

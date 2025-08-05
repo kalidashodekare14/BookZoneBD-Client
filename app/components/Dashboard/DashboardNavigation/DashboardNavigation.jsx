@@ -64,7 +64,7 @@ const DashboardNavigation = ({ isToggle }) => {
 
     return (
         <div className='relative '>
-            <div className={`${isToggle ? "translate-y-20 translate-x-0 duration-300" : "-translate-x-full translate-y-20 duration-300"} z-50 absolute lg:static lg:translate-y-0 lg:translate-x-0  left-0  bg-white w-52 border-[#bbb]`}>
+            <div className={`${isToggle ? "translate-y-20 translate-x-0 duration-300" : "-translate-x-full translate-y-20 duration-300"} z-50 absolute lg:static lg:translate-y-0 lg:translate-x-0  left-0  bg-white w-52 min-h-screen border-[#bbb] border-r`}>
                 <div className='flex flex-col gap-1 text-[16px] font-rubik'>
                     <div className='hidden lg:flex py-5 px-3'>
                         <img
