@@ -19,32 +19,33 @@ const Login = () => {
         formState: { errors },
     } = useForm()
 
-    const onSubmit = (data) => {
-        loginSystem(data.email, data.password)
-            .then(async (res) => {
-                const userInfo = {
-                    email: data.email,
-                    password: data.password
-                }
-                try {
-                    setLoading(true)
-                    const response = await axiosSecure.post('/api/user/login', userInfo);
-                    if (response.data.success === true) {
-                        localStorage.setItem('token', response.data.data.token);
+    const onSubmit = async (data) => {
+        try {
+            const userInfo = {
+                email: data.email,
+                password: data.password
+            }
+            setLoading(true)
+            const response = await axiosSecure.post('/api/user/login', userInfo);
+            if (response.data.success === true) {
+                localStorage.setItem('token', response.data.data.token);
+                loginSystem(data.email, data.password)
+                    .then(async (res) => {
                         navigation('/')
-                    }
+                    })
+                    .catch(error => {
+                        setIsError(true)
+                        setLoading(false)
+                    })
 
-                } catch (error) {
-                    setIsError(true)
-                } finally {
-                    setLoading(false);
-                }
+            }
 
-            })
-            .catch(error => {
-                setIsError(true)
-                setLoading(false)
-            })
+        } catch (error) {
+            setIsError(true)
+        } finally {
+            setLoading(false);
+        }
+
     }
 
     const handleGoogleRegister = () => {

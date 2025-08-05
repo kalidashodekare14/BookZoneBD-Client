@@ -119,7 +119,7 @@ const Navbar = () => {
                         loadingAuth ? (
                             <div className="skeleton w-10 h-10 rounded-full"></div>
                         ) : user ? (
-                            <div className="dropdown dropdown-end text-black">
+                            <div className="dropdown dropdown-end text-black lg:border-r-2 border-[#bbb] pr-3">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 rounded-full border-2 border-[#bbb]">
                                         <img
@@ -142,7 +142,7 @@ const Navbar = () => {
                             </div>
                         ) : (
                             <Link to={"/login"}>
-                                <div className="flex items-center gap-2 lg:border-r-2 border-[#bbb] lg:px-10 cursor-pointer">
+                                <div className="flex items-center gap-2 lg:px-10 cursor-pointer lg:border-r-2 border-[#bbb]">
                                     <FaRegUser className="lg:text-3xl text-[25px]" />
                                     <div className="hidden lg:flex flex-col">
                                         <h3>{t('account.accountName')}</h3>

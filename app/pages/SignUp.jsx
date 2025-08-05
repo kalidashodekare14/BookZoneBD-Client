@@ -20,28 +20,29 @@ const SignUp = () => {
     } = useForm()
 
     const onSubmit = async (data) => {
-        registerSystem(data.email, data.password)
-            .then(async (res) => {
-                try {
-                    const userInfo = {
-                        email: data.email,
-                        password: data.password
-                    }
-                    setLoading(true)
-                    const response = await axiosSecure.post('/api/user/register', userInfo);
-                    if (response.data.success === true) {
-                        localStorage.setItem('token', response.data.data.token);
+        try {
+            const userInfo = {
+                email: data.email,
+                password: data.password
+            }
+            setLoading(true)
+            const response = await axiosSecure.post('/api/user/register', userInfo);
+            if (response.data.success === true) {
+                localStorage.setItem('token', response.data.data.token);
+                registerSystem(data.email, data.password)
+                    .then(async (res) => {
                         navigation('/');
-                    }
-                } catch (error) {
-                } finally {
-                    setLoading(false)
-                }
-            })
-            .catch(error => {
-                setLoading(false)
-                setIsError(true)
-            })
+                    })
+                    .catch(error => {
+                        setLoading(false)
+                        setIsError(true)
+                    })
+            }
+        } catch (error) {
+        } finally {
+            setLoading(false)
+        }
+
     }
 
     const handleGoogleRegister = () => {
