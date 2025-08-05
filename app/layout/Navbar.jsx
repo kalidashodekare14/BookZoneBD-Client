@@ -1,5 +1,5 @@
 import '../i18n';
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars, FaRegUser } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { GrFavorite } from "react-icons/gr";
@@ -11,6 +11,8 @@ import useAuth from '../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { useCart } from 'react-use-cart';
 import logo from '../../public/logo.png'
+import axiosPublic from '../utils/axiosPublic';
+import axiosSecure from '../utils/axiosSecure';
 
 
 const Navbar = () => {
@@ -26,6 +28,17 @@ const Navbar = () => {
     const [searchInput, setSearchInput] = useState(null);
     const navigate = useNavigate();
     const { totalUniqueItems } = useCart()
+    const [userRole, setUserRole] = useState("");
+
+    useEffect(() => {
+        const userRoleFetched = async () => {
+            const res = await axiosSecure.get('/api/userInfo/user_role');
+            setUserRole(res.data.role)
+        }
+        if (user?.email) {
+            userRoleFetched();
+        }
+    }, [user?.email])
 
 
     const handleNavToggle = () => {
@@ -130,12 +143,18 @@ const Navbar = () => {
                                 <ul
                                     tabIndex={0}
                                     className="menu menu-sm dropdown-content bg-base-100 z-1 mt-3 w-52 p-2 shadow ">
-                                    <li>
-                                        <Link to={'/profile'} className="justify-between text-[15px]">
-                                            Profile
-                                        </Link>
-                                    </li>
-                                    <li><Link to={'/dashboard'} className='text-[15px]'>Dashboard</Link></li>
+                                    {
+                                        userRole === "Admin" && <li><Link to={'/dashboard'} className='text-[15px]'>Dashboard</Link></li>
+                                    }
+                                    {
+                                        userRole === "User" && (
+                                            <li>
+                                                <Link to={'/profile'} className="justify-between text-[15px]">
+                                                    Profile
+                                                </Link>
+                                            </li>
+                                        )
+                                    }
                                     <li><a className='text-[15px]'>Settings</a></li>
                                     <li onClick={handleLogOut}><p className='text-[15px]'>Logout</p></li>
                                 </ul>
