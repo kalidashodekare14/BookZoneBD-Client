@@ -16,6 +16,7 @@ export default [
     // Auth Protected
     layout("./ProtectedRoute/AuthProtected.jsx", [
         route("profile", './pages/UserProfile.jsx'),
+        route('orders', './pages/UserOrders.jsx'),
         route('checkout', './pages/Checkout.jsx'),
         route('checkout_payment', './pages/CheckoutPayment.jsx'),
         route("payment_success", "./pages/PaymentSuccess.jsx"),

@@ -10,9 +10,9 @@ import './Navbar.css'
 import useAuth from '../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { useCart } from 'react-use-cart';
-import logo from '../../public/logo.png'
 import axiosPublic from '../utils/axiosPublic';
 import axiosSecure from '../utils/axiosSecure';
+import logo from '/logo.png'
 
 
 const Navbar = () => {
@@ -148,11 +148,20 @@ const Navbar = () => {
                                     }
                                     {
                                         userRole === "User" && (
-                                            <li>
-                                                <Link to={'/profile'} className="justify-between text-[15px]">
-                                                    Profile
-                                                </Link>
-                                            </li>
+                                            <>
+                                                <li>
+                                                    <Link to={'/profile'} className="justify-between text-[15px]">
+                                                        Profile
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link to={'/orders'} className="justify-between text-[15px]">
+                                                        Orders
+                                                    </Link>
+                                                </li>
+                                            </>
+
+
                                         )
                                     }
                                     <li><a className='text-[15px]'>Settings</a></li>
