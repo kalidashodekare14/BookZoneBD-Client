@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { userOrderFetched } from '../Redux/slice/orderSlice';
+import { userOrderFetched, orderStatusUpdate } from '../Redux/slice/orderSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserOrders = () => {
 
@@ -16,6 +18,22 @@ const UserOrders = () => {
         dispatch(userOrderFetched({ email: user?.email }))
     }, [user?.email, dispatch])
 
+    const handleUserOrderStatus = (isId, isStatus) => {
+
+        if (isStatus.order_status === "Processing") {
+            return toast.warning("Your order Processing");
+        } else if (isStatus.order_status === "Delivered") {
+            return toast.warning("Your order Delivered");
+        } else if (isStatus.order_status === "Cancelled") {
+            return toast.warning("Your order Cancelled");
+        }
+
+        const orderStatus = {
+            order_status: "Cancelled"
+        }
+        dispatch(orderStatusUpdate({ id: isId.id, data: orderStatus }))
+    }
+
     return (
         <div className='lg:px-32 min-h-screen py-10 bg-[#f0f0f0]'>
             {/* <h1 className='text-3xl text-center my-10'>My Orders</h1> */}
@@ -28,7 +46,20 @@ const UserOrders = () => {
                                     <p className='text-xl my-2 font-bold'>ORDER : <span className=''>{orders?.tran_id}</span></p>
                                     <p className='text-[17px]'>{new Date(orders?.createdAt).toLocaleDateString()}</p>
                                 </div>
-                                <button className='btn bg-[#003a5a] text-white'>Cancel Order</button>
+                                <button onClick={(event) => handleUserOrderStatus({ id: orders._id }, { order_status: orders.order_status })} className={`${orders?.order_status === "Delivered" && "bg-[#59b15a] text-white"} ${orders?.order_status === "Pending" && "bg-[#0077b6] text-white"} ${orders?.order_status === "Processing" && "bg-[#e09f3e] text-white"} ${orders?.order_status === "Cancelled" && "bg-[#ef233c] text-white"} btn bg-[#003a5a] text-white`}>
+                                    {
+                                        orders?.order_status === "Pending" && "Cencel"
+                                    }
+                                    {
+                                        orders?.order_status === "Processing" && "Processing"
+                                    }
+                                    {
+                                        orders?.order_status === "Delivered" && "Delivered"
+                                    }
+                                    {
+                                        orders?.order_status === "Cancelled" && "Cancelled"
+                                    }
+                                </button>
                             </div>
                             <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
                                 {
@@ -53,7 +84,8 @@ const UserOrders = () => {
                     ))
                 }
             </div>
-        </div>
+            <ToastContainer />
+        </div >
     );
 };
 

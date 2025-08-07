@@ -9,6 +9,13 @@ export const userOrderFetched = createAsyncThunk(
     }
 )
 
+export const orderStatusUpdate = createAsyncThunk(
+    "allUserOrder/orderStatusUpdate",
+    async ({ id, data }) => {
+        const res = await axiosSecure.patch(`/api/dashboard/order_status/${id}`, data);
+        return res.data.data
+    }
+)
 
 
 const userOrderSlice = createSlice({
@@ -28,6 +35,22 @@ const userOrderSlice = createSlice({
                 state.userOrder = action.payload;
             })
             .addCase(userOrderFetched.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            // Update
+            .addCase(orderStatusUpdate.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(orderStatusUpdate.fulfilled, (state, action) => {
+                state.loading = false;
+                const updateOrder = action.payload;
+                const index = state.userOrder.findIndex(order => order._id === updateOrder._id);
+                if (index !== -1) {
+                    state.userOrder[index] = updateOrder
+                }
+            })
+            .addCase(orderStatusUpdate.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })
