@@ -10,6 +10,14 @@ export const orderManageFatched = createAsyncThunk(
     }
 )
 
+export const orderStatusUpdate = createAsyncThunk(
+    "totalOrders/orderStatusUpdate",
+    async ({ id, data }) => {
+        const res = await axiosSecure.patch(`/api/dashboard/order_status/${id}`, data);
+        return res.data.data
+    }
+)
+
 
 const dashboardOrderManage = createSlice({
     name: "allAuthors",
@@ -31,6 +39,24 @@ const dashboardOrderManage = createSlice({
                 state.totalPages = action.payload.totalPages;
             })
             .addCase(orderManageFatched.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            // update
+            .addCase(orderStatusUpdate.pending, (state, action) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(orderStatusUpdate.fulfilled, (state, action) => {
+                state.loading = false;
+                const updateOrder = action.payload;
+                const index = state.totalOrder.findIndex(order => order._id === updateOrder._id);
+                if (index !== -1) {
+                    state.totalOrder[index] = updateOrder
+                }
+
+            })
+            .addCase(orderStatusUpdate.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })

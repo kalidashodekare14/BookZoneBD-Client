@@ -127,7 +127,7 @@ const CheckoutPayment = () => {
                 status: "Pending"
             }
             setPaymentLoading(true);
-            const res = await axiosSecure.post('/api/payment/cash_on_payment', paymentInfo)
+            const res = await axiosSecure.post('/api/order/cash_on_payment', paymentInfo)
             if (res.data.success === true) {
                 Swal.fire({
                     position: "center",
@@ -184,7 +184,7 @@ const CheckoutPayment = () => {
                 status: "Pending"
             }
             setPaymentLoading(true);
-            const res = await axiosSecure.post('/api/payment/payment_integration', paymentInfo)
+            const res = await axiosSecure.post('/api/order/payment_integration', paymentInfo)
             const redirecUrl = res.data.paymentUrl;
             if (res.data.success === true) {
                 emptyCart()

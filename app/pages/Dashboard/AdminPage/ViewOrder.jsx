@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderManageFatched } from '../../../Redux/slice/dashboardSlice/orderManageSlice'
+import { orderManageFatched, orderStatusUpdate } from '../../../Redux/slice/dashboardSlice/orderManageSlice'
 import { HiDotsVertical } from 'react-icons/hi';
 import { Link } from 'react-router';
 
@@ -13,13 +13,26 @@ const ViewOrder = () => {
     const [isSearch, setIsSearch] = useState(null);
     const { totalOrder, loading, error } = useSelector((state) => state.totalOrders);
     const dispatch = useDispatch()
-
-    console.log('checking total order', totalOrder)
+    const [orderStatus, setOrderStatus] = useState("");
+    console.log('checking order status', totalOrder)
 
 
     useEffect(() => {
         dispatch(orderManageFatched());
     }, [])
+
+
+    const handleOrderStatus = async (isId, isValue) => {
+        const orderStatus = {
+            order_status: isValue.value
+        }
+        try {
+            dispatch(orderStatusUpdate({ id: isId.id, data: orderStatus }))
+        } catch (error) {
+            console.log('order status error', error)
+        }
+    }
+
 
 
     const handleSearch = (event) => {
@@ -55,7 +68,8 @@ const ViewOrder = () => {
                                 <th>Total order</th>
                                 <th>Amount</th>
                                 <th>Order Date</th>
-                                <th>Status</th>
+                                <th>Payment Status</th>
+                                <th>Order Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -85,8 +99,17 @@ const ViewOrder = () => {
                                             </div>
                                         </td>
                                         <td>
-                                            <p className={`${order.status === "Success" && "bg-[#59b15a] text-white"} ${order.status === "Pending" && "bg-[#cc554c] text-white"} p-2 rounded-full`}>{order.status}</p>
+                                            <p className={`${order.payment_status === "Success" && "bg-[#59b15a] text-white"} ${order.payment_status === "Pending" && "bg-[#cc554c] text-white"} p-2 rounded-full`}>{order.payment_status}</p>
                                         </td>
+                                        <td>
+                                            <select disabled={order?.order_status === "Delivered" || order?.order_status === "Cancelled"} onClick={(event) => handleOrderStatus({ id: order._id, }, { value: event.target.value })} defaultValue={order?.order_status} className={`${order?.order_status === "Delivered" && "bg-[#59b15a] text-white"} ${order?.order_status === "Pending" && "bg-[#0077b6] text-white"} ${order?.order_status === "Processing" && "bg-[#e09f3e] text-white"} ${order?.order_status === "Cancelled" && "bg-[#ef233c] text-white"} border rounded-2xl p-2 font-mixed`}>
+                                                <option value="Pending">Pending</option>
+                                                <option value="Processing">Processing</option>
+                                                <option value="Delivered">Delivered</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                            </select>
+                                        </td>
+
                                         <td>
                                             <div className="dropdown dropdown-bottom dropdown-end">
                                                 <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>

@@ -17,28 +17,35 @@ const UserOrders = () => {
     }, [user?.email, dispatch])
 
     return (
-        <div className='mx-32 min-h-screen'>
-            <h1 className='text-3xl text-center my-10'>My Orders</h1>
-            <div>
+        <div className='lg:px-32 min-h-screen py-10 bg-[#f0f0f0]'>
+            {/* <h1 className='text-3xl text-center my-10'>My Orders</h1> */}
+            <div className='space-y-5'>
                 {
                     userOrder?.map(orders => (
-                        <div className='bg-[#f3f2f2] p-3'>
+                        <div className='bg-white p-3'>
                             <div className='flex justify-between items-center'>
-                                <p className='text-xl my-2'>Your Order ID: <span className='text-[#40b47f]'>{orders?.tran_id}</span></p>
-                                <button className='btn bg-[#003a5a] text-white'>Order Cancel</button>
+                                <div className='flex items-center gap-5'>
+                                    <p className='text-xl my-2 font-bold'>ORDER : <span className=''>{orders?.tran_id}</span></p>
+                                    <p className='text-[17px]'>{new Date(orders?.createdAt).toLocaleDateString()}</p>
+                                </div>
+                                <button className='btn bg-[#003a5a] text-white'>Cancel Order</button>
                             </div>
-                            <div className='grid grid-cols-1 lg:grid-cols-5 gap-2'>
+                            <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
                                 {
                                     orders?.products.map(product => (
-                                        <div className='flex flex-col gap-2 bg-white border border-[#bbb] p-2'>
-                                            <img className='w-full h-52' src={product?.product_image} alt="" />
-                                            <p>{product?.product_name}</p>
-                                            <p className='text-xl font-semibold'>৳{product?.product_price}</p>
-                                            <p>items: {product?.prodcut_quantity}</p>
-                                            <Link to={`/book/${product?.product_id}`}>
-                                                <button className='btn w-full bg-[#003a5a] text-white'>View Details</button>
-                                            </Link>
-                                        </div>
+                                        <Link to={`/book/${product.product_id}`}>
+                                            <div className='hover:border hover:border-[#023958] flex items-center gap-2  bg-white border border-[#bbb] p-2'>
+                                                <div className=''>
+                                                    <img className='w-full h-40' src={product?.product_image} alt="" />
+                                                </div>
+                                                <div className='list-disc space-y-1'>
+                                                    <p className='font-semibold'>{product?.product_name}</p>
+                                                    <li>Category: {product?.product_category}</li>
+                                                    <li>items: {product?.prodcut_quantity}</li>
+                                                    <li className=' font-semibold'>Price: ৳{product?.product_price}</li>
+                                                </div>
+                                            </div>
+                                        </Link>
                                     ))
                                 }
                             </div>
