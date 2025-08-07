@@ -35,53 +35,63 @@ const UserOrders = () => {
     }
 
     return (
-        <div className='lg:px-32 min-h-screen py-10 bg-[#f0f0f0]'>
+        <div className='lg:px-32 min-h-screen py-10 bg-[#f0f0f0] font-mixed'>
             {/* <h1 className='text-3xl text-center my-10'>My Orders</h1> */}
             <div className='space-y-5'>
                 {
-                    userOrder?.map(orders => (
-                        <div className='bg-white p-3'>
-                            <div className='my-2 flex flex-col lg:flex-row lg:justify-between lg:items-center'>
-                                <div className='flex flex-col lg:flex-row  lg:items-center lg:gap-5'>
-                                    <p className='text-xl my-2 font-bold'>ORDER : <span className=''>{orders?.tran_id}</span></p>
-                                    <p className='text-[17px]'>{new Date(orders?.createdAt).toLocaleDateString()}</p>
+                    userOrder.length > 0 ? (
+                        userOrder?.map(orders => (
+                            <div className='bg-white p-3'>
+                                <div className='my-2 flex flex-col lg:flex-row lg:justify-between lg:items-center'>
+                                    <div className='flex flex-col lg:flex-row  lg:items-center lg:gap-5'>
+                                        <p className='text-xl my-2 font-bold'>ORDER : <span className=''>{orders?.tran_id}</span></p>
+                                        <p className='text-[17px]'>{new Date(orders?.createdAt).toLocaleDateString()}</p>
+                                    </div>
+                                    <button onClick={(event) => handleUserOrderStatus({ id: orders._id }, { order_status: orders.order_status })} className={`${orders?.order_status === "Delivered" && "bg-[#59b15a] text-white"} ${orders?.order_status === "Pending" && "bg-[#0077b6] text-white"} ${orders?.order_status === "Processing" && "bg-[#e09f3e] text-white"} ${orders?.order_status === "Cancelled" && "bg-[#ef233c] text-white"} w-32 btn bg-[#003a5a] text-white`}>
+                                        {
+                                            orders?.order_status === "Pending" && "Cencel"
+                                        }
+                                        {
+                                            orders?.order_status === "Processing" && "Processing"
+                                        }
+                                        {
+                                            orders?.order_status === "Delivered" && "Delivered"
+                                        }
+                                        {
+                                            orders?.order_status === "Cancelled" && "Cancelled"
+                                        }
+                                    </button>
                                 </div>
-                                <button onClick={(event) => handleUserOrderStatus({ id: orders._id }, { order_status: orders.order_status })} className={`${orders?.order_status === "Delivered" && "bg-[#59b15a] text-white"} ${orders?.order_status === "Pending" && "bg-[#0077b6] text-white"} ${orders?.order_status === "Processing" && "bg-[#e09f3e] text-white"} ${orders?.order_status === "Cancelled" && "bg-[#ef233c] text-white"} w-32 btn bg-[#003a5a] text-white`}>
+                                <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
                                     {
-                                        orders?.order_status === "Pending" && "Cencel"
+                                        orders?.products.map(product => (
+                                            <Link to={`/book/${product.product_id}`}>
+                                                <div className='hover:border hover:border-[#023958] flex items-center gap-2  bg-white border border-[#bbb] p-2'>
+                                                    <div className=''>
+                                                        <img className='w-full h-40' src={product?.product_image} alt="" />
+                                                    </div>
+                                                    <div className='list-disc space-y-1'>
+                                                        <p className='font-semibold'>{product?.product_name}</p>
+                                                        <li>Category: {product?.product_category}</li>
+                                                        <li>items: {product?.prodcut_quantity}</li>
+                                                        <li className=' font-semibold'>Price: ৳{product?.product_price}</li>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        ))
                                     }
-                                    {
-                                        orders?.order_status === "Processing" && "Processing"
-                                    }
-                                    {
-                                        orders?.order_status === "Delivered" && "Delivered"
-                                    }
-                                    {
-                                        orders?.order_status === "Cancelled" && "Cancelled"
-                                    }
-                                </button>
+                                </div>
                             </div>
-                            <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
-                                {
-                                    orders?.products.map(product => (
-                                        <Link to={`/book/${product.product_id}`}>
-                                            <div className='hover:border hover:border-[#023958] flex items-center gap-2  bg-white border border-[#bbb] p-2'>
-                                                <div className=''>
-                                                    <img className='w-full h-40' src={product?.product_image} alt="" />
-                                                </div>
-                                                <div className='list-disc space-y-1'>
-                                                    <p className='font-semibold'>{product?.product_name}</p>
-                                                    <li>Category: {product?.product_category}</li>
-                                                    <li>items: {product?.prodcut_quantity}</li>
-                                                    <li className=' font-semibold'>Price: ৳{product?.product_price}</li>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    ))
-                                }
+                        ))
+                    ) : (
+                        <div className='flex justify-center items-center h-[500px]'>
+                            <div className='flex flex-col justify-center items-center'>
+                                <img className='w-96' src="https://i.ibb.co.com/84B9Kcbb/no-order-Photoroom.png" alt="" />
+                                <p className='text-xl'>Your order has not been found.</p>
                             </div>
                         </div>
-                    ))
+                    )
+
                 }
             </div>
             <ToastContainer />
