@@ -170,7 +170,7 @@ const UserProfile = () => {
                 </div>
                 {/* Modal */}
                 <Modal open={open} onClose={onCloseModal} center>
-                    <div className='w-96'>
+                    <div className='lg:w-96'>
                         <div className='flex justify-center items-center'>
                             <div className="relative w-28 h-28 mb-5 rounded-full">
                                 <img

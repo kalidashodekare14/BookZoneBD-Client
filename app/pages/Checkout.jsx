@@ -71,15 +71,15 @@ const Checkout = () => {
     }
 
     return (
-        <div className='mx-10 my-10 font-mixed min-h-[600px]'>
+        <div className='lg:mx-10 mx-5 my-10 font-mixed min-h-[600px]'>
             <h1 className='text-3xl'>Sopping Card</h1>
-            <div className='flex  justify-between gap-20'>
+            <div className='flex flex-col lg:flex-row  justify-between gap-20'>
                 <div className="overflow-x-auto w-full">
                     <table className="table">
                         {/* head */}
                         <thead>
                             <tr>
-                                <th>Product</th>
+                                <th>Product Info</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total Price</th>
@@ -129,7 +129,7 @@ const Checkout = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className='w-96 space-y-2'>
+                <div className='lg:w-96 space-y-2'>
                     {
                         shippingInfo && (
                             <div className='border border-[#bbb] p-3'>

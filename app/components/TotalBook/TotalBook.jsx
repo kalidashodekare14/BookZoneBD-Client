@@ -298,7 +298,7 @@ const TotalBook = () => {
 
     return (
         <div className='lg:mx-5 my-5 font-mixed'>
-            <div className=' flex items-center justify-between my-5'>
+            <div className=' flex items-center justify-between my-5 mx-5'>
                 <div className='flex items-center gap-3'>
                     {
                         toggle ? <IoMdClose className='lg:hidden text-xl' onClick={handleToggele} /> : <FaBarsStaggered className='lg:hidden' onClick={handleToggele} />

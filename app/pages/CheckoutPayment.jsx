@@ -214,9 +214,9 @@ const CheckoutPayment = () => {
     }
 
     return (
-        <div className='px-20 py-10 font-mixed min-h-[600px] bg-[#e4e4e4]'>
-            <div className='flex gap-20'>
-                <form onSubmit={handleSubmit(onSubmit)} className='w-[65%] space-y-5'>
+        <div className='lg:px-20 px-5 py-10 font-mixed min-h-[600px] bg-[#e4e4e4]'>
+            <div className='flex flex-col lg:flex-row gap-20'>
+                <form onSubmit={handleSubmit(onSubmit)} className='lg:w-[65%] space-y-5'>
                     {/* Shipping Address */}
                     {
                         shipppingAddress && (
@@ -265,7 +265,7 @@ const CheckoutPayment = () => {
                     {/* Payment method */}
                     <div className='bg-white p-5'>
                         <h3 className='text-xl my-5'>Payment Method</h3>
-                        <div className='flex items-center justify-between gap-5'>
+                        <div className='flex flex-col lg:flex-row items-center justify-between gap-5'>
                             <div className='w-full'>
                                 <p className='pb-1'>Cash On Delivery</p>
                                 <div className='flex items-center gap-2 border border-[#bbb] p-2'>
@@ -278,10 +278,10 @@ const CheckoutPayment = () => {
                             </div>
                             <div className='w-full'>
                                 <p className='pb-1'>Payment SSLCommerz</p>
-                                <div className='flex items-center gap-2 border border-[#bbb] p-[14px]'>
+                                <div className='flex items-center gap-5 border border-[#bbb] p-[14px]'>
                                     <div className='flex items-center gap-2'>
                                         <input type="checkbox" onChange={handleSslcommerz} checked={isSslcommerz} className="checkbox" />
-                                        <img className='w-32' src={sslcommerzImage} alt="" />
+                                        <img className='lg:w-32 w-24' src={sslcommerzImage} alt="" />
                                     </div>
                                     <p>Payment SSLCommerz</p>
                                 </div>
@@ -303,7 +303,7 @@ const CheckoutPayment = () => {
                         </div>
                     </div>
                 </form>
-                <div className='right-20 w-96 h-52 border border-[#bbb] p-3 bg-[#f8f8f8] '>
+                <div className='right-20 lg:w-96 h-52 border border-[#bbb] p-3 bg-[#f8f8f8] '>
                     <div >
                         <p>Enter Promo Code</p>
                         <div className='flex items-center'>

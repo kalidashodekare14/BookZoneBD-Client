@@ -41,12 +41,12 @@ const UserOrders = () => {
                 {
                     userOrder?.map(orders => (
                         <div className='bg-white p-3'>
-                            <div className='flex justify-between items-center'>
-                                <div className='flex items-center gap-5'>
+                            <div className='my-2 flex flex-col lg:flex-row lg:justify-between lg:items-center'>
+                                <div className='flex flex-col lg:flex-row  lg:items-center lg:gap-5'>
                                     <p className='text-xl my-2 font-bold'>ORDER : <span className=''>{orders?.tran_id}</span></p>
                                     <p className='text-[17px]'>{new Date(orders?.createdAt).toLocaleDateString()}</p>
                                 </div>
-                                <button onClick={(event) => handleUserOrderStatus({ id: orders._id }, { order_status: orders.order_status })} className={`${orders?.order_status === "Delivered" && "bg-[#59b15a] text-white"} ${orders?.order_status === "Pending" && "bg-[#0077b6] text-white"} ${orders?.order_status === "Processing" && "bg-[#e09f3e] text-white"} ${orders?.order_status === "Cancelled" && "bg-[#ef233c] text-white"} btn bg-[#003a5a] text-white`}>
+                                <button onClick={(event) => handleUserOrderStatus({ id: orders._id }, { order_status: orders.order_status })} className={`${orders?.order_status === "Delivered" && "bg-[#59b15a] text-white"} ${orders?.order_status === "Pending" && "bg-[#0077b6] text-white"} ${orders?.order_status === "Processing" && "bg-[#e09f3e] text-white"} ${orders?.order_status === "Cancelled" && "bg-[#ef233c] text-white"} w-32 btn bg-[#003a5a] text-white`}>
                                     {
                                         orders?.order_status === "Pending" && "Cencel"
                                     }

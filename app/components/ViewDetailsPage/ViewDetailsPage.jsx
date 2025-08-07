@@ -321,12 +321,12 @@ const ViewDetailsPage = () => {
 
 
     return (
-        <div className='mx-20 my-5 font-mixed'>
-            <div className='flex justify-between gap-5'>
-                <div className='cursor-pointer book-shadaw w-80 h-96 overflow-hidden bg-[#bbbbbb6b] border-black '>
+        <div className='lg:mx-20 mx-5 my-5 font-mixed'>
+            <div className='flex flex-col lg:flex-row justify-between gap-5'>
+                <div className='cursor-pointer book-shadaw lg:w-80 h-96 overflow-hidden bg-[#bbbbbb6b] border-black '>
                     <img className='w-full h-96 hover:w-74 hover:duration-300 duration-300' src={bookDetails?.image} alt="" />
                 </div>
-                <div className='space-y-3 w-[40%]'>
+                <div className='space-y-3 lg:w-[40%]'>
                     <h1 className='text-xl'>{bookDetails?.title}</h1>
                     <div className='flex items-center gap-2'>
                         {/* <img className='w-16 h-16 rounded-full border p-2' src={"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSuFnh8mh6WfiAXU0jGmRiP6EXFQK5PefgnEiQIFNLtsMKGfXby9-mC7zefO-w8aTjLLzQdprFK7byzNd-SWuNbA"} alt="" /> */}
@@ -363,8 +363,8 @@ const ViewDetailsPage = () => {
                         <span>৳{bookDetails?.price * bookDetails?.discount / 100}</span>
                     </p>
                     <div className='space-x-3'>
-                        <button onClick={() => addItem({ ...bookDetails, id: bookDetails._id })} className='btn w-52 bg-[#003A5A] text-white'>Add to Cart</button>
-                        <button className='btn w-52  bg-opacity-0 border bg-opacity-0 border-[#003A5A]'>Preview</button>
+                        <button onClick={() => addItem({ ...bookDetails, id: bookDetails._id })} className='btn lg:w-52 w-full bg-[#003A5A] text-white'>Add to Cart</button>
+                        <button className='btn lg:w-52 w-full  bg-opacity-0 border bg-opacity-0 border-[#003A5A]'>Preview</button>
                     </div>
                 </div>
                 <div className=''>
@@ -430,7 +430,7 @@ const ViewDetailsPage = () => {
                                     <div className='space-y-1'>
                                         <p className='space-x-3'>
                                             <span className='font-semibold'>{review?.user_name}</span>
-                                            <span>{ new Date(review?.createdAt).toLocaleDateString()}</span>
+                                            <span>{new Date(review?.createdAt).toLocaleDateString()}</span>
                                         </p>
                                         <Rating
                                             style={{ maxWidth: 80 }}
@@ -456,7 +456,7 @@ const ViewDetailsPage = () => {
                 </div>
             </div>
             <Modal open={open} onClose={onCloseModal} center>
-                <form onSubmit={handleReviewForm} className='w-96'>
+                <form onSubmit={handleReviewForm} className='lg:w-96'>
                     <h2 className='text-xl pb-2'>Write your review</h2>
                     <div className='flex flex-col justify-center items-center border-t border-b border-[#bbb] p-3'>
                         <p>Please rate this product</p>
