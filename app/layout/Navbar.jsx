@@ -154,6 +154,11 @@ const Navbar = () => {
                                                         Profile
                                                     </Link>
                                                 </li>
+                                                <li>
+                                                    <Link to={'/writer_books'} className="justify-between text-[15px]">
+                                                        My Books
+                                                    </Link>
+                                                </li>
                                             </>
                                         )
                                     }

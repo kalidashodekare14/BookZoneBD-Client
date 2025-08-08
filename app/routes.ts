@@ -17,6 +17,7 @@ export default [
     layout("./ProtectedRoute/AuthProtected.jsx", [
         route("profile", './pages/UserProfile.jsx'),
         route('writer_profile', './pages/WriterProfile.jsx'),
+        route('writer_books', './pages/WriterBooks.jsx'),
         route('orders', './pages/UserOrders.jsx'),
         route('checkout', './pages/Checkout.jsx'),
         route('checkout_payment', './pages/CheckoutPayment.jsx'),
