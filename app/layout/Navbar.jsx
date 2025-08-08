@@ -147,6 +147,17 @@ const Navbar = () => {
                                         userRole === "Admin" && <li><Link to={'/dashboard'} className='text-[15px]'>Dashboard</Link></li>
                                     }
                                     {
+                                        userRole === "Writer" && (
+                                            <>
+                                                <li>
+                                                    <Link to={'/writer_profile'} className="justify-between text-[15px]">
+                                                        Profile
+                                                    </Link>
+                                                </li>
+                                            </>
+                                        )
+                                    }
+                                    {
                                         userRole === "User" && (
                                             <>
                                                 <li>

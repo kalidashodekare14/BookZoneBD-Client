@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import profileSlice from '../Redux/slice/profileSlice'
+import writerProfileSlice from '../Redux/slice/writerProfileSlice'
 import userOrderSlice from '../Redux/slice/orderSlice'
 import publicTotalBooks from '../Redux/slice/publicDataSlice/publicTotalBooks'
 import publicDetailBooks from '../Redux/slice/publicDataSlice/viewDetailsBookSlice'
@@ -22,6 +23,7 @@ import dashboardTotalReview from '../Redux/slice/dashboardSlice/totalReviewSlice
 const store = configureStore({
     reducer: {
         profile: profileSlice,
+        writerProfile: writerProfileSlice,
         allUserOrder: userOrderSlice,
         publicAllBooks: publicTotalBooks,
         viewDetailBooks: publicDetailBooks,
