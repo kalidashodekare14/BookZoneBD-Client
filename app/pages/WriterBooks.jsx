@@ -4,6 +4,9 @@ import Modal from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import { FaCamera } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
+import useWriter from '../hooks/useWriter';
+import { writerBooksDataCreate, writerBooksFetched } from '../Redux/slice/writerBooksSlice'
+import { useDispatch, useSelector } from 'react-redux';
 const IMG_API_KEY = import.meta.env.VITE_IMG_API_KEY;
 const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 
@@ -16,14 +19,18 @@ const WriterBooks = () => {
     const [imageHosting, setImageHosting] = useState("")
     const [imgHostingLoading, setImgHostingLoading] = useState(false);
     const [isDiscription, setIsDiscription] = useState("")
+    const { writerData, loading, error } = useWriter();
+    const { writerBook, loading: writerLoading, error: writerError } = useSelector((state) => state.writerBooks);
+    const dispatch = useDispatch()
+
+    console.log('checking writer book', writerBook)
+    console.log('checking writer id', writerData?._id)
+
 
     useEffect(() => {
-        const booksDataFetched = async () => {
-            const res = await axiosPublic.get('/api/public/special_discount');
-            setIsBooks(res.data.data)
-        }
-        booksDataFetched()
-    }, [])
+        dispatch(writerBooksFetched({ id: writerData?._id }))
+    }, [writerData?._id, dispatch])
+
 
 
     const handleImageHosting = async (event) => {
@@ -55,18 +62,28 @@ const WriterBooks = () => {
     } = useForm()
 
     const onSubmit = (data) => {
-        const booksInfo = {
-            title: data.title,
-            category: data.category,
-            subcategory: data.subcategory,
-            price: data.price,
-            discount: data.discount,
-            publisher: data.publisher,
-            publisher: data.publisher,
-            description: isDiscription
-        }
+        try {
+            const booksInfo = {
+                author_id: writerData?._id,
+                image: imageHosting,
+                title: data.title,
+                category: data.category,
+                subCategory: data.subcategory,
+                price: data.price,
+                discount: data.discount,
+                publisher: data.publisher,
+                stock: data.stock,
+                description: isDiscription
+            }
+            dispatch(writerBooksDataCreate({ data: booksInfo }))
+            if (writerLoading === false) {
+                onCloseModal()
+            }
+        } catch (error) {
+            console.log(error)
+        } finally {
 
-        
+        }
 
     }
 
@@ -79,27 +96,38 @@ const WriterBooks = () => {
                     <h1 className='text-xl'>My Books</h1>
                     <button onClick={onOpenModal} className='btn bg-[#003a5a] text-white'>Add Book</button>
                 </div>
-                <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+                <div>
                     {
-                        isBooks.length > 0 ? (
-                            isBooks.slice(0, 5).map(book => (
-                                <div className='flex flex-col lg:flex-row gap-3 border border-[#bbb] p-3'>
-                                    <img className='w-full h-full' src={book?.image} alt="" />
-                                    <div className='space-y-2'>
-                                        <p className='font-bold text-[17px]'>{book?.title}</p>
-                                        <div className='list'>
-                                            <li className='text-[16px]'><span className='font-semibold'>Catygory:</span> {book?.category}</li>
-                                            <li className='text-[16px]'><span className='font-semibold'>Sub Category:</span> {book?.subcategory}</li>
-                                            <li className='text-[16px]'><span className='font-semibold'>Discount:</span> {book?.discount}%</li>
-                                            <li className='text-[16px]'><span className='font-semibold'>Price:</span> ৳{book?.price}</li>
-                                            <li className='text-[16px]'><span className='font-semibold'>Publisher:</span> {book?.publisher}</li>
-                                            <li className='text-[16px]'><span className='font-semibold'>Stock:</span> {book?.stock}</li>
-                                            <li className='text-[16px]'><span className='font-semibold'>Description:</span> {book?.description.slice(0, 100)}...</li>
+                        writerBook.length > 0 ? (
+                            <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+                                {
+                                    writerBook.slice(0, 5).map(book => (
+                                        <div className='flex flex-col lg:flex-row gap-3 border border-[#bbb] p-3'>
+                                            <img className='w-full h-full' src={book?.image} alt="" />
+                                            <div className='space-y-2'>
+                                                <p className='font-bold text-[17px]'>{book?.title}</p>
+                                                <div className='list'>
+                                                    <li className='text-[16px]'><span className='font-semibold'>Catygory:</span> {book?.category}</li>
+                                                    <li className='text-[16px]'><span className='font-semibold'>Sub Category:</span> {book?.subcategory}</li>
+                                                    <li className='text-[16px]'><span className='font-semibold'>Discount:</span> {book?.discount}%</li>
+                                                    <li className='text-[16px]'><span className='font-semibold'>Price:</span> ৳{book?.price}</li>
+                                                    <li className='text-[16px]'><span className='font-semibold'>Publisher:</span> {book?.publisher}</li>
+                                                    <li className='text-[16px]'><span className='font-semibold'>Stock:</span> {book?.stock}</li>
+                                                    <li className='text-[16px]'><span className='font-semibold'>Description:</span> {book?.description.slice(0, 100)}...</li>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    ))
+                                }
+                            </div>
+                        ) : (
+                            <div className='flex justify-center items-center h-[500px]'>
+                                <div className='flex flex-col justify-center items-center'>
+                                    <img className='w-52' src={"https://i.ibb.co.com/GfQ9CjV6/9264885.jpg"} alt="" />
+                                    <p>No data</p>
                                 </div>
-                            ))
-                        ) : ("")
+                            </div>
+                        )
                     }
                 </div>
             </div>

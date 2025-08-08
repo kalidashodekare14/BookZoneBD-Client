@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import { useForm } from 'react-hook-form';
+import useWriter from '../hooks/useWriter';
 const IMG_API_KEY = import.meta.env.VITE_IMG_API_KEY;
 const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 
@@ -15,7 +16,8 @@ const WriterProfile = () => {
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
     const { user, userImageUpdate } = useAuth()
-    const { writerData, loading, error } = useSelector((state) => state.writerProfile);
+    // const { writerData, loading, error } = useSelector((state) => state.writerProfile);
+    const { writerData, loading, error } = useWriter()
     const dispatch = useDispatch();
     const [imageHosting, setImageHosting] = useState("")
     const [imgHostingLoading, setImgHostingLoading] = useState(false);
