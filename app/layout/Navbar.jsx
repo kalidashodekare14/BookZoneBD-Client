@@ -13,6 +13,7 @@ import { useCart } from 'react-use-cart';
 import axiosPublic from '../utils/axiosPublic';
 import axiosSecure from '../utils/axiosSecure';
 import logo from '/logo.png'
+import useRole from '../hooks/useRole';
 
 
 const Navbar = () => {
@@ -28,17 +29,8 @@ const Navbar = () => {
     const [searchInput, setSearchInput] = useState(null);
     const navigate = useNavigate();
     const { totalUniqueItems } = useCart()
-    const [userRole, setUserRole] = useState("");
+    const { isRole } = useRole()
 
-    useEffect(() => {
-        const userRoleFetched = async () => {
-            const res = await axiosSecure.get('/api/userInfo/user_role');
-            setUserRole(res.data.role)
-        }
-        if (user?.email) {
-            userRoleFetched();
-        }
-    }, [user?.email])
 
 
     const handleNavToggle = () => {
@@ -144,10 +136,10 @@ const Navbar = () => {
                                     tabIndex={0}
                                     className="menu menu-sm dropdown-content bg-base-100 z-1 mt-3 w-52 p-2 shadow ">
                                     {
-                                        userRole === "Admin" && <li><Link to={'/dashboard'} className='text-[15px]'>Dashboard</Link></li>
+                                        isRole === "Admin" && <li><Link to={'/dashboard'} className='text-[15px]'>Dashboard</Link></li>
                                     }
                                     {
-                                        userRole === "Writer" && (
+                                        isRole === "Writer" && (
                                             <>
                                                 <li>
                                                     <Link to={'/writer_profile'} className="justify-between text-[15px]">
@@ -163,7 +155,7 @@ const Navbar = () => {
                                         )
                                     }
                                     {
-                                        userRole === "User" && (
+                                        isRole === "User" && (
                                             <>
                                                 <li>
                                                     <Link to={'/profile'} className="justify-between text-[15px]">

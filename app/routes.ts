@@ -15,15 +15,23 @@ export default [
     route('email_varify', './pages/PasswordResetForm.jsx'),
     // Auth Protected
     layout("./ProtectedRoute/AuthProtected.jsx", [
-        route("profile", './pages/UserProfile.jsx'),
-        route('writer_profile', './pages/WriterProfile.jsx'),
-        route('writer_books', './pages/WriterBooks.jsx'),
-        route('orders', './pages/UserOrders.jsx'),
         route('checkout', './pages/Checkout.jsx'),
         route('checkout_payment', './pages/CheckoutPayment.jsx'),
         route("payment_success", "./pages/PaymentSuccess.jsx"),
         route("payment_fail", "./pages/PaymentFail.jsx"),
         route("payment_cancel", "./pages/PaymentCancel.jsx"),
+    ]),
+
+    // User Protected
+    layout('./ProtectedRoute/UserProtected.jsx', [
+        route("profile", './pages/UserProfile.jsx'),
+        route('orders', './pages/UserOrders.jsx'),
+    ]),
+
+    // Writer Protected
+    layout('./ProtectedRoute/WriterProtected.jsx', [
+        route('writer_profile', './pages/WriterProfile.jsx'),
+        route('writer_books', './pages/WriterBooks.jsx'),
     ]),
 
     // Dashboard 
