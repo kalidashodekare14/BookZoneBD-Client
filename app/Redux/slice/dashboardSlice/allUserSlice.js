@@ -10,6 +10,14 @@ export const dashboardAllUser = createAsyncThunk(
     }
 )
 
+export const dashboardUserRole = createAsyncThunk(
+    "totalUser/dashboardUserRole",
+    async ({ id, data }) => {
+        const res = await axiosSecure.patch(`/api/dashboard/user_role/${id}`, data);
+        return res.data.data
+    }
+)
+
 
 
 const dashboardAllBook = createSlice({
@@ -32,6 +40,23 @@ const dashboardAllBook = createSlice({
                 state.totalPages = action.payload.totalPages;
             })
             .addCase(dashboardAllUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            // User Role Update
+            .addCase(dashboardUserRole.pending, (state, action) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(dashboardUserRole.fulfilled, (state, action) => {
+                state.loading = false;
+                const updateRole = action.payload;
+                const index = state.totalUser.findIndex(role => role._id === updateRole._id);
+                if (index !== -1) {
+                    state.totalUser[index] = updateRole
+                }
+            })
+            .addCase(dashboardUserRole.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })

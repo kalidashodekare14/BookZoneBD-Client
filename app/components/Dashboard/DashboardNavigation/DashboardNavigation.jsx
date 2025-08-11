@@ -6,6 +6,7 @@ import { IoIosHome } from 'react-icons/io'
 import { IoBookSharp } from 'react-icons/io5'
 import { MdDashboard, MdManageAccounts } from 'react-icons/md'
 import { Link, useLocation } from 'react-router'
+import logo from '/dashboard_logo.png'
 
 const DashboardNavigation = ({ isToggle }) => {
 
@@ -68,7 +69,7 @@ const DashboardNavigation = ({ isToggle }) => {
                 <div className='flex flex-col gap-1 text-[16px] font-rubik'>
                     <div className='hidden lg:flex py-5 px-3'>
                         <img
-                            src={""}
+                            src={logo}
                             alt='logo'
                         />
                     </div>

@@ -30,6 +30,8 @@ const AdminProtected = () => {
         return <Navigate to={"/login"} replace state={{ from: location }} />
     }
 
+
+
     return user && admin === true ? <Outlet /> : <Navigate to={"/login"} replace state={{ from: location }} />
 };
 

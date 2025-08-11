@@ -6,6 +6,7 @@ import { HiDotsVertical } from 'react-icons/hi';
 import { Link } from 'react-router';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
+import { OrbitProgress } from 'react-loading-indicators';
 
 const ViewReview = () => {
 
@@ -26,6 +27,13 @@ const ViewReview = () => {
         setIsSearch(search)
     }
 
+
+    if (loading) {
+        return <div className='h-[550px] flex flex-col justify-center items-center'>
+            <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
+            <p className='text-xl'>Please wait...</p>
+        </div>
+    }
 
 
     return (
@@ -54,49 +62,59 @@ const ViewReview = () => {
                         </thead>
                         <tbody>
                             {
-                                reviewAllData.map(review => (
-                                    <tr className='text-[15px]'>
-                                        <th>
-                                            <div>
-                                                <img className='lg:w-14 lg:h-14 w-14  h-14 rounded-full' src={review?.user_image ? review.user_image : "https://i.ibb.co/WcTWxsN/nav-img.png"} alt="" />
-                                            </div>
-                                        </th>
-                                        <td>
-                                            <div className='flex flex-col gap-1'>
-                                                <span className='font-bold'>{review?.user_name ? review?.user_name : "N/A"}</span>
-                                            </div>
-                                        </td>
-                                        <td className=''>
-                                            <Rating
-                                                style={{ maxWidth: 90 }}
-                                                value={review?.rating || 0}
-                                                readOnly
-                                            />
-                                        </td>
+                                reviewAllData.length > 0 ? (
+                                    reviewAllData.map(review => (
+                                        <tr className='text-[15px]'>
+                                            <th>
+                                                <div>
+                                                    <img className='lg:w-14 lg:h-14 w-14  h-14 rounded-full' src={review?.user_image ? review.user_image : "https://i.ibb.co/WcTWxsN/nav-img.png"} alt="" />
+                                                </div>
+                                            </th>
+                                            <td>
+                                                <div className='flex flex-col gap-1'>
+                                                    <span className='font-bold'>{review?.user_name ? review?.user_name : "N/A"}</span>
+                                                </div>
+                                            </td>
+                                            <td className=''>
+                                                <Rating
+                                                    style={{ maxWidth: 90 }}
+                                                    value={review?.rating || 0}
+                                                    readOnly
+                                                />
+                                            </td>
+                                            <td></td>
+                                            <td>{review?.comment}</td>
+                                            <td>
+                                                <div className='flex flex-col'>
+                                                    <span>{review?.createdAt ? new Date(review?.createdAt).toLocaleTimeString() : "N/A"}</span>
+                                                    <span>{review?.createdAt ? new Date(review?.createdAt).toLocaleDateString() : "N/A"}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p className={`${review.status === "Success" && "bg-[#59b15a] text-white"} ${review.status === "Pending" && "bg-[#cc554c] text-white"} p-2 rounded-full`}>{review.status}</p>
+                                            </td>
+                                            <td>
+                                                <div className="dropdown dropdown-bottom dropdown-end">
+                                                    <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
+                                                    <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                                        <li>
+                                                            <Link to={`details/${review._id}`}>review Details</Link>
+                                                        </li>
+                                                        <li><a>Item 2</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
                                         <td></td>
-                                        <td>{review?.comment}</td>
-                                        <td>
-                                            <div className='flex flex-col'>
-                                                <span>{review?.createdAt ? new Date(review?.createdAt).toLocaleTimeString() : "N/A"}</span>
-                                                <span>{review?.createdAt ? new Date(review?.createdAt).toLocaleDateString() : "N/A"}</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p className={`${review.status === "Success" && "bg-[#59b15a] text-white"} ${review.status === "Pending" && "bg-[#cc554c] text-white"} p-2 rounded-full`}>{review.status}</p>
-                                        </td>
-                                        <td>
-                                            <div className="dropdown dropdown-bottom dropdown-end">
-                                                <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
-                                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                                    <li>
-                                                        <Link to={`details/${review._id}`}>review Details</Link>
-                                                    </li>
-                                                    <li><a>Item 2</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td className='text-xl'>No Data</td>
                                     </tr>
-                                ))
+                                )
+
                             }
                         </tbody>
                     </table>

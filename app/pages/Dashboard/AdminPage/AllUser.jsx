@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
-import { dashboardAllUser } from '../../../Redux/slice/dashboardSlice/allUserSlice';
+import { dashboardAllUser, dashboardUserRole } from '../../../Redux/slice/dashboardSlice/allUserSlice';
 import { OrbitProgress } from 'react-loading-indicators';
 import { CiSearch } from 'react-icons/ci';
 import ReactPaginate from 'react-paginate';
+import Swal from 'sweetalert2';
 
 const allUser = [
     {
@@ -76,6 +77,8 @@ const AllUsers = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const limit = 10;
     const [isSearch, setIsSearch] = useState(null);
+    const [isRole, setIsRole] = useState("")
+
 
     const handleSearch = (event) => {
         event.preventDefault();
@@ -94,9 +97,40 @@ const AllUsers = () => {
     }, [isSearch, currentPage, limit])
 
 
+    const handleRoleSystem = async (id, role) => {
+
+        setIsRole(role)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const userRole = {
+                    role: role
+                }
+                dispatch(dashboardUserRole({ id: id, data: userRole }))
+
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            }
+            else if (result.isDismissed) {
+                dispatch(dashboardAllUser())
+            }
+        })
+    }
+
     const handlePageClick = (data) => {
         setCurrentPage(data.selected)
     }
+
 
 
     if (loading) {
@@ -108,7 +142,7 @@ const AllUsers = () => {
 
 
     return (
-        <div className='lg:px-5 px-2 py-5 bg-[#E0E0E0] font-mixed space-y-3'>
+        <div className='lg:px-5 px-2 py-5 bg-[#E0E0E0] font-mixed space-y-3 min-h-screen'>
             <div className='flex justify-between items-center bg-white p-3 rounded-xl'>
                 <p className='font-semibold'>Users Manager</p>
                 <form onSubmit={handleSearch} className='flex items-center border border-[#bbb] rounded-[10px] p-2'>
@@ -126,49 +160,74 @@ const AllUsers = () => {
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            totalUser.map(user => (
-                                <tr className='text-[15px]'>
-                                    <th>
-                                        <img className='w-14 h-14 rounded-full' src={user?.image ? user.image : "https://i.ibb.co/WcTWxsN/nav-img.png"} alt="" />
-                                    </th>
-                                    <td>{user?.name ? user?.name : "N/A"}</td>
-                                    <td>{user?.email ? user?.email : "N/A"}</td>
-                                    <td>{user?.contact_number ? user?.contact_number : "N/A"}</td>
-                                    <div className="dropdown dropdown-bottom dropdown-end">
-                                        <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
-                                        <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                            <li><a>Item 1</a></li>
-                                            <li><a>Item 2</a></li>
-                                        </ul>
-                                    </div>
+                            totalUser.length > 0 ? (
+                                totalUser.map(user => (
+                                    <tr className='text-[15px]'>
+                                        <th>
+                                            <img className='w-14 h-14 rounded-full' src={user?.image ? user.image : "https://i.ibb.co/WcTWxsN/nav-img.png"} alt="" />
+                                        </th>
+                                        <td>{user?.name ? user?.name : "N/A"}</td>
+                                        <td>{user?.email ? user?.email : "N/A"}</td>
+                                        <td>{user?.contact_number ? user?.contact_number : "N/A"}</td>
+                                        <td>
+                                            <select onChange={(event) => handleRoleSystem(user?._id, event.target.value)} defaultValue={user?.role} className='border w-20 border-[#bbb] p-1'>
+                                                <option value="User">User</option>
+                                                <option value="Writer">Writer</option>
+                                            </select>
+                                        </td>
+                                        <div className="dropdown dropdown-bottom dropdown-end">
+                                            <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
+                                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                                <li><a>Item 1</a></li>
+                                                <li><a>Item 2</a></li>
+                                            </ul>
+                                        </div>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-[18px]'>No Data</td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
-                            ))
+                            )
+
                         }
                     </tbody>
                 </table>
-                <div className='my-10 flex justify-center items-center'>
-                    <ReactPaginate
-                        forcePage={currentPage}
-                        previousLabel={'← Previous'}
-                        nextLabel={'Next →'}
-                        breakLabel={'...'}
-                        pageCount={totalPages}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={3}
-                        onPageChange={handlePageClick}
-                        containerClassName={'flex flex-wrap items-center gap-2'}
-                        activeClassName={'bg-[#003a5a] text-white'}
-                        pageClassName={'px-3 py-2 border cursor-pointer'}
-                        previousClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
-                        nextClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
-                        breakClassName={'px-3 py-2 border cursor-pointer'}
-                    />
-                </div>
+            </div>
+            <div className='my-10 flex justify-center items-center'>
+                {
+                    totalUser.length > 0 && (
+                        <div className='bg-white p-4'>
+                            <ReactPaginate
+                                forcePage={currentPage}
+                                previousLabel={'← Previous'}
+                                nextLabel={'Next →'}
+                                breakLabel={'...'}
+                                pageCount={totalPages}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={3}
+                                onPageChange={handlePageClick}
+                                containerClassName={'flex flex-wrap items-center gap-2'}
+                                activeClassName={'bg-[#003a5a] text-white'}
+                                pageClassName={'px-3 py-2 border cursor-pointer'}
+                                previousClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
+                                nextClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
+                                breakClassName={'px-3 py-2 border cursor-pointer'}
+                            />
+                        </div>
+                    )}
+
             </div>
         </div>
     );

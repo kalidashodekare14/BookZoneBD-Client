@@ -211,7 +211,7 @@ const AllBook = () => {
     }
 
     return (
-        <div className='lg:px-5 px-2 py-5 bg-[#E0E0E0] font-mixed space-y-3'>
+        <div className='lg:px-5 px-2 py-5 bg-[#E0E0E0] font-mixed space-y-3 min-h-screen'>
             <div className='flex justify-between items-center bg-white p-3 rounded-xl'>
                 <p className='font-semibold'>All Book</p>
                 <form onSubmit={handleSearch} className='flex items-center border border-[#bbb] rounded-[10px] p-2'>
@@ -235,45 +235,64 @@ const AllBook = () => {
                     </thead>
                     <tbody>
                         {
-                            totalBook.map(books => (
-                                <tr className='text-[15px]'>
-                                    <th>
-                                        <img className='w-14 h-14 rounded-full' src={books.image} alt="" />
-                                    </th>
-                                    <td>{books.title}</td>
-                                    <td>{books?.author?.author_name}</td>
-                                    <td>৳{books.price}</td>
-                                    <td>{books.discount}%</td>
-                                    <div className="dropdown dropdown-bottom dropdown-end">
-                                        <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
-                                        <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                            <li><a>Item 1</a></li>
-                                            <li><a>Item 2</a></li>
-                                        </ul>
-                                    </div>
+                            totalBook.length > 0 ? (
+                                totalBook.map(books => (
+                                    <tr className='text-[15px]'>
+                                        <th>
+                                            <img className='w-14 h-14 rounded-full' src={books.image} alt="" />
+                                        </th>
+                                        <td>{books.title}</td>
+                                        <td>{books?.author?.author_name}</td>
+                                        <td>৳{books.price}</td>
+                                        <td>{books.discount}%</td>
+                                        <div className="dropdown dropdown-bottom dropdown-end">
+                                            <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
+                                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                                <li><a>Item 1</a></li>
+                                                <li><a>Item 2</a></li>
+                                            </ul>
+                                        </div>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-[18px]'>No Data</td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
-                            ))
+                            )
+
                         }
                     </tbody>
                 </table>
             </div>
-            <div className='my-10 flex justify-center items-center'>
-                <ReactPaginate
-                    forcePage={currentPage}
-                    previousLabel={'← Previous'}
-                    nextLabel={'Next →'}
-                    breakLabel={'...'}
-                    pageCount={totalPages}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={3}
-                    onPageChange={handlePageClick}
-                    containerClassName={'flex flex-wrap items-center gap-2'}
-                    activeClassName={'bg-[#003a5a] text-white'}
-                    pageClassName={'px-3 py-2 border cursor-pointer'}
-                    previousClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
-                    nextClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
-                    breakClassName={'px-3 py-2 border cursor-pointer'}
-                />
+            <div className='my-10 flex justify-center items-center  p-3 rounded-2xl'>
+                {
+                    totalBook.length > 0 && (
+                        <div className='bg-white p-4 rounded-xl'>
+                            <ReactPaginate
+                                forcePage={currentPage}
+                                previousLabel={'← Previous'}
+                                nextLabel={'Next →'}
+                                breakLabel={'...'}
+                                pageCount={totalPages}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={3}
+                                onPageChange={handlePageClick}
+                                containerClassName={'flex flex-wrap items-center gap-2'}
+                                activeClassName={'bg-[#003a5a] text-white'}
+                                pageClassName={'px-3 py-2 border cursor-pointer'}
+                                previousClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
+                                nextClassName={'px-3 py-2 border cursor-pointer  hover:bg-[#003a5a] hover:text-white'}
+                                breakClassName={'px-3 py-2 border cursor-pointer'}
+                            />
+                        </div>
+                    )
+                }
+
             </div>
         </div>
     );

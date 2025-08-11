@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { orderManageFatched, orderStatusUpdate } from '../../../Redux/slice/dashboardSlice/orderManageSlice'
 import { HiDotsVertical } from 'react-icons/hi';
 import { Link } from 'react-router';
+import { OrbitProgress } from 'react-loading-indicators';
 
 const ViewOrder = () => {
 
@@ -45,6 +46,13 @@ const ViewOrder = () => {
         setCurrentPage(data.selected)
     }
 
+    if (loading) {
+        return <div className='h-[550px] flex flex-col justify-center items-center'>
+            <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
+            <p className='text-xl'>Please wait...</p>
+        </div>
+    }
+
     return (
         <div className='lg:px-5 py-5 bg-[#E0E0E0] font-mixed space-y-3 min-h-screen'>
             <div className='flex justify-between items-center bg-[#ffffffc9] p-3 rounded-xl'>
@@ -75,54 +83,66 @@ const ViewOrder = () => {
                         </thead>
                         <tbody>
                             {
-                                totalOrder.map(order => (
-                                    <tr className='text-[15px]'>
-                                        <th>
-                                            <div>
-                                                <img className='lg:w-14 lg:h-14 w-auto rounded-full' src={order?.image ? order.image : "https://i.ibb.co/WcTWxsN/nav-img.png"} alt="" />
-                                            </div>
-                                        </th>
-                                        <td>
-                                            <div className='flex flex-col gap-1'>
-                                                <span className='font-bold'>{order?.customar_name ? order?.customar_name : "N/A"}</span>
-                                                <span>{order?.customar_email ? order?.customar_email : "N/A"}</span>
-                                                <span>{order?.addressData?.phone_number ? order?.addressData?.phone_number : "N/A"}</span>
-                                            </div>
-                                        </td>
-                                        <td className=''>{order?.tran_id}</td>
-                                        <td>{order?.products.length}</td>
-                                        <td>৳{order?.amount}</td>
-                                        <td>
-                                            <div className='flex flex-col'>
-                                                <span>{order?.createdAt ? new Date(order?.createdAt).toLocaleTimeString() : "N/A"}</span>
-                                                <span>{order?.createdAt ? new Date(order?.createdAt).toLocaleDateString() : "N/A"}</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p className={`${order.payment_status === "Success" && "bg-[#59b15a] text-white"} ${order.payment_status === "Pending" && "bg-[#cc554c] text-white"} p-2 rounded-full`}>{order.payment_status}</p>
-                                        </td>
-                                        <td>
-                                            <select disabled={order?.order_status === "Delivered" || order?.order_status === "Cancelled"} onClick={(event) => handleOrderStatus({ id: order._id, }, { value: event.target.value })} defaultValue={order?.order_status} className={`${order?.order_status === "Delivered" && "bg-[#59b15a] text-white"} ${order?.order_status === "Pending" && "bg-[#0077b6] text-white"} ${order?.order_status === "Processing" && "bg-[#e09f3e] text-white"} ${order?.order_status === "Cancelled" && "bg-[#ef233c] text-white"} border rounded-2xl p-2 font-mixed`}>
-                                                <option value="Pending">Pending</option>
-                                                <option value="Processing">Processing</option>
-                                                <option value="Delivered">Delivered</option>
-                                                <option value="Cancelled">Cancelled</option>
-                                            </select>
-                                        </td>
+                                totalOrder.length > 0 ? (
+                                    totalOrder.map(order => (
+                                        <tr className='text-[15px]'>
+                                            <th>
+                                                <div>
+                                                    <img className='lg:w-14 lg:h-14 w-auto rounded-full' src={order?.image ? order.image : "https://i.ibb.co/WcTWxsN/nav-img.png"} alt="" />
+                                                </div>
+                                            </th>
+                                            <td>
+                                                <div className='flex flex-col gap-1'>
+                                                    <span className='font-bold'>{order?.customar_name ? order?.customar_name : "N/A"}</span>
+                                                    <span>{order?.customar_email ? order?.customar_email : "N/A"}</span>
+                                                    <span>{order?.addressData?.phone_number ? order?.addressData?.phone_number : "N/A"}</span>
+                                                </div>
+                                            </td>
+                                            <td className=''>{order?.tran_id}</td>
+                                            <td>{order?.products.length}</td>
+                                            <td>৳{order?.amount}</td>
+                                            <td>
+                                                <div className='flex flex-col'>
+                                                    <span>{order?.createdAt ? new Date(order?.createdAt).toLocaleTimeString() : "N/A"}</span>
+                                                    <span>{order?.createdAt ? new Date(order?.createdAt).toLocaleDateString() : "N/A"}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p className={`${order.payment_status === "Success" && "bg-[#59b15a] text-white"} ${order.payment_status === "Pending" && "bg-[#cc554c] text-white"} p-2 rounded-full`}>{order.payment_status}</p>
+                                            </td>
+                                            <td>
+                                                <select disabled={order?.order_status === "Delivered" || order?.order_status === "Cancelled"} onClick={(event) => handleOrderStatus({ id: order._id, }, { value: event.target.value })} defaultValue={order?.order_status} className={`${order?.order_status === "Delivered" && "bg-[#59b15a] text-white"} ${order?.order_status === "Pending" && "bg-[#0077b6] text-white"} ${order?.order_status === "Processing" && "bg-[#e09f3e] text-white"} ${order?.order_status === "Cancelled" && "bg-[#ef233c] text-white"} border rounded-2xl p-2 font-mixed`}>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Processing">Processing</option>
+                                                    <option value="Delivered">Delivered</option>
+                                                    <option value="Cancelled">Cancelled</option>
+                                                </select>
+                                            </td>
 
-                                        <td>
-                                            <div className="dropdown dropdown-bottom dropdown-end">
-                                                <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
-                                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                                    <li>
-                                                        <Link to={`details/${order._id}`}>Order Details</Link>
-                                                    </li>
-                                                    <li><a>Item 2</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
+                                            <td>
+                                                <div className="dropdown dropdown-bottom dropdown-end">
+                                                    <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
+                                                    <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                                        <li>
+                                                            <Link to={`details/${order._id}`}>Order Details</Link>
+                                                        </li>
+                                                        <li><a>Item 2</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td className='text-xl'>No Data</td>
                                     </tr>
-                                ))
+                                )
+
                             }
                         </tbody>
                     </table>
