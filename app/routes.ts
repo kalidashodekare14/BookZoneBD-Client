@@ -12,7 +12,8 @@ export default [
     route("writer/:writer_id", "./pages/WriterDetails.jsx"),
     route("login", "./pages/Login.jsx"),
     route("signup", "./pages/SignUp.jsx"),
-    route('email_varify', './pages/PasswordResetForm.jsx'),
+    route('forget_password', './pages/PasswordResetForm.jsx'),
+    route('reset_password', './pages/ResetPassword.jsx'),
     // Auth Protected
     layout("./ProtectedRoute/AuthProtected.jsx", [
         route('checkout', './pages/Checkout.jsx'),

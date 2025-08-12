@@ -288,16 +288,16 @@ const TotalBook = () => {
 
 
 
-    if (loading) {
-        return <div className='h-[550px] flex flex-col justify-center items-center'>
-            <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
-            <p className='text-xl'>Please wait...</p>
-        </div>
-    }
+    // if (loading) {
+    //     return <div className='h-[550px] flex flex-col justify-center items-center'>
+    //         <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
+    //         <p className='text-xl'>Please wait...</p>
+    //     </div>
+    // }
 
 
     return (
-        <div className='lg:mx-5 my-5 font-mixed'>
+        <div className='lg:mx-5 my-5 font-mixed relative'>
             <div className=' flex items-center justify-between my-5 mx-5'>
                 <div className='flex items-center gap-3'>
                     {

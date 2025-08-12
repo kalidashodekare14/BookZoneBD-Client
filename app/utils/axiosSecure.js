@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getAuth, signOut } from 'firebase/auth';
 
 const axiosSecure = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://book-zone-bd-server.vercel.app",
     withCredentials: true
 });
 
@@ -16,6 +16,7 @@ axiosSecure.interceptors.request.use((config) => {
 }, (error) => {
     return Promise.reject(error);
 });
+
 
 axiosSecure.interceptors.response.use(
     response => response,

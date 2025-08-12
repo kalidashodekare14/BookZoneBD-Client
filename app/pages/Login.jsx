@@ -4,6 +4,7 @@ import { FaEye, FaFacebookF, FaGoogle, FaRegEyeSlash, FaTwitter } from 'react-ic
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import axiosSecure from '../utils/axiosSecure';
+import axiosPublic from '../utils/axiosPublic';
 
 const Login = () => {
 
@@ -34,6 +35,7 @@ const Login = () => {
                         navigation('/')
                     })
                     .catch(error => {
+                        console.log('checking error', error);
                         setIsError(true)
                         setLoading(false)
                     })
@@ -132,7 +134,7 @@ const Login = () => {
                     </Link>
                 </div>
                 <button type='submit' className='btn w-full text-[16px] bg-[#003A5A] text-white'>
-                    {loading ? <span class="loader"></span> : "Login"}
+                    {loading ? <span className="loader"></span> : "Login"}
                 </button>
             </form>
         </div>

@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosSecure from "../../../utils/axiosSecure";
+import axiosPublic from "../../../utils/axiosPublic";
 
 
 export const publicViewBooks = createAsyncThunk(
     "viewDetailBooks/publicViewBooks",
     async ({ id }) => {
-        const res = await axiosSecure.get(`/api/public/view_details/${id}`);
+        const res = await axiosPublic.get(`/api/public/view_details/${id}`);
         return res.data.data
     }
 )

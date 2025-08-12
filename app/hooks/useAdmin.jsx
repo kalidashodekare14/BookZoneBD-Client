@@ -9,12 +9,6 @@ const useAdmin = () => {
     const dispatch = useDispatch();
     const { user, loading: authLoading } = useAuth();
 
-    // if (authLoading) {
-    //     return <div className='h-[550px] flex flex-col justify-center items-center'>
-    //         <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
-    //         <p className='text-xl'>Please wait...</p>
-    //     </div>
-    // }
 
     useEffect(() => {
         if (user?.email) {

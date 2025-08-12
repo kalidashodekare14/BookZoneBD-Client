@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updatePassword, updateProfile } from "firebase/auth";
 import auth from "../firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
 
@@ -32,10 +32,6 @@ const AuthProvider = ({ children }) => {
     }
 
 
-    const passwordResetSystem = (email) => {
-        return sendPasswordResetEmail(auth, email)
-    }
-
     const userImageUpdate = (image) => {
         updateProfile(auth.currentUser, {
             photoURL: image
@@ -63,7 +59,6 @@ const AuthProvider = ({ children }) => {
         setLoading,
         loading,
         googleAuthSystem,
-        passwordResetSystem,
         logoutSystem,
         userImageUpdate
     }

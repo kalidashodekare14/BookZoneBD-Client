@@ -4,6 +4,7 @@ import { FaEye, FaFacebookF, FaGoogle, FaRegEyeSlash, FaTwitter } from 'react-ic
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import axiosSecure from '../utils/axiosSecure';
+import axiosPublic from '../utils/axiosPublic';
 
 const SignUp = () => {
 
