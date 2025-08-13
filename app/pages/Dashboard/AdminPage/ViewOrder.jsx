@@ -46,12 +46,12 @@ const ViewOrder = () => {
         setCurrentPage(data.selected)
     }
 
-    if (loading) {
-        return <div className='h-[550px] flex flex-col justify-center items-center'>
-            <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
-            <p className='text-xl'>Please wait...</p>
-        </div>
-    }
+    // if (loading) {
+    //     return <div className='h-[550px] flex flex-col justify-center items-center'>
+    //         <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
+    //         <p className='text-xl'>Please wait...</p>
+    //     </div>
+    // }
 
     return (
         <div className='lg:px-5 py-5 bg-[#E0E0E0] font-mixed space-y-3 min-h-screen'>
