@@ -7,21 +7,18 @@ import useRole from '../hooks/useRole';
 const WriterProtected = () => {
     const { user, loading, logoutSystem } = useAuth();
     const location = useLocation();
-    const [wait, setWait] = useState(true);
-    const { isRole } = useRole()
+    const { isRole, roleLoading } = useRole()
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setWait(false)
-        }, 1000);
-        return () => clearTimeout(timer)
-    }, [])
 
-    if (wait || user === undefined || loading) {
+    if (loading || roleLoading) {
         return <div className='h-[550px] flex flex-col justify-center items-center'>
             <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
             <p className='text-xl'>Please wait...</p>
         </div>
+    }
+
+    if (!user) {
+        return <Navigate to={'/login'} replace state={{ from: location }} />
     }
 
     if (isRole !== "Writer") {
@@ -29,7 +26,7 @@ const WriterProtected = () => {
         return <Navigate to={'/login'} replace state={{ from: location }} />
     }
 
-    return user && isRole === "Writer" ? <Outlet /> : <Navigate to={'/login'} replace state={{ from: location }} />
+    return <Outlet />
 
 };
 

@@ -3,25 +3,24 @@ import { Navigate, Outlet, useLocation } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import { OrbitProgress } from 'react-loading-indicators';
 import useRole from '../hooks/useRole';
+import axiosSecure from '../utils/axiosSecure';
 
 const UserProtected = () => {
     const { user, loading, logoutSystem } = useAuth();
     const location = useLocation();
-    const [wait, setWait] = useState(true);
-    const { isRole } = useRole()
+    const { isRole, roleLoading } = useRole()
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setWait(false)
-        }, 1000);
-        return () => clearTimeout(timer)
-    }, [])
 
-    if (wait || user === undefined || loading) {
+    if (loading || roleLoading) {
         return <div className='h-[550px] flex flex-col justify-center items-center'>
             <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
             <p className='text-xl'>Please wait...</p>
         </div>
+    }
+
+
+    if (!user) {
+        return <Navigate to={'/login'} replace state={{ from: location }} />
     }
 
     if (isRole !== "User") {
@@ -29,7 +28,8 @@ const UserProtected = () => {
         return <Navigate to={'/login'} replace state={{ from: location }} />
     }
 
-    return user && isRole === "User" ? <Outlet /> : <Navigate to={'/login'} replace state={{ from: location }} />
+
+    return <Outlet />
 };
 
 export default UserProtected;

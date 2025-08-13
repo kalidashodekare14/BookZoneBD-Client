@@ -7,18 +7,11 @@ import useAdmin from '../hooks/useAdmin';
 const AdminProtected = () => {
     const { user, loading, logoutSystem } = useAuth();
     const location = useLocation();
-    const [wait, setWait] = useState(true);
-    const [admin, adminLoading, authLoading] = useAdmin();
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setWait(false);
-        }, 1000)
-        return () => clearTimeout(timer);
-    }, [])
+    const [admin, adminLoading] = useAdmin();
 
 
-    if (wait || adminLoading === true || loading || !user === undefined) {
+
+    if ((loading || adminLoading)) {
         return <div className='h-[550px] flex flex-col justify-center items-center'>
             <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
             <p className='text-xl'>Please wait...</p>
@@ -26,14 +19,16 @@ const AdminProtected = () => {
     }
 
 
-    if (user && admin !== true) {
+    if (!user) {
+        return <Navigate to={"/login"} replace state={{ from: location }} />
+    }
+
+    if (!admin) {
         logoutSystem()
         return <Navigate to={"/login"} replace state={{ from: location }} />
     }
 
-
-
-    return user && admin === true ? <Outlet /> : <Navigate to={"/login"} replace state={{ from: location }} />
+    return <Outlet />
 };
 
 export default AdminProtected;
