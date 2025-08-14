@@ -13,6 +13,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import useUser from '../../hooks/useUser';
+import { ToastContainer, toast } from 'react-toastify';
 const allBookData = [
     {
         "image": "https://i.ibb.co/gMg3m1Zw/potherpachali.png",
@@ -294,6 +295,15 @@ const ViewDetailsPage = () => {
     const handleReviewForm = (event) => {
         event.preventDefault()
         const comment = event.target.comment.value
+
+        if (rating < 1) {
+            return toast.warning("Please select start");
+        } else if (event.target.comment.value.length < 1) {
+            return toast.warning("Please write a comment");
+        } else if (!userData.name || !userData.image) {
+            return toast.warning("Please update your profile");
+        }
+
         try {
             const reviewInfo = {
                 user_name: userData?.name,
@@ -334,12 +344,12 @@ const ViewDetailsPage = () => {
                     </div>
                     <Rating
                         style={{ maxWidth: 100 }}
-                        value={bookDetails?.rating}
+                        value={bookDetails?.averageRating}
                         readOnly
                     />
                     <p>{bookDetails?.description}</p>
                     <div className="">
-                        <table className=" text-left w-60">
+                        <table className=" text-left w-70">
                             <tr>
                                 <td className='font-semibold'>Category :</td>
                                 <td>{bookDetails?.category}</td>
@@ -409,7 +419,7 @@ const ViewDetailsPage = () => {
                         <h1 className='text-3xl'>4.50</h1>
                         <Rating
                             style={{ maxWidth: 90 }}
-                            value={3}
+                            value={bookDetails?.averageRating}
                             readOnly
                         />
                     </div>
@@ -476,6 +486,7 @@ const ViewDetailsPage = () => {
                     </div>
                 </form>
             </Modal>
+            <ToastContainer />
         </div>
     );
 };

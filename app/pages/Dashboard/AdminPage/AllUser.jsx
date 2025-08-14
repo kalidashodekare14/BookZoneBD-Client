@@ -176,7 +176,7 @@ const AllUsers = () => {
                                         <td>{user?.email ? user?.email : "N/A"}</td>
                                         <td>{user?.contact_number ? user?.contact_number : "N/A"}</td>
                                         <td>
-                                            <select onChange={(event) => handleRoleSystem(user?._id, event.target.value)} defaultValue={user?.role} className='border w-20 border-[#bbb] p-1'>
+                                            <select onChange={(event) => handleRoleSystem(user?._id, event.target.value)} value={user?.role} className='border w-20 border-[#bbb] p-1'>
                                                 <option value="User">User</option>
                                                 <option value="Writer">Writer</option>
                                             </select>

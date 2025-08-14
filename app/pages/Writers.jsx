@@ -86,8 +86,8 @@ const Writers = () => {
                     writerData.length > 0 ? (
                         writerData.map(writer => (
                             <div className='border-2 border-[#bbb] hover:border-[#003A5A] hover:duration-300 rounded-2xl cursor-pointer  flex flex-col justify-center items-center p-5 space-y-3'>
-                                <img className='w-32 h-32 rounded-full' src={writer?.author_image} alt="" />
-                                <p className='text-xl'>{writer?.author_name}</p>
+                                <img className='w-32 h-32 rounded-full' src={writer?.image} alt="" />
+                                <p className='text-xl'>{writer?.name}</p>
                                 <Link to={`/writer/${writer._id}`}>
                                     <button className='btn w-52 bg-[#003A5A] text-white'>View Details</button>
                                 </Link>

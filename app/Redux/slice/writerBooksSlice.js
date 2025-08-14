@@ -17,6 +17,16 @@ export const writerBooksDataCreate = createAsyncThunk(
     }
 )
 
+export const writerBooksDataUpdate = createAsyncThunk(
+    'writerBooks/writerBooksDataUpdate',
+    async ({ id, data }) => {
+        const res = await axiosSecure.patch(`/api/writerInfo/writer_book_update/${id}`, data)
+        return res.data.data
+    }
+)
+
+
+
 
 const writerProfileSlice = createSlice({
     name: 'writer_profile',
@@ -38,7 +48,7 @@ const writerProfileSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-            // info update
+            // book add
             .addCase(writerBooksDataCreate.pending, (state, action) => {
                 state.loading = true;
             })
@@ -47,6 +57,23 @@ const writerProfileSlice = createSlice({
                 state.writerBook.unshift(action.payload);
             })
             .addCase(writerBooksDataCreate.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            // update book
+            .addCase(writerBooksDataUpdate.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(writerBooksDataUpdate.fulfilled, (state, action) => {
+                state.loading = false;
+                const updateBook = action.payload;
+                const index = state.writerBook.findIndex(role => role._id === updateBook._id);
+                if (index !== -1) {
+                    state.writerBook[index] = { ...state.writerBook[index], ...updateBook }
+                }
+
+            })
+            .addCase(writerBooksDataUpdate.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })

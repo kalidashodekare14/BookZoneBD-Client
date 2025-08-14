@@ -57,6 +57,7 @@ const ViewReview = () => {
                                 <th>Rating</th>
                                 <th>Comment</th>
                                 <th>Date</th>
+                                <th></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -82,7 +83,6 @@ const ViewReview = () => {
                                                     readOnly
                                                 />
                                             </td>
-                                            <td></td>
                                             <td>{review?.comment}</td>
                                             <td>
                                                 <div className='flex flex-col'>
@@ -91,16 +91,18 @@ const ViewReview = () => {
                                                 </div>
                                             </td>
                                             <td>
-                                                <p className={`${review.status === "Success" && "bg-[#59b15a] text-white"} ${review.status === "Pending" && "bg-[#cc554c] text-white"} p-2 rounded-full`}>{review.status}</p>
+                                                <select className='border border-[#bbb] p-1'>
+                                                    <option value="">Approved</option>
+                                                    <option value="">Hide</option>
+                                                </select>
                                             </td>
                                             <td>
                                                 <div className="dropdown dropdown-bottom dropdown-end">
                                                     <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
                                                     <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                                        <li>
-                                                            <Link to={`details/${review._id}`}>review Details</Link>
+                                                        <li className='bg-[#e63946] hover:bg-[#c51d2b] duration-300 text-white'>
+                                                            <p>Delete</p>
                                                         </li>
-                                                        <li><a>Item 2</a></li>
                                                     </ul>
                                                 </div>
                                             </td>
