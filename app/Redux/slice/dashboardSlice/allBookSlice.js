@@ -19,6 +19,15 @@ export const dashboardBookUpdate = createAsyncThunk(
 )
 
 
+export const dashboardBookDelete = createAsyncThunk(
+    "totalBooks/dashboardBookDelete",
+    async ({ id }) => {
+        const res = await axiosSecure.delete(`/api/dashboard/book_delete/${id}`);
+        return res.data.data
+    }
+)
+
+
 const dashboardAllBook = createSlice({
     name: "allBook",
     initialState: {
@@ -34,9 +43,9 @@ const dashboardAllBook = createSlice({
                 state.error = null
             })
             .addCase(dashboardTotalBooks.fulfilled, (state, action) => {
-                state.loading = false;
                 state.totalBook = action.payload.books;
                 state.totalPages = action.payload.totalPages;
+                state.loading = false;
             })
             .addCase(dashboardTotalBooks.rejected, (state, action) => {
                 state.loading = false;
@@ -50,14 +59,33 @@ const dashboardAllBook = createSlice({
                 state.error = null
             })
             .addCase(dashboardBookUpdate.fulfilled, (state, action) => {
-                state.loading = false;
                 const updateBook = action.payload;
                 const index = state.totalBook.findIndex(book => book._id === updateBook._id);
                 if (index !== -1) {
                     state.totalBook[index] = { ...state.totalBook[index], ...updateBook };
                 }
+                state.loading = false;
             })
             .addCase(dashboardBookUpdate.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload
+            })
+
+            // delete book
+
+            .addCase(dashboardBookDelete.pending, (state, action) => {
+                state.loading = true;
+                state.error = null
+            })
+            .addCase(dashboardBookDelete.fulfilled, (state, action) => {
+                const updateBook = action.payload;
+                const index = state.totalBook.findIndex(book => book._id === updateBook._id);
+                if (index !== -1) {
+                    state.totalBook.splice(index, 1);
+                }
+                state.loading = false;
+            })
+            .addCase(dashboardBookDelete.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload
             })

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
-import { dashboardTotalBooks, dashboardBookUpdate } from '../../../Redux/slice/dashboardSlice/allBookSlice'
+import { dashboardTotalBooks, dashboardBookUpdate, dashboardBookDelete } from '../../../Redux/slice/dashboardSlice/allBookSlice'
 import { OrbitProgress } from 'react-loading-indicators';
 import ReactPaginate from 'react-paginate';
 import { CiSearch } from "react-icons/ci";
@@ -9,6 +9,7 @@ import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import { useForm } from 'react-hook-form';
 import { FaCamera } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 const IMG_API_KEY = import.meta.env.VITE_IMG_API_KEY;
 const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 
@@ -127,6 +128,43 @@ const AllBook = () => {
     }
 
 
+    const handleDeleteBook = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to delete the book.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res = await dispatch(dashboardBookDelete({ id: id }))
+
+                    if (res.meta.requestStatus === "fulfilled") {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Something went wrong while deleting.",
+                            icon: "error"
+                        });
+                    }
+                } catch (error) {
+                    console.error(error.message);
+                }
+
+
+            }
+        });
+    }
+
+
 
 
     // if (loading) {
@@ -171,13 +209,15 @@ const AllBook = () => {
                                         <td>{books?.author?.author_name}</td>
                                         <td>৳{books.price}</td>
                                         <td>{books.discount}%</td>
-                                        <div className="dropdown dropdown-bottom dropdown-end">
-                                            <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
-                                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm space-y-2">
-                                                <li onClick={() => { setSelectedBook(books), onOpenModal() }} className='bg-[#0081a7] text-white p-2 cursor-pointer'>Edit</li>
-                                                <li className='bg-[#d00000] text-white p-2 cursor-pointer'>Delete</li>
-                                            </ul>
-                                        </div>
+                                        <td>
+                                            <div className="dropdown dropdown-bottom dropdown-end">
+                                                <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
+                                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm space-y-2">
+                                                    <li onClick={() => { setSelectedBook(books), onOpenModal() }} className='bg-[#0081a7] text-white p-2 cursor-pointer'>Edit</li>
+                                                    <li onClick={() => handleDeleteBook(books._id)} className='bg-[#d00000] text-white p-2 cursor-pointer'>Delete</li>
+                                                </ul>
+                                            </div>  
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
