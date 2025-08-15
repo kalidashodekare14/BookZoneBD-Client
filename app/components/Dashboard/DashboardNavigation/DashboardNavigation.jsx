@@ -20,43 +20,44 @@ const DashboardNavigation = ({ isToggle }) => {
             icon: <MdDashboard />
         },
         {
-            id: 2,
-            name: "All Book",
-            path: "/dashboard/all_book",
-            icon: <IoBookSharp />
-        },
-        {
             id: 3,
-            name: "Manage Users",
-            path: "/dashboard/manage_users",
-            icon: <FaUsers />
-        },
-        {
-            id: 4,
-            name: "Publisher Create",
-            path: "/dashboard/publisher-create",
-            icon: <FaUserPlus />
-        },
-        {
-            id: 5,
-            name: "Author Manage",
-            path: "/dashboard/author-manage",
-            icon: <MdManageAccounts className='text-xl' />
-        },
-        {
-            id: 6,
             name: "Add Book",
             path: "/dashboard/add_book",
             icon: <BiSolidBookAdd />
         },
         {
+            id: 4,
+            name: "All Book",
+            path: "/dashboard/all_book",
+            icon: <IoBookSharp />
+        },
+        {
+            id: 5,
+            name: "Manage Users",
+            path: "/dashboard/manage_users",
+            icon: <FaUsers />
+        },
+        {
+            id: 6,
+            name: "Publisher Create",
+            path: "/dashboard/publisher-create",
+            icon: <FaUserPlus />
+        },
+        {
             id: 7,
+            name: "Author Manage",
+            path: "/dashboard/author-manage",
+            icon: <MdManageAccounts className='text-xl' />
+        },
+
+        {
+            id: 8,
             name: "View Order",
             path: "/dashboard/view_order",
             icon: <FaCartFlatbedSuitcase />
         },
         {
-            id: 8,
+            id: 9,
             name: "View Reviews",
             path: "/dashboard/view-review",
             icon: <GiStarsStack />

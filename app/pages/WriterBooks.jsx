@@ -75,8 +75,15 @@ const WriterBooks = () => {
     const {
         register: register1,
         handleSubmit: handleSubmit1,
+        reset: reset1,
         formState: { errors: errors1 },
     } = useForm()
+
+    useEffect(() => {
+        if (editData) {
+            reset1(editData)
+        }
+    }, [editData, reset1])
 
     const onSubmit = (data) => {
         try {

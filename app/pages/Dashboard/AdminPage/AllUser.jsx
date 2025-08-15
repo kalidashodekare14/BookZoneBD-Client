@@ -6,6 +6,8 @@ import { OrbitProgress } from 'react-loading-indicators';
 import { CiSearch } from 'react-icons/ci';
 import ReactPaginate from 'react-paginate';
 import Swal from 'sweetalert2';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
 
 const allUser = [
     {
@@ -78,6 +80,9 @@ const AllUsers = () => {
     const limit = 10;
     const [isSearch, setIsSearch] = useState(null);
     const [isRole, setIsRole] = useState("")
+    const [open, setOpen] = useState(false);
+    const onOpenModal = () => setOpen(true);
+    const onCloseModal = () => setOpen(false);
 
 
     const handleSearch = (event) => {
@@ -102,12 +107,12 @@ const AllUsers = () => {
         setIsRole(role)
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            text: "Want to change role.",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes"
         }).then((result) => {
             if (result.isConfirmed) {
                 const userRole = {
@@ -184,8 +189,8 @@ const AllUsers = () => {
                                         <div className="dropdown dropdown-bottom dropdown-end">
                                             <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
                                             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                                <li><a>Item 1</a></li>
-                                                <li><a>Item 2</a></li>
+                                                <li className='bg-[#0081a7] text-white p-2 cursor-pointer'>Edit</li>
+                                                <li className='bg-[#d00000] text-white p-2 cursor-pointer'>Delete</li>
                                             </ul>
                                         </div>
                                     </tr>
@@ -205,6 +210,9 @@ const AllUsers = () => {
                     </tbody>
                 </table>
             </div>
+            <Modal open={open} onClose={onCloseModal} center>
+                <h2>Simple centered modal</h2>
+            </Modal>
             <div className='my-10 flex justify-center items-center'>
                 {
                     totalUser.length > 0 && (

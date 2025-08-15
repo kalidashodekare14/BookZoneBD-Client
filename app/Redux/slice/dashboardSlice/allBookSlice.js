@@ -10,6 +10,15 @@ export const dashboardTotalBooks = createAsyncThunk(
 )
 
 
+export const dashboardBookUpdate = createAsyncThunk(
+    "totalBooks/dashboardBookUpdate",
+    async ({ id, data }) => {
+        const res = await axiosSecure.patch(`/api/dashboard/book_update/${id}`, data);
+        return res.data.data
+    }
+)
+
+
 const dashboardAllBook = createSlice({
     name: "allBook",
     initialState: {
@@ -30,6 +39,25 @@ const dashboardAllBook = createSlice({
                 state.totalPages = action.payload.totalPages;
             })
             .addCase(dashboardTotalBooks.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload
+            })
+
+
+            // Book update
+            .addCase(dashboardBookUpdate.pending, (state, action) => {
+                state.loading = true;
+                state.error = null
+            })
+            .addCase(dashboardBookUpdate.fulfilled, (state, action) => {
+                state.loading = false;
+                const updateBook = action.payload;
+                const index = state.totalBook.findIndex(book => book._id === updateBook._id);
+                if (index !== -1) {
+                    state.totalBook[index] = { ...state.totalBook[index], ...updateBook };
+                }
+            })
+            .addCase(dashboardBookUpdate.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload
             })
