@@ -28,6 +28,7 @@ const WriterBooks = () => {
     const [editData, setEditData] = useState(null);
     const [isUpdateDiscription, setIsUpdateDiscription] = useState("")
     const [updateBookImage, setUpdateBookImage] = useState("");
+    const [editDescriptionError, setEditDescriptionError] = useState(false);
 
     useEffect(() => {
         setUpdateBookImage(editData?.image)
@@ -68,14 +69,13 @@ const WriterBooks = () => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm()
 
     const {
         register: register1,
         handleSubmit: handleSubmit1,
-        formState: { errors1 },
+        formState: { errors: errors1 },
     } = useForm()
 
     const onSubmit = (data) => {
@@ -107,6 +107,10 @@ const WriterBooks = () => {
     const onEditSubmit = (data) => {
         try {
 
+            if (!isUpdateDiscription) {
+                return setEditDescriptionError(true);
+            }
+
             const bookData = {
                 title: data.title,
                 category: data.category,
@@ -124,12 +128,7 @@ const WriterBooks = () => {
             }
         } catch (error) {
             console.error(error.message)
-        } finally {
-
         }
-
-
-
 
     }
 
@@ -265,37 +264,37 @@ const WriterBooks = () => {
                     <form onSubmit={handleSubmit1(onEditSubmit)}>
                         <div className='flex flex-col'>
                             <label htmlFor="">Name</label>
-                            <input {...register1("title", { required: true })} defaultValue={editData?.title} className='input focus:outline-0 w-full' type="text" />
+                            <input {...register1("title", { required: true })} defaultValue={editData?.title} className={`input focus:outline-0 w-full ${errors1?.title && "border border-red-500"}`} type="text" />
                         </div>
                         <div className='grid grid-cols-1 lg:grid-cols-2 gap-2'>
                             <div className='flex flex-col'>
                                 <label htmlFor="">Category</label>
-                                <input {...register1("category", { required: true })} defaultValue={editData?.category} className='input focus:outline-0 w-full' type="text" />
+                                <input {...register1("category", { required: true })} defaultValue={editData?.category} className={`input focus:outline-0 w-full ${errors1?.category && "border border-red-500"}`} type="text" />
                             </div>
                             <div className='flex flex-col'>
                                 <label htmlFor="">Sub-Category</label>
-                                <input {...register1("subCategory", { required: true })} defaultValue={editData?.subCategory} className='input focus:outline-0 w-full' type="text" />
+                                <input {...register1("subCategory", { required: true })} defaultValue={editData?.subCategory} className={`input focus:outline-0 w-full ${errors1?.subCategory && "border border-red-500"}`} type="text" />
                             </div>
                             <div className='flex flex-col'>
                                 <label htmlFor="">Price</label>
-                                <input {...register1("price", { required: true })} defaultValue={editData?.price} className='input focus:outline-0 w-full' type="text" />
+                                <input {...register1("price", { required: true })} defaultValue={editData?.price} className={`input focus:outline-0 w-full ${errors1?.price && "border border-red-500"}`} type="text" />
                             </div>
                             <div className='flex flex-col'>
                                 <label htmlFor="">Discount</label>
-                                <input {...register1("discount", { required: true })} defaultValue={editData?.discount} className='input focus:outline-0 w-full' type="text" />
+                                <input {...register1("discount", { required: true })} defaultValue={editData?.discount} className={`input focus:outline-0 w-full ${errors1?.discount && "border border-red-500"}`} type="text" />
                             </div>
                             <div className='flex flex-col'>
                                 <label htmlFor="">Publisher</label>
-                                <input {...register1("publisher", { required: true })} defaultValue={editData?.publisher} className='input focus:outline-0 w-full' type="text" />
+                                <input {...register1("publisher", { required: true })} defaultValue={editData?.publisher} className={`input focus:outline-0 w-full ${errors1?.publisher && "border border-red-500"}`} type="text" />
                             </div>
                             <div className='flex flex-col'>
                                 <label htmlFor="">Stock</label>
-                                <input {...register1("stock", { required: true })} defaultValue={editData?.stock} className='input focus:outline-0 w-full' type="text" />
+                                <input {...register1("stock", { required: true })} defaultValue={editData?.stock} className={`input focus:outline-0 w-full ${errors1?.stock && "border border-red-500"}`} type="text" />
                             </div>
                         </div>
                         <div className='flex flex-col'>
                             <label htmlFor="">Description</label>
-                            <textarea onChange={(event) => setIsUpdateDiscription(event.target.value)} defaultValue={isUpdateDiscription} className='textarea focus:outline-0 w-full h-32' type="text" />
+                            <textarea onChange={(event) => setIsUpdateDiscription(event.target.value)} defaultValue={isUpdateDiscription} className={`textarea focus:outline-0 w-full h-32 ${editDescriptionError && "border border-red-500"}`} type="text" />
                         </div>
                         <div className='flex justify-center items-center mt-5'>
                             <button type='submit' className='btn bg-[#003A5A] text-white'>

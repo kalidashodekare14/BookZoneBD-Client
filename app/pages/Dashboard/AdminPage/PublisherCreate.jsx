@@ -8,10 +8,11 @@ import { OrbitProgress } from 'react-loading-indicators';
 const IMG_API_KEY = import.meta.env.VITE_IMG_API_KEY;
 const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 
-const AuthorCreate = () => {
+const PublisherCreate = () => {
 
     const [authorBio, setAuthoBio] = useState("");
-    const [isAuthorImage, setIsAuthorImage] = useState("");
+    // const [isPublisherImage, setisPublisherImage] = useState("");
+    const [isPublisherImage, setIsPublisherImage] = useState("");
     const [bioError, setBioError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [imageHostingLoading, setImgHostingLoading] = useState(false);
@@ -35,7 +36,7 @@ const AuthorCreate = () => {
             })
             const data = await res.json();
             if (data.success) {
-                setIsAuthorImage(data.data.url);
+                setIsPublisherImage(data.data.url);
             }
         } catch (error) {
             console.log(error.message);
@@ -49,15 +50,14 @@ const AuthorCreate = () => {
             if (authorBio.length === 0) {
                 return setBioError(true)
             }
-            const authorData = {
-                author_name: data.author_name,
-                author_nationality: data.author_nationality,
-                author_dob: data.author_dob,
-                author_bio: authorBio,
-                author_image: isAuthorImage || ""
+            const publisherData = {
+                publisher_name: data.publisher_name,
+                publisher_website: data.publisher_website,
+                publisher_description: authorBio,
+                publisher_image: isPublisherImage || ""
             }
             setLoading(true)
-            const res = await axiosSecure.post('/api/dashboard/author_add', authorData);
+            const res = await axiosSecure.post('/api/dashboard/publiser_add', publisherData);
             if (res.status === 200) {
                 Swal.fire({
                     position: "center",
@@ -67,7 +67,7 @@ const AuthorCreate = () => {
                     timer: 1500
                 });
                 reset();
-                setIsAuthorImage("")
+                setIsPublisherImage("")
             }
         } catch (error) {
             console.log('checking error', error)
@@ -84,15 +84,11 @@ const AuthorCreate = () => {
                     <div className='flex flex-col lg:flex-row items-center gap-5'>
                         <div className='flex flex-col gap-1 w-full'>
                             <label htmlFor="">Name</label>
-                            <input {...register("author_name", { required: true })} className={`input focus:outline-0 w-full ${errors.author_name && "border border-red-400"}`} placeholder='Name' type="text" />
+                            <input {...register("publisher_name", { required: true })} className={`input focus:outline-0 w-full ${errors.author_name && "border border-red-400"}`} placeholder='Name' type="text" />
                         </div>
                         <div className='flex flex-col gap-1 w-full'>
-                            <label htmlFor="">Nationality</label>
-                            <input {...register("author_nationality", { required: true })} className={`input  focus:outline-0 w-full ${errors.author_nationality && "border border-red-400"}`} placeholder='Nationality' type="text" />
-                        </div>
-                        <div className='flex flex-col gap-1 w-full'>
-                            <label htmlFor="">Date of birth</label>
-                            <input {...register("author_dob", { required: true })} className={`input focus:outline-0 w-full ${errors.author_dob && "border border-red-400"}`} type="date" />
+                            <label htmlFor="">Webiste</label>
+                            <input {...register("publisher_website", { required: true })} className={`input  focus:outline-0 w-full ${errors.author_nationality && "border border-red-400"}`} placeholder='Website link' type="text" />
                         </div>
                     </div>
                     <div>
@@ -104,7 +100,7 @@ const AuthorCreate = () => {
                 </form>
                 <div className='flex flex-col justify-center items-center bg-white border-5 border-[#bbb] border-dotted rounded-2xl lg:w-[50%] p-2'>
                     <div className='border-2 rounded-full mb-5'>
-                        <img className='w-32 h-32 rounded-full' src={`${isAuthorImage ? isAuthorImage : "https://i.ibb.co/WcTWxsN/nav-img.png"}`} alt="" />
+                        <img className='w-32 h-32 rounded-full' src={`${isPublisherImage ? isPublisherImage : "https://i.ibb.co/WcTWxsN/nav-img.png"}`} alt="" />
                     </div>
                     <div className='flex flex-col justify-center items-center'>
                         <IoMdCloudUpload className='text-3xl' />
@@ -128,4 +124,4 @@ const AuthorCreate = () => {
     );
 };
 
-export default AuthorCreate;
+export default PublisherCreate;

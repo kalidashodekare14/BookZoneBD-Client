@@ -15,7 +15,7 @@ import adminVerify from '../Redux/slice/adminSlice'
 import dashboardTotalBooks from '../Redux/slice/dashboardSlice/allBookSlice'
 import dashboardTotalUsers from '../Redux/slice/dashboardSlice/allUserSlice'
 import dashboardTotalInfo from '../Redux/slice/dashboardSlice/totalInfoSlice'
-import dashboardTotalAuthor from '../Redux/slice/dashboardSlice/authorsManageSlice'
+import dashboardTotalPublisher from './slice/dashboardSlice/publishersManageSlice'
 import dashboardTotalOrder from '../Redux/slice/dashboardSlice/orderManageSlice'
 import dashboardOrderDetils from '../Redux/slice/dashboardSlice/orderDetailsSlice'
 import dashboardTotalReview from '../Redux/slice/dashboardSlice/totalReviewSlice';
@@ -40,7 +40,7 @@ const store = configureStore({
         totalInfo: dashboardTotalInfo,
         totalBooks: dashboardTotalBooks,
         totalUser: dashboardTotalUsers,
-        totalAuthors: dashboardTotalAuthor,
+        totalPublisher: dashboardTotalPublisher,
         totalOrders: dashboardTotalOrder,
         viewOrderDetails: dashboardOrderDetils,
         totalReview: dashboardTotalReview

@@ -45,8 +45,8 @@ export default [
             route("/dashboard/view_order", "./pages/Dashboard/AdminPage/ViewOrder.jsx"),
             route("/dashboard/view_order/details/:order_id", "./pages/Dashboard/AdminPage/OrderDetails.jsx"),
             route("/dashboard/view-review", "./pages/Dashboard/AdminPage/ViewReview.jsx"),
-            route("/dashboard/author-manage", "./pages/Dashboard/AdminPage/AuthorManage.jsx"),
-            route("/dashboard/author-create", "./pages/Dashboard/AdminPage/AuthorCreate.jsx"),
+            route("/dashboard/author-manage", "./pages/Dashboard/AdminPage/PublisherManage.jsx"),
+            route("/dashboard/publisher-create", "./pages/Dashboard/AdminPage/PublisherCreate.jsx"),
         ])
     ])
 

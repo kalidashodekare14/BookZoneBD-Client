@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { authorManageFatched } from '../../../Redux/slice/dashboardSlice/authorsManageSlice';
+import { publisherManageFatched } from '../../../Redux/slice/dashboardSlice/publishersManageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import { OrbitProgress } from 'react-loading-indicators';
 import { CiSearch } from 'react-icons/ci';
 import { HiDotsVertical } from 'react-icons/hi';
+import { Link } from 'react-router';
 
 const AuthorManage = () => {
 
-    const { totalAuthor, totalPages, loading, error } = useSelector((state) => state.totalAuthors);
+    const { totalpublisher, totalPages, loading, error } = useSelector((state) => state.totalPublisher);
     const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(0);
     const limit = 10;
     const [isSearch, setIsSearch] = useState(null);
 
+
+    console.log('checking publisher', totalpublisher)
 
     useEffect(() => {
         const params = new URLSearchParams({
@@ -21,7 +24,7 @@ const AuthorManage = () => {
             page: currentPage + 1,
             limit: limit
         })
-        dispatch(authorManageFatched({ params }))
+        dispatch(publisherManageFatched({ params }))
     }, [isSearch, currentPage, limit])
 
     const handleSearch = (event) => {
@@ -59,31 +62,36 @@ const AuthorManage = () => {
                         <tr className='text-[16px]'>
                             <th>Image</th>
                             <th>Name</th>
-                            <th>Nationality</th>
-                            <th>Date Of Birth</th>
+                            <th>Website</th>
                             <th>Bio</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            totalAuthor.length > 0 ? (
-                                totalAuthor.map(author => (
+                            totalpublisher.length > 0 ? (
+                                totalpublisher.map(author => (
                                     <tr className='text-[15px]'>
                                         <th>
-                                            <img className='w-14 h-14 rounded-full' src={author?.author_image ? author.author_image : "https://i.ibb.co/WcTWxsN/nav-img.png"} alt="" />
+                                            <img className='w-14 h-14 rounded-full' src={author?.publisher_image ? author.publisher_image : "https://i.ibb.co/WcTWxsN/nav-img.png"} alt="" />
                                         </th>
-                                        <td>{author?.author_name ? author?.author_name : "N/A"}</td>
-                                        <td>{author?.author_nationality ? author?.author_nationality : "N/A"}</td>
-                                        <td>{author?.author_dob ? author?.author_dob : "N/A"}</td>
-                                        <td>{author?.author_bio ? author?.author_bio.slice(0, 40) : "N/A"} {author?.author_bio.length > 40 && "..."}</td>
-                                        <div className="dropdown dropdown-bottom dropdown-end">
-                                            <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
-                                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                                <li><a>Item 1</a></li>
-                                                <li><a>Item 2</a></li>
-                                            </ul>
-                                        </div>
+                                        <td>{author?.publisher_name ? author?.publisher_name : "N/A"}</td>
+                                        <td>
+                                            <Link className='text-[#3bb77c]' to={author?.publisher_website}>
+                                                {author?.publisher_website ? author?.publisher_website : "N/A"}
+                                            </Link>
+
+                                        </td>
+                                        <td>{author?.publisher_description ? author?.publisher_description.slice(0, 40) : "N/A"} {author?.publisher_description.length > 40 && "..."}</td>
+                                        <td>
+                                            <div className="dropdown dropdown-bottom dropdown-end">
+                                                <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
+                                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                                    <li>Edit</li>
+                                                    <li className='bg-[#d00000] text-white'>Delete</li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
@@ -102,7 +110,7 @@ const AuthorManage = () => {
             </div>
             <div className='my-10 flex justify-center items-center'>
                 {
-                    totalAuthor.length > 0 && (
+                    totalpublisher.length > 0 && (
                         <div className='bg-white p-4'>
                             <ReactPaginate
                                 forcePage={currentPage}

@@ -2,35 +2,35 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosSecure from "../../../utils/axiosSecure";
 
 
-export const authorManageFatched = createAsyncThunk(
-    "totalAuthors/authorManageFatched",
+export const publisherManageFatched = createAsyncThunk(
+    "totalPublisher/publisherManageFatched",
     async ({ params }) => {
-        const res = await axiosSecure.get(`/api/dashboard/total_author?${params}`);
+        const res = await axiosSecure.get(`/api/dashboard/total_publisher?${params}`);
         return res.data.data
     }
 )
 
 
 const dashboardAuthorsManage = createSlice({
-    name: "allAuthors",
+    name: "allPublishers",
     initialState: {
-        totalAuthor: [],
+        totalpublisher: [],
         totalPages: 0,
         loading: false,
         error: null
     },
     extraReducers: (builder) => {
         builder
-            .addCase(authorManageFatched.pending, (state, action) => {
+            .addCase(publisherManageFatched.pending, (state, action) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(authorManageFatched.fulfilled, (state, action) => {
+            .addCase(publisherManageFatched.fulfilled, (state, action) => {
                 state.loading = false;
-                state.totalAuthor = action.payload.books;
+                state.totalpublisher = action.payload.books;
                 state.totalPages = action.payload.totalPages;
             })
-            .addCase(authorManageFatched.rejected, (state, action) => {
+            .addCase(publisherManageFatched.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })

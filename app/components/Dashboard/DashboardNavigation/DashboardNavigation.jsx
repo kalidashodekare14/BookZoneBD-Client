@@ -33,8 +33,8 @@ const DashboardNavigation = ({ isToggle }) => {
         },
         {
             id: 4,
-            name: "Author Create",
-            path: "/dashboard/author-create",
+            name: "Publisher Create",
+            path: "/dashboard/publisher-create",
             icon: <FaUserPlus />
         },
         {
