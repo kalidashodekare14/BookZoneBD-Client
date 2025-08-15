@@ -140,6 +140,7 @@ const AllBook = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
+                    
                     const res = await dispatch(dashboardBookDelete({ id: id }))
 
                     if (res.meta.requestStatus === "fulfilled") {

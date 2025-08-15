@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
-import { dashboardAllUser, dashboardUserRole } from '../../../Redux/slice/dashboardSlice/allUserSlice';
+import { dashboardAllUser, dashboardUserRole, dashboardUserAction } from '../../../Redux/slice/dashboardSlice/allUserSlice';
 import { OrbitProgress } from 'react-loading-indicators';
 import { CiSearch } from 'react-icons/ci';
 import ReactPaginate from 'react-paginate';
@@ -136,6 +136,41 @@ const AllUsers = () => {
         setCurrentPage(data.selected)
     }
 
+    const hanleActionUser = (id, action) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Want to disable the user.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, disable"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const actionInfo = {
+                    action: action
+                }
+                const res = await dispatch(dashboardUserAction({ id: id, data: actionInfo }));
+                if (res.meta.requestStatus === "fulfilled") {
+                    Swal.fire({
+                        title: "Successfully",
+                        text: "Your action has been successfully.",
+                        icon: "success"
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "There were some problems taking action.",
+                        icon: "error"
+                    });
+                }
+
+            } else if (result.isDismissed) {
+                dispatch(dashboardAllUser())
+            }
+        });
+    }
+
 
 
     // if (loading) {
@@ -186,13 +221,12 @@ const AllUsers = () => {
                                                 <option value="Writer">Writer</option>
                                             </select>
                                         </td>
-                                        <div className="dropdown dropdown-bottom dropdown-end">
-                                            <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
-                                            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                                <li className='bg-[#0081a7] text-white p-2 cursor-pointer'>Edit</li>
-                                                <li className='bg-[#d00000] text-white p-2 cursor-pointer'>Delete</li>
-                                            </ul>
-                                        </div>
+                                        <td>
+                                            <select onChange={(event) => hanleActionUser(user?._id, event.target.value)} value={user?.isActive} className='border w-20 border-[#bbb] p-1'>
+                                                <option value={false}>Disable</option>
+                                                <option value={true}>Enable</option>
+                                            </select>
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
