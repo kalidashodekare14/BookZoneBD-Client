@@ -110,8 +110,8 @@ const AddBook = () => {
                                 <p>Author</p>
                                 <select {...register("author_id")} className='border border-[#bbb] p-[6px] w-full'>
                                     {
-                                        totalAuthors.map((author) => (
-                                            <option key={author._id} value={author?._id}>{author?.author_name}</option>
+                                        totalAuthors.map((publisher) => (
+                                            <option key={publisher._id} value={publisher?._id}>{publisher?.publisher_name}</option>
                                         ))
                                     }
                                 </select>

@@ -85,6 +85,8 @@ const AllUsers = () => {
     const onCloseModal = () => setOpen(false);
 
 
+
+
     const handleSearch = (event) => {
         event.preventDefault();
         const search = event.target.search.value;
@@ -101,6 +103,9 @@ const AllUsers = () => {
         dispatch(dashboardAllUser({ params: params.toString() }))
     }, [isSearch, currentPage, limit])
 
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected)
+    }
 
     const handleRoleSystem = async (id, role) => {
 
@@ -132,11 +137,10 @@ const AllUsers = () => {
         })
     }
 
-    const handlePageClick = (data) => {
-        setCurrentPage(data.selected)
-    }
+
 
     const hanleActionUser = (id, action) => {
+        console.log('checking row action', action);
         Swal.fire({
             title: "Are you sure?",
             text: "Want to disable the user.",
@@ -150,6 +154,7 @@ const AllUsers = () => {
                 const actionInfo = {
                     action: action
                 }
+                console.log('checking action', actionInfo)
                 const res = await dispatch(dashboardUserAction({ id: id, data: actionInfo }));
                 if (res.meta.requestStatus === "fulfilled") {
                     Swal.fire({
@@ -223,8 +228,8 @@ const AllUsers = () => {
                                         </td>
                                         <td>
                                             <select onChange={(event) => hanleActionUser(user?._id, event.target.value)} value={user?.isActive} className='border w-20 border-[#bbb] p-1'>
-                                                <option value={false}>Disable</option>
-                                                <option value={true}>Enable</option>
+                                                <option value={"false"}>Disable</option>
+                                                <option value={"true"}>Enable</option>
                                             </select>
                                         </td>
                                     </tr>

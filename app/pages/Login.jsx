@@ -11,7 +11,10 @@ const Login = () => {
     const { loginSystem, googleAuthSystem, setLoading, loading } = useAuth()
     const navigation = useNavigate()
     const [idError, setIsError] = useState(false);
+    const [handleErrorMessage, setHandleErrorMessage] = useState("")
     const [passwordHideAndShow, setPasswordHideAndShow] = useState(false);
+
+    console.log('checking error', handleErrorMessage)
 
     const {
         register,
@@ -28,6 +31,7 @@ const Login = () => {
             }
             setLoading(true)
             const response = await axiosSecure.post('/api/user/login', userInfo);
+            console.log('checking login data', response.data.message);
             if (response.data.success === true) {
                 localStorage.setItem('token', response.data.data.token);
                 loginSystem(data.email, data.password)
@@ -35,7 +39,6 @@ const Login = () => {
                         navigation('/')
                     })
                     .catch(error => {
-                        console.log('checking error', error);
                         setIsError(true)
                         setLoading(false)
                     })
@@ -43,7 +46,8 @@ const Login = () => {
             }
 
         } catch (error) {
-            setIsError(true)
+            setIsError(true);
+            setLoading(false);
         } finally {
             setLoading(false);
         }

@@ -211,7 +211,7 @@ const AllBook = () => {
                                         <td>৳{books.price}</td>
                                         <td>{books.discount}%</td>
                                         <td>
-                                            <div className="dropdown dropdown-bottom dropdown-end">
+                                            <div className="dropdown dropdown-left dropdown-end">
                                                 <div tabIndex={0} role="button" className="btn m-1"><HiDotsVertical /></div>
                                                 <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm space-y-2">
                                                     <li onClick={() => { setSelectedBook(books), onOpenModal() }} className='bg-[#0081a7] text-white p-2 cursor-pointer'>Edit</li>
