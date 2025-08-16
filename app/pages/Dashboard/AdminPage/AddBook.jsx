@@ -11,7 +11,7 @@ const AddBook = () => {
 
     const [isBookImage, setIsBookImage] = useState("");
     const [imageHostingLoading, setImgHostingLoading] = useState(false);
-    const [totalAuthors, setTotalAuthors] = useState([])
+    const [dropdownInfo, setDropdownInfo] = useState([])
     const [isDescription, setIsDescription] = useState("");
     const [bookLoading, setBookLoading] = useState(false);
 
@@ -37,12 +37,13 @@ const AddBook = () => {
         }
     }
 
+    console.log('checking author and publisher', dropdownInfo)
 
     // authors get
     useEffect(() => {
         const totalAuthorFetched = async () => {
-            const res = await axiosSecure.get('/api/dashboard/authors_get');
-            return setTotalAuthors(res.data.data)
+            const res = await axiosSecure.get('/api/dashboard/authorAndPublisherGet');
+            return setDropdownInfo(res.data.data)
         }
         totalAuthorFetched()
     }, [])
@@ -59,7 +60,7 @@ const AddBook = () => {
             const bookData = {
                 title: data.title,
                 author_id: data.author_id,
-                publisher: data.publisher,
+                publisher: data.publisher_id,
                 price: parseInt(data.price),
                 stock: parseInt(data.stock),
                 discount: parseInt(data.discount),
@@ -110,15 +111,21 @@ const AddBook = () => {
                                 <p>Author</p>
                                 <select {...register("author_id")} className='border border-[#bbb] p-[6px] w-full'>
                                     {
-                                        totalAuthors.map((publisher) => (
-                                            <option key={publisher._id} value={publisher?._id}>{publisher?.publisher_name}</option>
+                                        dropdownInfo?.totalAuthor?.map((publisher) => (
+                                            <option key={publisher._id} value={publisher?._id}>{publisher?.name}</option>
                                         ))
                                     }
                                 </select>
                             </div>
                             <div className='w-full'>
                                 <p>Publisher</p>
-                                <input {...register("publisher")} className='input w-full focus:outline-0' type='text' />
+                                <select {...register("publisher_id")} className='border border-[#bbb] p-[6px] w-full'>
+                                    {
+                                        dropdownInfo?.totalPublisher?.map((publisher) => (
+                                            <option key={publisher._id} value={publisher?._id}>{publisher?.publisher_name}</option>
+                                        ))
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>
