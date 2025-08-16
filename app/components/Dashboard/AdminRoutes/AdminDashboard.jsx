@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { totalInformation } from '../../../Redux/slice/dashboardSlice/totalInfoSlice'
 import { useEffect } from 'react';
 import { OrbitProgress } from 'react-loading-indicators';
+import millify from "millify";
 const data = [
     {
         "name": "Page A",
@@ -52,11 +53,13 @@ const data = [
 ]
 
 
+
 const AdminDashboard = () => {
 
     const { allInfo, loading, error } = useSelector((state) => state.totalInfo);
     const dispatch = useDispatch()
 
+    console.log('checking info', allInfo);
 
     useEffect(() => {
         dispatch(totalInformation());
@@ -82,7 +85,7 @@ const AdminDashboard = () => {
                         <div className='bg-[#f8f8f8] rounded-xl  p-3 border border-[#bbb] flex flex-col gap-2'>
                             <h1 className='text-[18px]'>Total Earned</h1>
                             <div className='flex items-center gap-3'>
-                                <p className='text-2xl font-semibold'>$50K</p>
+                                <p className='text-2xl font-semibold'>${millify(allInfo?.totalAmount.value ? allInfo?.totalAmount.value : 0)}</p>
                                 <p className='text-[14px] flex items-center gap-1 bg-[#3bb77d1c] text-[#3bb77dd0] font-semibold w-20 p-1 rounded-full'>
                                     <span>+95%</span>
                                     <span><MdOutlineShowChart className='text-[20px]' /></span>
@@ -135,7 +138,7 @@ const AdminDashboard = () => {
                         <div className='bg-[#f8f8f8] rounded-xl p-3 border border-[#bbb] flex flex-col gap-2'>
                             <h1 className='text-[18px]'>Total Orders</h1>
                             <div className='flex items-center gap-3'>
-                                <p className='text-2xl font-semibold'>1500</p>
+                                <p className='text-2xl font-semibold'>{allInfo?.totalOrders.value ? allInfo?.totalOrders.value : 0}</p>
                                 <p className='text-[14px] flex items-center gap-1 bg-[#3bb77d1c] text-[#3bb77dd0] font-semibold w-20 p-1 rounded-full'>
                                     <span>+60%</span>
                                     <span><MdOutlineShowChart className='text-[20px]' /></span>
