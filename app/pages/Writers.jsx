@@ -70,6 +70,7 @@ const Writers = () => {
     const { writerData, loading, error } = useSelector((state) => state.allWriterData);
     const dispatch = useDispatch();
     const cardLoading = 10;
+    
 
     console.log('checking authors', writerData)
 

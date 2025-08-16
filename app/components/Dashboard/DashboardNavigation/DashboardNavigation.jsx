@@ -45,8 +45,8 @@ const DashboardNavigation = ({ isToggle }) => {
         },
         {
             id: 7,
-            name: "Author Manage",
-            path: "/dashboard/author-manage",
+            name: "Publisher Manage",
+            path: "/dashboard/publisher-manage",
             icon: <MdManageAccounts className='text-xl' />
         },
 
