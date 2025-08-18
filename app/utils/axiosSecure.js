@@ -2,8 +2,8 @@ import axios from 'axios';
 import { getAuth, signOut } from 'firebase/auth';
 
 const axiosSecure = axios.create({
-    // baseURL: "https://book-zone-bd-server.vercel.app",
-    baseURL: "http://localhost:5000",
+    baseURL: "https://book-zone-bd-server.vercel.app",
+    // baseURL: "http://localhost:5000",
     withCredentials: true
 });
 
