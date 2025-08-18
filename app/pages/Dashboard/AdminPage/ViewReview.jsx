@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { useDispatch, useSelector } from 'react-redux';
 import { totalReviewFetched } from '../../../Redux/slice/dashboardSlice/totalReviewSlice'
 import { HiDotsVertical } from 'react-icons/hi';
-import { Link } from 'react-router';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
-import { OrbitProgress } from 'react-loading-indicators';
 
 const ViewReview = () => {
 

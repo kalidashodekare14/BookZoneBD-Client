@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { writerProfileFetched } from '../Redux/slice/writerProfileSlice';
 import useAuth from './useAuth';

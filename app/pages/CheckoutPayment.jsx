@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cashImage from '../../public/cash.png'
 import sslcommerzImage from '../../public/sllcommerz.png'
 import { useCart } from 'react-use-cart';

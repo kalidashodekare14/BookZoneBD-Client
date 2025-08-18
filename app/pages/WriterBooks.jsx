@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axiosPublic from '../utils/axiosPublic';
 import Modal from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';

@@ -5,7 +5,6 @@ import './AdminDashboard.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { totalInformation } from '../../../Redux/slice/dashboardSlice/totalInfoSlice'
 import { useEffect } from 'react';
-import { OrbitProgress } from 'react-loading-indicators';
 import millify from "millify";
 const data = [
     {

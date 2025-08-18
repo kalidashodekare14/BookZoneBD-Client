@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { FaEdit, FaInfo, FaLock } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FaEdit } from 'react-icons/fa';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import { FaCamera } from "react-icons/fa";

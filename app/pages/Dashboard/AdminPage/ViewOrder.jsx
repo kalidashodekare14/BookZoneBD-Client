@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
-import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderManageFatched, orderStatusUpdate } from '../../../Redux/slice/dashboardSlice/orderManageSlice'
 import { HiDotsVertical } from 'react-icons/hi';

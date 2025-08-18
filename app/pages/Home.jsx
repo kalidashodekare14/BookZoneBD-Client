@@ -1,4 +1,3 @@
-import React from 'react';
 import Banner from '../components/HomePage/BannerSection/BannerSection'
 import SpecialOffer from '../components/HomePage/SpecialOffer/SpecialDiscount';
 import TrendingBooks from '../components/HomePage/TrendingBooks/TrendingBooks';

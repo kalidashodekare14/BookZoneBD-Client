@@ -56,24 +56,25 @@ const Navbar = () => {
         },
         {
             id: 3,
-            name: t("routes.categories"),
-            route: "/categories"
-        },
-        {
-            id: 4,
-            name: t("routes.subject"),
-            route: "/subjects"
-        },
-        {
-            id: 5,
             name: t("routes.writer"),
             route: "/writers"
         },
         {
-            id: 6,
+            id: 4,
             name: t("routes.publisher"),
             route: "/publisher"
         },
+        {
+            id: 5,
+            name: t("routes.categories"),
+            route: "/categories"
+        },
+        {
+            id: 6,
+            name: t("routes.subject"),
+            route: "/subjects"
+        },
+
     ]
 
     const lang = [

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoMdCloudUpload } from 'react-icons/io';
 import { OrbitProgress } from 'react-loading-indicators';
 import axiosSecure from '../../../utils/axiosSecure';

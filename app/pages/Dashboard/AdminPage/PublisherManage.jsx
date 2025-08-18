@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { publisherManageFatched, publisherDataUpdate, publisherDataDelete } from '../../../Redux/slice/dashboardSlice/publishersManageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
-import { OrbitProgress } from 'react-loading-indicators';
 import { CiSearch } from 'react-icons/ci';
 import { HiDotsVertical } from 'react-icons/hi';
 import { Link } from 'react-router';

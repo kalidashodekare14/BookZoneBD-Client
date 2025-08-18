@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import { OrbitProgress } from 'react-loading-indicators';

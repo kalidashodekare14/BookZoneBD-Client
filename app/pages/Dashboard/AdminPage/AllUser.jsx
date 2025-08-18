@@ -1,76 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { HiDotsVertical } from 'react-icons/hi';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { dashboardAllUser, dashboardUserRole, dashboardUserAction } from '../../../Redux/slice/dashboardSlice/allUserSlice';
-import { OrbitProgress } from 'react-loading-indicators';
 import { CiSearch } from 'react-icons/ci';
 import ReactPaginate from 'react-paginate';
 import Swal from 'sweetalert2';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 
-const allUser = [
-    {
-        "name": "Rahim Uddin",
-        "email": "rahim.uddin@example.com",
-        "image": "https://randomuser.me/api/portraits/men/1.jpg",
-        "phone": "+8801711001100"
-    },
-    {
-        "name": "Karima Akter",
-        "email": "karima.akter@example.com",
-        "image": "https://randomuser.me/api/portraits/women/2.jpg",
-        "phone": "+8801722002200"
-    },
-    {
-        "name": "Sumon Ali",
-        "email": "sumon.ali@example.com",
-        "image": "https://randomuser.me/api/portraits/men/3.jpg",
-        "phone": "+8801733003300"
-    },
-    {
-        "name": "Fatema Khatun",
-        "email": "fatema.khatun@example.com",
-        "image": "https://randomuser.me/api/portraits/women/4.jpg",
-        "phone": "+8801744004400"
-    },
-    {
-        "name": "Nasir Hossain",
-        "email": "nasir.hossain@example.com",
-        "image": "https://randomuser.me/api/portraits/men/5.jpg",
-        "phone": "+8801755005500"
-    },
-    {
-        "name": "Jannatul Ferdous",
-        "email": "jannatul.ferdous@example.com",
-        "image": "https://randomuser.me/api/portraits/women/6.jpg",
-        "phone": "+8801766006600"
-    },
-    {
-        "name": "Alamin Sarker",
-        "email": "alamin.sarker@example.com",
-        "image": "https://randomuser.me/api/portraits/men/7.jpg",
-        "phone": "+8801777007700"
-    },
-    {
-        "name": "Shirin Akhter",
-        "email": "shirin.akhter@example.com",
-        "image": "https://randomuser.me/api/portraits/women/8.jpg",
-        "phone": "+8801788008800"
-    },
-    {
-        "name": "Rafiq Mia",
-        "email": "rafiq.mia@example.com",
-        "image": "https://randomuser.me/api/portraits/men/9.jpg",
-        "phone": "+8801799009900"
-    },
-    {
-        "name": "Nusrat Jahan",
-        "email": "nusrat.jahan@example.com",
-        "image": "https://randomuser.me/api/portraits/women/10.jpg",
-        "phone": "+8801700010000"
-    }
-]
+
 
 const AllUsers = () => {
 

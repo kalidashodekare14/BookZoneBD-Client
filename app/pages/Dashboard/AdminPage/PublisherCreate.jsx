@@ -1,6 +1,5 @@
-import React, { use, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { CiSearch } from 'react-icons/ci';
 import { IoMdCloudUpload } from "react-icons/io";
 import axiosSecure from '../../../utils/axiosSecure';
 import Swal from 'sweetalert2';

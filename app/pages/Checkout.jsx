@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IoIosCloseCircle } from 'react-icons/io';
 import { useCart } from 'react-use-cart';
 import 'react-responsive-modal/styles.css';

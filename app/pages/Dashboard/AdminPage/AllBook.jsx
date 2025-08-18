@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import { dashboardTotalBooks, dashboardBookUpdate, dashboardBookDelete } from '../../../Redux/slice/dashboardSlice/allBookSlice'
-import { OrbitProgress } from 'react-loading-indicators';
 import ReactPaginate from 'react-paginate';
 import { CiSearch } from "react-icons/ci";
 import 'react-responsive-modal/styles.css';

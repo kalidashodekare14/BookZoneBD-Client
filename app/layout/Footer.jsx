@@ -1,9 +1,8 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaFacebookF, FaInstagram, FaLocationDot, FaXTwitter, FaYoutube } from 'react-icons/fa6';
+import { FaFacebookF, FaInstagram, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { IoIosSend } from 'react-icons/io';
 import { IoCallOutline, IoLocationOutline } from 'react-icons/io5';
-import { MdAddIcCall, MdOutlineMail } from 'react-icons/md';
+import { MdOutlineMail } from 'react-icons/md';
 
 const Footer = () => {
 

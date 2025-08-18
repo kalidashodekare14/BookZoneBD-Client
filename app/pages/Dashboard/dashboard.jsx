@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Outlet } from 'react-router';
 import DashboardNavigation from '../../components/Dashboard/DashboardNavigation/DashboardNavigation';
 import DashboardHeader from '../../components/Dashboard/DashboardHeader/DashboardHeader';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaCamera, FaEdit } from 'react-icons/fa';
 import useAuth from '../hooks/useAuth';
 import { writerProfileFetched, writerProfileDataUpdate } from '../Redux/slice/writerProfileSlice';

@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import { OrbitProgress } from 'react-loading-indicators';
 import useRole from '../hooks/useRole';
-import axiosSecure from '../utils/axiosSecure';
 
 const UserProtected = () => {
     const { user, loading, logoutSystem } = useAuth();
