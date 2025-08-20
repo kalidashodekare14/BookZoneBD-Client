@@ -120,26 +120,28 @@ const AcademicBooks = () => {
                         academicBook.length > 0 ? (
                             academicBook.map(data => (
                                 <SwiperSlide>
-                                    <div className=' border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
-                                        <img className='w-full h-60 px-5' src={data.image} alt="" />
-                                        <div className='mt-3 space-y-2'>
-                                            <h1 className='font-semibold'>{data.title.slice(0, 25)} {data.title.length >= 25 && "..."} </h1>
-                                            <p>{data?.author?.author_name}</p>
-                                            <Rating
-                                                style={{ maxWidth: 100 }}
-                                                value={3}
-                                                readOnly
-                                            />
-                                            <div className='flex justify-between items-center'>
-                                                <p>৳{data.price * data.discount / 100}</p>
-                                                <p><del>৳{data.price}</del></p>
-                                            </div>
-                                            <Link to={`/book/${data._id}`}>
+                                    <Link to={`/book/${data._id}`}>
+                                        <div className=' border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
+                                            <img className='w-full h-60 px-5' src={data.image} alt="" />
+                                            <div className='mt-3 space-y-2'>
+                                                <h1 className='font-semibold'>{data.title.slice(0, 25)} {data.title.length >= 25 && "..."} </h1>
+                                                <p>{data?.author?.author_name}</p>
+                                                <Rating
+                                                    style={{ maxWidth: 100 }}
+                                                    value={3}
+                                                    readOnly
+                                                />
+                                                <div className='flex justify-between items-center'>
+                                                    <p>৳{data.price * data.discount / 100}</p>
+                                                    <p><del>৳{data.price}</del></p>
+                                                </div>
+                                                {/* <Link to={`/book/${data._id}`}>
                                                 <button className='btn w-full bg-[#003A5A] text-white'>View Details</button>
-                                            </Link>
+                                            </Link> */}
+                                            </div>
                                         </div>
+                                    </Link>
 
-                                    </div>
 
                                 </SwiperSlide>
                             ))
@@ -155,10 +157,6 @@ const AcademicBooks = () => {
                                             <div className='flex items-center gap-5'>
                                                 <div className="skeleton h-4 w-full"></div>
                                                 <div className="skeleton h-4 w-full"></div>
-                                            </div>
-                                            <div className='flex items-center gap-5'>
-                                                <div className="skeleton h-8 w-full"></div>
-                                                <div className="skeleton h-8 w-full"></div>
                                             </div>
                                         </div>
                                     </div>

@@ -218,29 +218,32 @@ const TotalBook = () => {
                     <div className='relative mx-5 lg:mx-0  grid grid-cols-1 z-20  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
                         {
                             allBooks.map(book => (
-                                <div key={book._id} className='border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
-                                    <img className='w-full h-60 px-5' src={book.image} alt="" />
-                                    <div className='mt-3 space-y-2'>
-                                        <h1 className='font-semibold'>{book.title}</h1>
-                                        <p>{book?.author?.author_name}</p>
-                                        <Rating
-                                            style={{ maxWidth: 100 }}
-                                            value={book.rating}
-                                            readOnly
-                                        />
-                                        <div className='flex justify-between items-center'>
-                                            <p>৳{book.price * book.discount / 100}</p>
-                                            <p><del>৳{book.price}</del></p>
-                                        </div>
-                                        <div className='flex items-center'>
-                                            <Link to={`/book/${book._id}`}>
-                                                <button className='btn border-[#003A5A] text-black hover:text-white'>View Details</button>
+                                <Link to={`/book/${book._id}`}>
+                                    <div key={book._id} className='border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
+                                        <img className='w-full h-60 px-5' src={book.image} alt="" />
+                                        <div className='mt-3 space-y-2'>
+                                            <h1 className='font-semibold'>{book.title}</h1>
+                                            <p>{book?.author?.author_name}</p>
+                                            <Rating
+                                                style={{ maxWidth: 100 }}
+                                                value={book.rating}
+                                                readOnly
+                                            />
+                                            <div className='flex justify-between items-center'>
+                                                <p>৳{book.price * book.discount / 100}</p>
+                                                <p><del>৳{book.price}</del></p>
+                                            </div>
+                                            {/* <div className=''>
+                                            <Link >
+                                                <button className='btn w-full bg-[#003A5A] text-white'>View Details</button>
                                             </Link>
                                             <button onClick={() => addItem({ ...book, id: book._id })} className='btn bg-[#003A5A] text-white'>Add to cart</button>
+                                        </div> */}
                                         </div>
-                                    </div>
 
-                                </div>
+                                    </div>
+                                </Link>
+
                             ))
                         }
                     </div>
@@ -256,10 +259,6 @@ const TotalBook = () => {
                                     <div className='flex items-center gap-5'>
                                         <div className="skeleton h-4 w-full"></div>
                                         <div className="skeleton h-4 w-full"></div>
-                                    </div>
-                                    <div className='flex items-center gap-5'>
-                                        <div className="skeleton h-8 w-full"></div>
-                                        <div className="skeleton h-8 w-full"></div>
                                     </div>
                                 </div>
                             </div>
