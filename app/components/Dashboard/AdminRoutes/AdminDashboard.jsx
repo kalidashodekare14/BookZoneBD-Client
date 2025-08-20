@@ -64,12 +64,6 @@ const AdminDashboard = () => {
         dispatch(totalInformation());
     }, [])
 
-    // if (loading) {
-    //     return <div className='h-[550px] flex flex-col justify-center items-center'>
-    //         <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
-    //         <p className='text-xl'>Please wait...</p>
-    //     </div>
-    // }
 
 
     return (

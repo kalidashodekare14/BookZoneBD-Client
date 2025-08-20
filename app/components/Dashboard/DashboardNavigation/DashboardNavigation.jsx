@@ -66,7 +66,7 @@ const DashboardNavigation = ({ isToggle, handleToggle }) => {
 
     return (
         <div className='relative '>
-            <div className={`${isToggle ? "translate-y-0 translate-x-0 duration-300" : "-translate-x-full duration-300"} z-50 absolute lg:static lg:translate-y-0 lg:translate-x-0  left-0  bg-[#003a5a] text-white w-72 lg:w-60 min-h-screen border-[#bbb] border-r`}>
+            <div className={`${isToggle ? "translate-y-0 translate-x-0 duration-300" : "-translate-x-full duration-300"} z-50 absolute lg:static lg:translate-y-0 lg:translate-x-0  left-0  bg-white text-black w-72 lg:w-60 min-h-screen border-[#bbb] border-r`}>
                 <div className='flex flex-col gap-1 text-[16px] font-rubik'>
                     <div onClick={handleToggle} className='lg:hidden flex justify-end items-end p-1'>
                         <IoMdClose className='text-2xl' />
@@ -79,14 +79,14 @@ const DashboardNavigation = ({ isToggle, handleToggle }) => {
                     </div>
                     {
                         dashboardLinks.map(navi => (
-                            <Link key={navi.id} to={navi.path} className={`${pathname == navi.path ? "bg-[#307bc4] text-white  p-2 flex items-center gap-2" : "hover:bg-[#307bc4] hover:text-white p-2 flex items-center gap-2"}`} >
+                            <Link key={navi.id} to={navi.path} className={`${pathname == navi.path ? "bg-[#085781] text-white  p-2 flex items-center gap-2" : "hover:bg-[#085781] hover:text-white p-2 flex items-center gap-2"}`} >
                                 <p>{navi.icon}</p>
                                 <p>{navi.name}</p>
                             </Link>
                         ))
                     }
                     <div className="divider">OR</div>
-                    <Link to={'/'} className={`hover:bg-[#307bc4] hover:rounded-br-full hover:rounded-tr-xl hover:text-white p-2`}>
+                    <Link to={'/'} className={`hover:bg-[#085781] hover:rounded-br-full hover:rounded-tr-xl hover:text-white p-2`}>
                         <div className='flex items-center gap-2'>
                             <p><IoIosHome /></p>
                             <p>Home</p>

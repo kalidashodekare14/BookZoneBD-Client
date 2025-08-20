@@ -20,7 +20,7 @@ const AllUsers = () => {
     const [open, setOpen] = useState(false);
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
-
+    const loadingUser = 10;
 
 
 
@@ -172,14 +172,41 @@ const AllUsers = () => {
                                     </tr>
                                 ))
                             ) : (
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td className='text-[18px]'>No Data</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                <>
+                                    {loading && (
+                                        <>
+                                            {[...Array(loadingUser)].map((_, index) => (
+                                                <tr>
+                                                    <td>
+                                                        <div className="skeleton h-14 w-14 rounded-full"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-8 w-40"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-8 w-40"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-8 w-32"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-10 w-20"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-10 w-20"></div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </>
+                                    )}
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td className='font-semibold'>No Data</td>
+                                        <td></td>
+                                    </tr>
+                                </>
+
                             )
 
                         }

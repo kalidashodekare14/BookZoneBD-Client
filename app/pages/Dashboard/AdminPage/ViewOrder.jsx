@@ -14,7 +14,7 @@ const ViewOrder = () => {
     const { totalOrder, loading, error } = useSelector((state) => state.totalOrders);
     const dispatch = useDispatch()
     const [orderStatus, setOrderStatus] = useState("");
-    console.log('checking order status', totalOrder)
+    const loadingOrder = 10;
 
 
     useEffect(() => {
@@ -45,12 +45,6 @@ const ViewOrder = () => {
         setCurrentPage(data.selected)
     }
 
-    // if (loading) {
-    //     return <div className='h-[550px] flex flex-col justify-center items-center'>
-    //         <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
-    //         <p className='text-xl'>Please wait...</p>
-    //     </div>
-    // }
 
     return (
         <div className='lg:px-5 py-5 bg-[#E0E0E0] font-mixed space-y-3 min-h-screen'>
@@ -132,14 +126,58 @@ const ViewOrder = () => {
                                         </tr>
                                     ))
                                 ) : (
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td className='text-xl'>No Data</td>
-                                    </tr>
+                                    <>
+                                        {loading && (
+                                            <>
+                                                {[...Array(loadingOrder)].map((_, index) => (
+                                                    <tr>
+                                                        <td>
+                                                            <div className="skeleton h-14 w-14 rounded-full"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className='flex flex-col gap-2'>
+                                                                <div className="skeleton h-8 w-25"></div>
+                                                                <div className="skeleton h-8 w-40"></div>
+                                                                <div className="skeleton h-8 w-30"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-8 w-40"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-8 w-32"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-10 w-20"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className='flex flex-col gap-2'>
+                                                                <div className="skeleton h-5 w-25"></div>
+                                                                <div className="skeleton h-5 w-20"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-10 w-20"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-10 w-20"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-10 w-20"></div>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </>
+                                        )}
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td className='font-semibold'>No Data</td>
+                                            <td></td>
+                                        </tr>
+                                    </>
                                 )
 
                             }

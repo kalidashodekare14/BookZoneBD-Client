@@ -32,6 +32,8 @@ const UserProfile = () => {
         }
     }, [])
 
+    console.log('checking image', userData)
+
     useEffect(() => {
         if (userData?.image) {
             setImageHosting(userData.image)

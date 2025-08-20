@@ -11,8 +11,7 @@ const ViewReview = () => {
     const [isSearch, setIsSearch] = useState(null);
     const { reviewAllData, loading, error } = useSelector((state) => state.totalReview);
     const dispatch = useDispatch();
-
-    console.log('checking review', reviewAllData);
+    const loadingReview = 10;
 
     useEffect(() => {
         dispatch(totalReviewFetched());
@@ -26,12 +25,6 @@ const ViewReview = () => {
     }
 
 
-    // if (loading) {
-    //     return <div className='h-[550px] flex flex-col justify-center items-center'>
-    //         <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
-    //         <p className='text-xl'>Please wait...</p>
-    //     </div>
-    // }
 
 
     return (
@@ -107,12 +100,46 @@ const ViewReview = () => {
                                         </tr>
                                     ))
                                 ) : (
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td className='text-xl'>No Data</td>
-                                    </tr>
+                                    <>
+                                        {loading && (
+                                            <>
+                                                {[...Array(loadingReview)].map((_, index) => (
+                                                    <tr>
+                                                        <td>
+                                                            <div className="skeleton h-14 w-14 rounded-full"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-8 w-40"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-8 w-40"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-8 w-32"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className='flex flex-col gap-2'>
+                                                                <div className="skeleton h-5 w-30"></div>
+                                                                <div className="skeleton h-5 w-25"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-10 w-25"></div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="skeleton h-10 w-20"></div>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </>
+                                        )}
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td className='font-semibold'>No Data</td>
+                                            <td></td>
+                                        </tr>
+                                    </>
                                 )
 
                             }

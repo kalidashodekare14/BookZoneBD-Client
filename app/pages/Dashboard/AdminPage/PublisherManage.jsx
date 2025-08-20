@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { publisherManageFatched, publisherDataUpdate, publisherDataDelete } from '../../../Redux/slice/dashboardSlice/publishersManageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
@@ -28,7 +28,7 @@ const AuthorManage = () => {
     const [imgHostingLoading, setImgHostingLoading] = useState(false);
     const [selectedPublisher, setSelectedPublisher] = useState(null);
     const [publisherBio, setPublisherBio] = useState("")
-
+    const loadingPublisher = 10;
 
 
     useEffect(() => {
@@ -200,13 +200,37 @@ const AuthorManage = () => {
                                     </tr>
                                 ))
                             ) : (
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td className='text-xl'>No Data</td>
-                                    <td></td>
-                                </tr>
+                                <>
+                                    {loading && (
+                                        <>
+                                            {[...Array(loadingPublisher)].map((_, index) => (
+                                                <tr>
+                                                    <td>
+                                                        <div className="skeleton h-14 w-14 rounded-full"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-8 w-40"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-8 w-40"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-8 w-52"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-10 w-16"></div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </>
+                                    )}
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td className='font-semibold'>No Data</td>
+                                        <td></td>
+                                    </tr>
+                                </>
                             )
 
                         }

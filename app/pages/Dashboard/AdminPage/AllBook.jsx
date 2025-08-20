@@ -28,8 +28,7 @@ const AllBook = () => {
     const [selectedBook, setSelectedBook] = useState(null);
     const [isUpdateDiscription, setIsUpdateDiscription] = useState("");
     const [editDescriptionError, setEditDescriptionError] = useState(false);
-
-    console.log('checking selected data', selectedBook)
+    const loadingBook = 10;
 
 
     const {
@@ -139,7 +138,7 @@ const AllBook = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    
+
                     const res = await dispatch(dashboardBookDelete({ id: id }))
 
                     if (res.meta.requestStatus === "fulfilled") {
@@ -198,6 +197,7 @@ const AllBook = () => {
                         </tr>
                     </thead>
                     <tbody>
+
                         {
                             totalBook.length > 0 ? (
                                 totalBook.map(books => (
@@ -216,19 +216,46 @@ const AllBook = () => {
                                                     <li onClick={() => { setSelectedBook(books), onOpenModal() }} className='bg-[#0081a7] text-white p-2 cursor-pointer'>Edit</li>
                                                     <li onClick={() => handleDeleteBook(books._id)} className='bg-[#d00000] text-white p-2 cursor-pointer'>Delete</li>
                                                 </ul>
-                                            </div>  
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
                             ) : (
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td className='text-[18px]'>No Data</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                <>
+                                    {loading && (
+                                        <>
+                                            {[...Array(loadingBook)].map((_, index) => (
+                                                <tr>
+                                                    <td>
+                                                        <div className="skeleton h-14 w-14 rounded-full"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-8 w-40"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-8 w-40"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-8 w-14"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-8 w-14"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div className="skeleton h-10 w-14"></div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </>
+                                    )}
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td className='font-semibold'>No Data</td>
+                                        <td></td>
+                                    </tr>
+                                </>
+
                             )
 
                         }
