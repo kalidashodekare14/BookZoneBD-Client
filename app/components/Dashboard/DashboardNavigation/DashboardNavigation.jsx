@@ -2,13 +2,13 @@ import { BiSolidBookAdd } from 'react-icons/bi'
 import { FaUserPlus, FaUsers } from 'react-icons/fa'
 import { FaCartFlatbedSuitcase } from 'react-icons/fa6'
 import { GiStarsStack } from 'react-icons/gi'
-import { IoIosHome } from 'react-icons/io'
+import { IoIosHome, IoMdClose } from 'react-icons/io'
 import { IoBookSharp } from 'react-icons/io5'
 import { MdDashboard, MdManageAccounts } from 'react-icons/md'
 import { Link, useLocation } from 'react-router'
 import logo from '/dashboard_logo.png'
 
-const DashboardNavigation = ({ isToggle }) => {
+const DashboardNavigation = ({ isToggle, handleToggle }) => {
 
     const { pathname } = useLocation()
 
@@ -66,9 +66,12 @@ const DashboardNavigation = ({ isToggle }) => {
 
     return (
         <div className='relative '>
-            <div className={`${isToggle ? "translate-y-20 translate-x-0 duration-300" : "-translate-x-full translate-y-20 duration-300"} z-50 absolute lg:static lg:translate-y-0 lg:translate-x-0  left-0  bg-white w-52 min-h-screen border-[#bbb] border-r`}>
+            <div className={`${isToggle ? "translate-y-0 translate-x-0 duration-300" : "-translate-x-full duration-300"} z-50 absolute lg:static lg:translate-y-0 lg:translate-x-0  left-0  bg-[#003a5a] text-white w-72 lg:w-60 min-h-screen border-[#bbb] border-r`}>
                 <div className='flex flex-col gap-1 text-[16px] font-rubik'>
-                    <div className='hidden lg:flex py-5 px-3'>
+                    <div onClick={handleToggle} className='lg:hidden flex justify-end items-end p-1'>
+                        <IoMdClose className='text-2xl' />
+                    </div>
+                    <div className=' lg:flex py-5 px-3'>
                         <img
                             src={logo}
                             alt='logo'
@@ -87,7 +90,6 @@ const DashboardNavigation = ({ isToggle }) => {
                         <div className='flex items-center gap-2'>
                             <p><IoIosHome /></p>
                             <p>Home</p>
-
                         </div>
                     </Link>
                 </div>
