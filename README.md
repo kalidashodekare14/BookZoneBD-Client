@@ -24,7 +24,7 @@ BookZoneBD is a MERN Stack project where book readers can easily browse, search,
 
 
 ## Technologies
-[![My Skills](https://skillicons.dev/icons?i=nextjs,tailwind,mongodb)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=react,tailwind,nodejs,express,mongodb,redux)](https://skillicons.dev)
 
 
 ## Run Locally
