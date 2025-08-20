@@ -7,7 +7,7 @@
 #### Password: Kalidash14@#
 
 
-## 🔗 Live Link: [HealthCare](https://bookzonebd.vercel.app)
+## 🔗 Live Link: [BookZoneBD](https://bookzonebd.vercel.app)
 
 ## Overview
 BookZoneBD is a MERN Stack project where book readers can easily browse, search, filter, add to cart, and order books. It features role-based authentication secured via JWT and Firebase.
