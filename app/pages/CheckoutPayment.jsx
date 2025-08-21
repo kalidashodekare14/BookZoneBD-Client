@@ -314,15 +314,15 @@ const CheckoutPayment = () => {
                     <div className='space-y-2 mt-3'>
                         <div className='flex justify-between items-center '>
                             <p>Subtotal:</p>
-                            <p>৳{discountedCartTotal}</p>
+                            <p>৳{discountedCartTotal.toFixed(2)}</p>
                         </div>
                         <div className='flex justify-between items-center '>
                             <p>Sales Tax:</p>
-                            <p>৳{salesTax}</p>
+                            <p>৳{salesTax.toFixed(2)}</p>
                         </div>
                         <div className='flex justify-between items-center '>
                             <p>Grand Total: </p>
-                            <p>৳{grandTotal}</p>
+                            <p>৳{grandTotal.toFixed(2)}</p>
                         </div>
                     </div>
                 </div>

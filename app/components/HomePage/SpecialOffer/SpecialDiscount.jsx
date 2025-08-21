@@ -132,7 +132,7 @@ const SpecialDiscount = () => {
                                                         readOnly
                                                     />
                                                     <div className='flex justify-between items-center'>
-                                                        <p>৳{data.price * data.discount / 100}</p>
+                                                        <p>৳{(data.price - (data.price * data.discount / 100)).toFixed(2)}</p>
                                                         <p><del>৳{data.price}</del></p>
                                                     </div>
                                                     {/* <Link to={`/book/${data._id}`}>
@@ -159,7 +159,7 @@ const SpecialDiscount = () => {
                                                 <div className="skeleton h-4 w-full"></div>
                                                 <div className="skeleton h-4 w-full"></div>
                                             </div>
-                                           
+
                                         </div>
                                     </div>
                                 </SwiperSlide>

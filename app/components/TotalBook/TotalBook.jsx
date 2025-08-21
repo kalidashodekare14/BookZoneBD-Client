@@ -224,7 +224,7 @@ const TotalBook = () => {
                                                     readOnly
                                                 />
                                                 <div className='flex justify-between items-center'>
-                                                    <p>৳{(book.price - book.price * book.discount / 100)}</p>
+                                                    <p>৳{((book.price - book.price * book.discount / 100)).toFixed(2)}</p>
                                                     <p><del>৳{book.price}</del></p>
                                                 </div>
 
