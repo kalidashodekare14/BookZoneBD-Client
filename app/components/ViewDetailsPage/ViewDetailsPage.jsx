@@ -289,7 +289,7 @@ const ViewDetailsPage = () => {
                     </div>
                     <p className='space-x-3 text-xl'>
                         <del>৳{bookDetails?.price}</del>
-                        <span>৳{bookDetails?.price * bookDetails?.discount / 100}</span>
+                        <span>৳{bookDetails?.price - (bookDetails?.price * bookDetails?.discount / 100)}</span>
                     </p>
                     <div className='space-x-3'>
                         <button onClick={() => addItem({ ...bookDetails, id: bookDetails._id })} className='btn lg:w-52 w-full bg-[#003A5A] text-white'>Add to Cart</button>

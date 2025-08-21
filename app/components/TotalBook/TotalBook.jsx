@@ -224,15 +224,10 @@ const TotalBook = () => {
                                                     readOnly
                                                 />
                                                 <div className='flex justify-between items-center'>
-                                                    <p>৳{book.price * book.discount / 100}</p>
+                                                    <p>৳{(book.price - book.price * book.discount / 100)}</p>
                                                     <p><del>৳{book.price}</del></p>
                                                 </div>
-                                                {/* <div className=''>
-                                            <Link >
-                                                <button className='btn w-full bg-[#003A5A] text-white'>View Details</button>
-                                            </Link>
-                                            <button onClick={() => addItem({ ...book, id: book._id })} className='btn bg-[#003A5A] text-white'>Add to cart</button>
-                                        </div> */}
+
                                             </div>
 
                                         </div>
