@@ -17,6 +17,7 @@ import "./app.css";
 import { Provider } from "react-redux";
 import { CartProvider } from "react-use-cart";
 
+
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -46,13 +47,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <Provider store={store} >
-          <AuthProvider>
-            <CartProvider>
-              {!dashboardLoaction && <Navbar />}
-              {children}
-              {!dashboardLoaction && <Footer />}
-            </CartProvider>
-          </AuthProvider>
+            <AuthProvider>
+              <CartProvider>
+                {!dashboardLoaction && <Navbar />}
+                {children}
+                {!dashboardLoaction && <Footer />}
+              </CartProvider>
+            </AuthProvider>
         </Provider>
         <ScrollRestoration />
         <Scripts />

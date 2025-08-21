@@ -81,13 +81,6 @@ const TotalBook = () => {
 
 
 
-    // if (loading) {
-    //     return <div className='h-[550px] flex flex-col justify-center items-center'>
-    //         <OrbitProgress variant="spokes" color="#003a5a" size="large" text="" textColor="" />
-    //         <p className='text-xl'>Please wait...</p>
-    //     </div>
-    // }
-
 
     return (
         <div className='lg:mx-5 my-5 font-mixed relative'>
@@ -105,7 +98,7 @@ const TotalBook = () => {
                     <option>Velvet</option>
                 </select>
             </div>
-            <div className='relative flex justify-between gap-5'>
+            <div className='relative flex gap-5'>
 
                 {toggle && (
                     <div className="absolute  inset-0 w-full bg-[#00000052] bg-opacity-30 z-30 pointer-events-none"></div>
@@ -214,60 +207,76 @@ const TotalBook = () => {
                     </div>
                 </div>
                 {/* all data */}
-                {allBooks.length > 0 ? (
-                    <div className='relative mx-5 lg:mx-0  grid grid-cols-1 z-20  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
-                        {
-                            allBooks.map(book => (
-                                <Link to={`/book/${book._id}`}>
-                                    <div key={book._id} className='border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
-                                        <img className='w-full h-60 px-5' src={book.image} alt="" />
-                                        <div className='mt-3 space-y-2'>
-                                            <h1 className='font-semibold'>{book.title}</h1>
-                                            <p>{book?.author?.author_name}</p>
-                                            <Rating
-                                                style={{ maxWidth: 100 }}
-                                                value={book.rating}
-                                                readOnly
-                                            />
-                                            <div className='flex justify-between items-center'>
-                                                <p>৳{book.price * book.discount / 100}</p>
-                                                <p><del>৳{book.price}</del></p>
-                                            </div>
-                                            {/* <div className=''>
+                <div className='w-full'>
+                    {allBooks.length > 0 ? (
+                        <div className='relative mx-5 lg:mx-0  grid grid-cols-1 z-20  md:grid-cols-3 lg:grid-cols-4 gap-5 w-full'>
+                            {
+                                allBooks.map(book => (
+                                    <Link to={`/book/${book._id}`}>
+                                        <div key={book._id} className='border-2 border-[#bbb] hover:border-2 hover:border-[#003A5A] hover:duration-200 flex flex-col justify-center p-2'>
+                                            <img className='w-full h-60 px-5' src={book.image} alt="" />
+                                            <div className='mt-3 space-y-2'>
+                                                <h1 className='font-semibold'>{book.title}</h1>
+                                                <p>{book?.author?.author_name}</p>
+                                                <Rating
+                                                    style={{ maxWidth: 100 }}
+                                                    value={book.rating}
+                                                    readOnly
+                                                />
+                                                <div className='flex justify-between items-center'>
+                                                    <p>৳{book.price * book.discount / 100}</p>
+                                                    <p><del>৳{book.price}</del></p>
+                                                </div>
+                                                {/* <div className=''>
                                             <Link >
                                                 <button className='btn w-full bg-[#003A5A] text-white'>View Details</button>
                                             </Link>
                                             <button onClick={() => addItem({ ...book, id: book._id })} className='btn bg-[#003A5A] text-white'>Add to cart</button>
                                         </div> */}
+                                            </div>
+
                                         </div>
+                                    </Link>
 
+                                ))
+                            }
+                        </div>
+                    ) : (
+                        <div>
+                            {
+                                loading && (
+                                    <div className='w-full grid grid-cols-1 lg:grid-cols-4'>
+                                        {[...Array(cardLoading)].map((_, index) => (
+                                            <div className='border border-[#bbb] w-60 p-5'>
+                                                <div className="flex w-52 flex-col gap-4">
+                                                    <div className="skeleton h-52 w-full"></div>
+                                                    <div className="skeleton h-4 w-40"></div>
+                                                    <div className="skeleton h-4 w-32"></div>
+                                                    <div className="skeleton h-4 w-40"></div>
+                                                    <div className='flex items-center gap-5'>
+                                                        <div className="skeleton h-4 w-full"></div>
+                                                        <div className="skeleton h-4 w-full"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                </Link>
-
-                            ))
-                        }
-                    </div>
-                ) : (
-                    <div className='w-full grid grid-cols-1 lg:grid-cols-4'>
-                        {[...Array(cardLoading)].map((_, index) => (
-                            <div className='border border-[#bbb] w-60 p-5'>
-                                <div className="flex w-52 flex-col gap-4">
-                                    <div className="skeleton h-52 w-full"></div>
-                                    <div className="skeleton h-4 w-40"></div>
-                                    <div className="skeleton h-4 w-32"></div>
-                                    <div className="skeleton h-4 w-40"></div>
-                                    <div className='flex items-center gap-5'>
-                                        <div className="skeleton h-4 w-full"></div>
-                                        <div className="skeleton h-4 w-full"></div>
-                                    </div>
-                                </div>
+                                )
+                            }
+                            <div>
+                                {
+                                    !loading && (
+                                        <div className='flex flex-col justify-center items-center min-h-screen'>
+                                            <img className='w-80' src="https://i.ibb.co.com/GfQ9CjV6/9264885.jpg" alt="" />
+                                            <p className='text-xl'>No Data</p>
+                                        </div>
+                                    )
+                                }
                             </div>
-                        ))}
-                    </div>
-                )}
+                        </div>
 
-
-
+                    )}
+                </div>
             </div>
             <div className='flex justify-center items-center my-10 px-2'>
                 {
