@@ -169,14 +169,18 @@ const ViewOrder = () => {
                                                 ))}
                                             </>
                                         )}
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td className='font-semibold'>No Data</td>
-                                            <td></td>
-                                        </tr>
+                                        {
+                                            !loading && (
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td className='font-semibold'>No Data</td>
+                                                    <td></td>
+                                                </tr>
+                                            )
+                                        }
                                     </>
                                 )
 
