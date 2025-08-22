@@ -23,7 +23,6 @@ const AllUsers = () => {
     const loadingUser = 10;
 
 
-
     const handleSearch = (event) => {
         event.preventDefault();
         const search = event.target.search.value;

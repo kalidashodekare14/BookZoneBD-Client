@@ -34,7 +34,8 @@ const TotalBook = () => {
     const limit = 10
 
 
-    console.log('checking all data', allBooks)
+    console.log('checking authors', selectedAuthors);
+
 
     const handlePageClick = (data) => {
         setCurrentPage(data.selected)
@@ -79,6 +80,10 @@ const TotalBook = () => {
         }
     }
 
+    const handleResetFilter = () => {
+        setSelectedAuthors([])
+        setSelectedPublisher([])
+    }
 
 
 
@@ -141,7 +146,10 @@ const TotalBook = () => {
 
                     </div>
                     <div className='filter-shadaw rounded-xl'>
-                        <p className=' px-3 py-3 font-semibold text-xl'>Filters</p>
+                        <div className='flex items-center justify-between p-2'>
+                            <p className=' px-3 py-3 font-semibold text-xl'>Filters</p>
+                            <p onClick={handleResetFilter} className='text-[#003a5a] font-semibold cursor-pointer'>Reset Filters</p>
+                        </div>
                         <div>
                             <div tabIndex={0} className="collapse collapse-arrow bg-base-100 border-base-300 border-b">
                                 <input type="checkbox" className="peer" />
