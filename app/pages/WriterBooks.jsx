@@ -5,8 +5,10 @@ import 'react-responsive-modal/styles.css';
 import { FaCamera, FaEdit } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import useWriter from '../hooks/useWriter';
-import { writerBooksDataCreate, writerBooksFetched, writerBooksDataUpdate } from '../Redux/slice/writerBooksSlice'
+import { writerBooksDataCreate, writerBooksFetched, writerBooksDataUpdate, writerBookDelete } from '../Redux/slice/writerBooksSlice'
 import { useDispatch, useSelector } from 'react-redux';
+import { RiDeleteBin6Line } from "react-icons/ri";
+import Swal from 'sweetalert2';
 const IMG_API_KEY = import.meta.env.VITE_IMG_API_KEY;
 const IMG_HOSTING = `https://api.imgbb.com/1/upload?key=${IMG_API_KEY}`
 
@@ -29,6 +31,7 @@ const WriterBooks = () => {
     const [isUpdateDiscription, setIsUpdateDiscription] = useState("")
     const [updateBookImage, setUpdateBookImage] = useState("");
     const [editDescriptionError, setEditDescriptionError] = useState(false);
+    const bookLoading = 10;
 
     useEffect(() => {
         setUpdateBookImage(editData?.image)
@@ -139,6 +142,35 @@ const WriterBooks = () => {
 
     }
 
+    const handleDeleteBook = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to delete..?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res = await dispatch(writerBookDelete({ id: id }));
+                    if (res.meta.requestStatus === "fulfilled") {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your book has been deleted.",
+                            icon: "success"
+                        });
+                    }
+
+                } catch (error) {
+                    console.error(error.message);
+                }
+            }
+
+        });
+    }
+
 
     return (
         <div className='lg:px-40 py-10 font-mixed  bg-[#e0e0e0] min-h-screen'>
@@ -152,23 +184,28 @@ const WriterBooks = () => {
                         writerBook.length > 0 ? (
                             <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
                                 {
-                                    writerBook.slice(0, 5).map(book => (
-                                        <div className='border border-[#bbb]'>
-                                            <div onClick={() => { onEditOpenModal(), setEditData(book) }} className='flex justify-end p-3 cursor-pointer'>
-                                                <FaEdit className='text-xl' />
+                                    writerBook.map(book => (
+                                        <div className={`border border-[#bbb]`}>
+                                            <div className={`flex items-center justify-between p-2 border-b border-[#bbb]`}>
+                                                <div onClick={() => { onEditOpenModal(), setEditData(book) }} className={``}>
+                                                    <FaEdit className='text-xl' />
+                                                </div>
+                                                <div onClick={() => handleDeleteBook(book._id)}>
+                                                    <RiDeleteBin6Line className={`text-xl text-red-500`} />
+                                                </div>
                                             </div>
-                                            <div className='flex flex-col lg:flex-row gap-3  p-3'>
-                                                <img className='w-full h-full' src={book?.image} alt="" />
-                                                <div className='space-y-2'>
-                                                    <p className='font-bold text-[17px]'>{book?.title}</p>
-                                                    <div className='list'>
-                                                        <li className='text-[16px]'><span className='font-semibold'>Catygory:</span> {book?.category}</li>
-                                                        <li className='text-[16px]'><span className='font-semibold'>Sub Category:</span> {book?.subcategory}</li>
-                                                        <li className='text-[16px]'><span className='font-semibold'>Discount:</span> {book?.discount}%</li>
-                                                        <li className='text-[16px]'><span className='font-semibold'>Price:</span> ৳{book?.price}</li>
-                                                        <li className='text-[16px]'><span className='font-semibold'>Publisher:</span> {book?.publisher}</li>
-                                                        <li className='text-[16px]'><span className='font-semibold'>Stock:</span> {book?.stock}</li>
-                                                        <li className='text-[16px]'><span className='font-semibold'>Description:</span> {book?.description.slice(0, 100)}...</li>
+                                            <div className={`flex flex-col lg:flex-row gap-3  p-3`}>
+                                                <img className={`w-full h-full`} src={book?.image} alt="" />
+                                                <div className={`space-y-2`}>
+                                                    <p className={`font-bold text-[17px]`}>{book?.title}</p>
+                                                    <div className={`list`}>
+                                                        <li className={`text-[16px]`}><span className='font-semibold'>Catygory:</span> {book?.category}</li>
+                                                        <li className={`text-[16px]`}><span className='font-semibold'>Sub Category:</span> {book?.subcategory}</li>
+                                                        <li className={`text-[16px]`}><span className='font-semibold'>Discount:</span> {book?.discount}%</li>
+                                                        <li className={`text-[16px]`}><span className='font-semibold'>Price:</span> ৳{book?.price}</li>
+                                                        <li className={`text-[16px]`}><span className='font-semibold'>Publisher:</span> {book?.publisher}</li>
+                                                        <li className={`text-[16px]`}><span className='font-semibold'>Stock:</span> {book?.stock}</li>
+                                                        <li className={`text-[16px]`}><span className='font-semibold'>Description:</span> {book?.description.slice(0, 100)}...</li>
                                                     </div>
                                                 </div>
                                             </div>
@@ -177,12 +214,48 @@ const WriterBooks = () => {
                                 }
                             </div>
                         ) : (
-                            <div className='flex justify-center items-center h-[500px]'>
-                                <div className='flex flex-col justify-center items-center'>
-                                    <img className='w-52' src={"https://i.ibb.co.com/GfQ9CjV6/9264885.jpg"} alt="" />
-                                    <p>No data</p>
-                                </div>
-                            </div>
+                            <>
+                                {
+                                    loading && (
+                                        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+                                            {[...Array(bookLoading)].map((_, index) => (
+                                                <div className='border border-[#bbb] p-2'>
+                                                    <div className='flex items-center justify-between border-b border-[#bbb] pb-2'>
+                                                        <div className='skeleton w-7 h-7'></div>
+                                                        <div className='skeleton w-7 h-7'></div>
+                                                    </div>
+                                                    <div className='flex flex-col lg:flex-row gap-5 pt-2'>
+                                                        <div className="skeleton h-80 w-full"></div>
+                                                        <div>
+                                                            <div className='skeleton w-52 h-8 mb-5'></div>
+                                                            <div className='space-y-2'>
+                                                                <div className='skeleton w-52 h-5'></div>
+                                                                <div className='skeleton w-52  h-5'></div>
+                                                                <div className='skeleton w-52  h-5'></div>
+                                                                <div className='skeleton w-52  h-5'></div>
+                                                                <div className='skeleton w-52  h-5'></div>
+                                                                <div className='skeleton w-52  h-5'></div>
+                                                                <div className='skeleton w-52  h-20'></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )
+                                }
+                                {
+                                    !loading && (
+                                        <div className='flex justify-center items-center h-[500px]'>
+                                            <div className='flex flex-col justify-center items-center'>
+                                                <img className='w-52' src={"https://i.ibb.co.com/GfQ9CjV6/9264885.jpg"} alt="" />
+                                                <p>No data</p>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            </>
+
                         )
                     }
                 </div>
@@ -312,7 +385,7 @@ const WriterBooks = () => {
                     </form>
                 </div>
             </ Modal>
-        </div>
+        </div >
     );
 };
 

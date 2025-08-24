@@ -259,7 +259,7 @@ const ViewDetailsPage = () => {
                     <h1 className='text-xl'>{bookDetails?.title}</h1>
                     <div className='flex items-center gap-2'>
                         {/* <img className='w-16 h-16 rounded-full border p-2' src={"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSuFnh8mh6WfiAXU0jGmRiP6EXFQK5PefgnEiQIFNLtsMKGfXby9-mC7zefO-w8aTjLLzQdprFK7byzNd-SWuNbA"} alt="" /> */}
-                        <p>By: <Link className='border-b' to={`/writer/${bookDetails?._id}`}>{bookDetails?.author?.author_name}</Link></p>
+                        <p>By: <Link className='border-b' to={`/writer/${bookDetails?.author?.author_id}`}>{bookDetails?.author?.author_name}</Link></p>
                     </div>
                     <Rating
                         style={{ maxWidth: 100 }}

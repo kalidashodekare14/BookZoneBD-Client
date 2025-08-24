@@ -25,6 +25,14 @@ export const writerBooksDataUpdate = createAsyncThunk(
     }
 )
 
+export const writerBookDelete = createAsyncThunk(
+    'writerBooks/writerBookDelete',
+    async ({ id }) => {
+        const res = await axiosSecure.delete(`/api/writerInfo/writer_book_delete/${id}`)
+        return res.data.data
+    }
+)
+
 
 
 
@@ -60,6 +68,8 @@ const writerProfileSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
+
+            
             // update book
             .addCase(writerBooksDataUpdate.pending, (state, action) => {
                 state.loading = true;
@@ -74,6 +84,26 @@ const writerProfileSlice = createSlice({
 
             })
             .addCase(writerBooksDataUpdate.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            // Book delete
+
+
+            .addCase(writerBookDelete.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(writerBookDelete.fulfilled, (state, action) => {
+                const deleteBook = action.payload;
+                const index = state.writerBook.findIndex(book => book._id === deleteBook._id);
+                if (index !== -1) {
+                    state.writerBook.splice(index, 1);
+                }
+                state.loading = false;
+
+            })
+            .addCase(writerBookDelete.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })
